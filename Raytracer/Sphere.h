@@ -7,7 +7,7 @@
 class Sphere : public Object
 {
 public:
-	Sphere(shape typ, float sz, float A[4], float D[4], float S[4], float E[4],
+	Sphere(shape typ, Color A, Color D, Color S, Color E,
 		float shininess, glm::mat4 transf, float x, float y, float z, float r);
 	bool intersects_ray();
 

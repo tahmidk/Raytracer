@@ -1,0 +1,13 @@
+#ifndef H_Color
+#define H_Color
+
+class Color {
+private:
+	double r, g, b;
+public:
+	Color();
+	Color(double red, double green, double blue);
+	Color operator+(const Color& col2);
+};
+
+#endif

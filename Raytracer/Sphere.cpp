@@ -20,9 +20,9 @@
 	Desc:	Constructor that initializes all relevant instance fields
 	Rtrn:	None
 -------------------------------------------------------------------*/
-Sphere::Sphere(shape typ, float sz, float A[4], float D[4], float S[4], float E[4],
+Sphere::Sphere(shape typ, Color A, Color D, Color S, Color E,
 	float shininess, glm::mat4 transf, float x, float y, float z, float r) :
-	Object::Object(typ, sz, A, D, S, E, shininess, transf)
+	Object::Object(typ, A, D, S, E, shininess, transf)
 {
 	Point c = Point(x, y, z);
 	this->center = c;

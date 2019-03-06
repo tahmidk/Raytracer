@@ -23,21 +23,18 @@
 	Desc:	Constructor that initializes all relevant instance fields
 	Rtrn:	None
 -------------------------------------------------------------------*/
-Object::Object(shape type, float size, float ambient[4], float diffuse[4], 
-	float specular[4], float emission[4], float shininess, glm::mat4 transform)
+Object::Object(shape type, Color ambient, Color diffuse, Color specular,
+	Color emission, float shininess, glm::mat4 transform)
 {
 	// Set object properties
 	this->type = type;
-	this->size = size;
 	this->shininess = shininess;
 
 	// Initialize lighting and coloring properties
-	for (int i = 0; i < 4; i++) {
-		(this->ambient)[i] = ambient[i];
-		(this->diffuse)[i] = diffuse[i];
-		(this->specular)[i] = specular[i];
-		(this->emission)[i] = emission[i];
-	}
+	this->ambient = ambient;
+	this->diffuse = diffuse;
+	this->specular = specular;
+	this->emission = emission;
 
 	// Set transformation properties
 	this->transform = transform;
@@ -45,10 +42,9 @@ Object::Object(shape type, float size, float ambient[4], float diffuse[4],
 
 /*-------------[ Getter Methods ]-------------*/
 shape Object::get_type()			{ return type; }
-float Object::get_size()			{ return size; }
-float * Object::get_ambient()		{ return ambient; }
-float * Object::get_diffuse()		{ return diffuse; }
-float * Object::get_specular()	{ return specular; }
-float * Object::get_emission()	{ return emission; }
+Color Object::get_ambient()		{ return ambient; }
+Color Object::get_diffuse()		{ return diffuse; }
+Color Object::get_specular()	{ return specular; }
+Color Object::get_emission()	{ return emission; }
 float Object::get_shininess()		{ return shininess; }
 glm::mat4 Object::get_transf()		{ return transform; }
