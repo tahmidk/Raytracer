@@ -10,12 +10,36 @@
 #include "pch.h"
 #include "Sphere.h"
 
+/*-------------------------------------------------------------------
+	Func:	Constructor: [Sphere]
+	Args:	All args of Object
+			x - x-coordinate of Sphere's center
+			y - y-coordinate of Sphere's center
+			z - z-coordinate of Sphere's center
+			r - the sphere's radius
+	Desc:	Constructor that initializes all relevant instance fields
+	Rtrn:	None
+-------------------------------------------------------------------*/
 Sphere::Sphere(shape typ, float sz, float A[4], float D[4], float S[4], float E[4],
 	float shininess, glm::mat4 transf, float x, float y, float z, float r) :
-	Object(typ, sz, A, D, S, E, shininess, transf)
+	Object::Object(typ, sz, A, D, S, E, shininess, transf)
 {
-	this->center = Point(x, y, z);
+	Point c = Point(x, y, z);
+	this->center = c;
 	this->radius = r;
+}
+
+/*-------------------------------------------------------------------
+	Func:	[intersects_ray]
+	Args:	ray - the ray to calculate intersection for
+	Desc:	Using the equation of a sphere given in lecture, this
+			function determines whether the given Ray intersects this
+			sphere surface and accordingly returns all intersection
+			points
+	Rtrn:	A (potentially empty) list of intersection points
+-------------------------------------------------------------------*/
+bool Sphere::intersects_ray() {
+	return true;
 }
 
 /*--------------[ Getter methods ]--------------*/

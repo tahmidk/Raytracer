@@ -2,7 +2,8 @@
 
 class Point
 {
-	public:
+public:
+		Point() {};
 		Point(float x, float y, float z);
 
 		// Getter methods
