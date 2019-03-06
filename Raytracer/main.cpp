@@ -7,12 +7,16 @@
 			Raytracer program starts and ends with this file
 ==================================================================*/
 
-#include "pch.h"	  
-#include <iostream>	  
+// Standard imports
+#include "pch.h"
+#include <iostream>
+
+// FreeImage library
 #include "FreeImage.h"
 
-#include "readfile.h"
-#include "variables.h"
+// Project file imports
+//#include "readfile.h"
+//#include "variables.h"
 
 using namespace std;
 
@@ -23,4 +27,11 @@ int main()
 	cout << "FreeImage_" << FreeImage_GetVersion() << endl;
 	cout << FreeImage_GetCopyrightMessage() << endl;
 	FreeImage_DeInitialise();
+
+	// Read in and parse input file
+
+	// Begin Raytracing
+
+	// Render all pixels to image via FreeImage
+
 }

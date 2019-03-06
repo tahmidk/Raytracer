@@ -4,6 +4,7 @@
 // Keep this in mind in readfile.cpp and display.cpp
 // See FAQ for more details or if you're having problems.
 
+#include "pch.h"
 #include "Transform.h"
 #include <stdio.h>
 // Helper rotation function.  Please implement this.

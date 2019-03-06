@@ -9,22 +9,30 @@
 			according to the instructions in the input
 ==================================================================*/
 
+// Standard library imports
 #include <iostream>
 #include <string>
 #include <fstream>
 #include <sstream>
 #include <deque>
 #include <stack>
-#include <gl/GL.h>
-#include "Transform.h"
+#include "pch.h"
 
-using namespace std;
+// Project file imports
+#include "Transform.h"
 #include "variables.h"
 #include "readfile.h"
 
+using namespace std;
 
-// The function below applies the appropriate transform to a 4-vector
-void matransform(stack<mat4> &transfstack, GLfloat* values)
+/*-------------------------------------------------------------------
+	Func:	[matransform]
+	Args:	transfstack - the transformation stack
+			values - the ordered values of the vec4 of interest
+	Desc:	Applies the appropriate transform to the given vec4
+	Rtrn:	None
+-------------------------------------------------------------------*/
+void matransform(stack<mat4> &transfstack, float* values)
 {
 	mat4 transform = transfstack.top();
 	vec4 valvec = vec4(values[0], values[1], values[2], values[3]);
@@ -55,7 +63,7 @@ void rightmultiply(const mat4 & M, stack<mat4> &transfstack)
 	Rtrn:	True upon successful parse
 			False otherwise
 -------------------------------------------------------------------*/
-bool readvals(stringstream &s, const int numvals, GLfloat* values)
+bool readvals(stringstream &s, const int numvals, float* values)
 {
 	for (int i = 0; i < numvals; i++) {
 		s >> values[i];
@@ -93,7 +101,7 @@ void readfile(const char* filename)
 				stringstream s(str);
 				s >> cmd;
 				int i;
-				GLfloat values[10]; // Position and color for light, colors for others
+				float values[10]; // Position and color for light, colors for others
 				// Up to 10 params for cameras.
 				bool validinput; // Validity of input
 
@@ -181,6 +189,7 @@ void readfile(const char* filename)
 					else {
 						validinput = readvals(s, 1, values);
 						if (validinput) {
+							/*
 							object * obj = &(objects[numobjects]);
 							obj->size = values[0];
 
@@ -206,6 +215,7 @@ void readfile(const char* filename)
 							else if (cmd == "teapot") {
 								obj->type = teapot;
 							}
+							*/
 						}
 						++numobjects;
 					}
