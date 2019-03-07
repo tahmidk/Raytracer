@@ -33,7 +33,15 @@ void trace(Ray & ray, Scene * scene)
 
 	Object * curr_obj = objects[0];
 	for (int obj_num = 0; curr_obj != NULL; obj_num++) {
+		float * t_hit;	// Output parameter to store t parameter at hit location
+		vec3 * norm;	// Output parameter to store surface normal
 
+		// If the intersection is closer to the ray origin, record it
+		bool intersects = curr_obj->intersects_ray(ray, t_hit, norm);
+		if (intersects && (*t_hit > 0)  && (*t_hit < t_min)) {
+			t_min = *t_hit;
+			obj_hit = curr_obj;
+		}
 
 		// Update for next iteration
 		curr_obj = objects[obj_num + 1];

@@ -29,7 +29,7 @@ public:
 	mat4 get_transf();
 
 	// Virtual methods to be implemented by specific shape
-	virtual bool intersects_ray(Ray ray) { return false; };
+	virtual bool intersects_ray(Ray ray, float * t_hit, vec3 * normal) {};
 
 	// Protected fields
 protected:

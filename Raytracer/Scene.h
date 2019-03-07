@@ -55,9 +55,10 @@ private:
 
 	// List of objects and lights
 	Object * objects[NUM_OBJECTS];
+	int num_objects;
 	Light * lights[NUM_LIGHTS];
-	int numObjects;
-	int numLights;
+	int num_lights;
+
 	vector<vec3> vertices;
 	int maxverts;
 
@@ -69,6 +70,7 @@ private:
 public:
 	Scene();
 	~Scene();
+
 	void render();
 
 	// Getter methods
@@ -91,6 +93,8 @@ public:
 
 	Object ** getAllObjects();
 	Light ** getAllLights();
+	float getNumObjects();
+	float getNumLights();
 };
 
 #endif
