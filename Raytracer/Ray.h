@@ -11,6 +11,8 @@ public:
 	Ray() {};
 	Ray(vec3 posn, vec3 dirn, float t_min, float t_max);
 
+	vec3 evaluate(float t);
+
 	// Getter methods
 	vec3 get_posn();
 	vec3 get_dirn();
