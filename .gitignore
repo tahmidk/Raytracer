@@ -263,3 +263,7 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+*.dll
+Raytracer/FreeImage.dll
+*.lib
+Raytracer/FreeImage/FreeImage.lib

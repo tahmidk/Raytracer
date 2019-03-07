@@ -55,7 +55,7 @@ bool Sphere::intersects_ray(Ray ray, float * t_hit, vec3 * normal) {
 
 	// Initialize a, b, and c of quadratic equation
 	float a = dot(P1, P1);
-	float b = 2.0 * dot(P1, (P0 - center));
+	float b = 2.0f * dot(P1, (P0 - center));
 	float c = dot(P0 - center, P0 - center) - radius*radius;
 
 	// Determine if this equation has atleast 1 solution

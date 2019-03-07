@@ -44,6 +44,14 @@ Triangle::Triangle(shape typ, Color A, Color D, Color S, Color E,
 -------------------------------------------------------------------*/
 bool Triangle::intersects_ray(Ray ray, float * t_hit, vec3 * normal)
 {
+	t_hit = NULL;
+	normal = NULL;
+
+	// Given Ray :	P = P0 + P1*t
+	// And Sphere:	(P - C) dot (P - C) - R^2 = 0
+	// Solve: (P1 dot P1)t^2 + 2(P1 dot (P0 - C))t + (P0 - C) dot (P0 - C) - R^2
+
+	// No intersection
 	return false;
 }
 
