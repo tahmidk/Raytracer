@@ -1,8 +1,11 @@
 #ifndef SCENE_CPP
 #define SCENE_CPP
 
+// GLM imports
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+
+// Standard library imports
 #include <vector>
 #include <stack>
 #include <iostream>
@@ -10,6 +13,8 @@
 #include <fstream>
 #include <sstream>
 #include <math.h>
+
+// Project file imports 
 #include "Transform.h"
 #include "Color.h"
 #include "Light.h"
