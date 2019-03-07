@@ -16,3 +16,18 @@ Color Color::operator+(const Color& col2) {
 	Color ret(this->r+col2.r, this->g + col2.g, this->b + col2.b);
 	return ret;
 }
+
+double Color::getRed()
+{
+	return this->r;
+}
+
+double Color::getGreen()
+{
+	return this->g;
+}
+
+double Color::getBlue()
+{
+	return this->b;
+}

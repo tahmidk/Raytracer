@@ -21,12 +21,17 @@
 #include "PointLight.h"
 #include "Sphere.h"
 #include "Object.h"
+#include "Sampler.h"
 
 using namespace std;
 using namespace glm;
 
 #define NUM_OBJECTS 100
 #define NUM_LIGHTS 100
+
+class Scene;
+
+extern Scene* scn;
 
 class Scene {
 private:
@@ -64,6 +69,20 @@ public:
 	Scene();
 	~Scene();
 	void render();
+	vec3 getCamPos();
+	vec3 getUpVector();
+	vec3 getLookAt();
+	vec3 getEyeInit();
+	vec3 getCenter();
+	double getFovy();
+	double getHeight();
+	double getWidth();
+	Color getAmbient();
+	Color getDiffuse();
+	Color getEmission();
+	Color getSpecular();
+	double getShininess();
+	vector<vec3> getVertices();
 };
 
 #endif

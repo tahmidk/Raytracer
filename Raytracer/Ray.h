@@ -9,6 +9,7 @@ class Ray
 {
 public:
 	Ray() {};
+	Ray(vec3 posn, vec3 dirn);
 	Ray(vec3 posn, vec3 dirn, float t_min, float t_max);
 
 	vec3 evaluate(float t);

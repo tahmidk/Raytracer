@@ -21,6 +21,8 @@
 
 using namespace std;
 
+Scene* scn;
+
 int main(int argc, char *argv[])
 {
 	/*
@@ -37,9 +39,9 @@ int main(int argc, char *argv[])
 	// Read in and parse input file
 	const char * input_file = argv[1];
 	Parser parser(input_file);
-	Scene* scene = new Scene();
-	parser.initScene(scene);
-
+	//note that scn is declared as a Scene* and it's accessible in external files
+	scn = new Scene();
+	parser.initScene(scn);
 	// Begin Raytracing
 
 	// Render all pixels to image via FreeImage

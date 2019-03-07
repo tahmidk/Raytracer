@@ -20,6 +20,12 @@
 			for some time parameter t
 	Rtrn:	None
 -------------------------------------------------------------------*/
+Ray::Ray(vec3 posn, vec3 dirn)
+{
+	this->posn = posn;
+	this->dirn = dirn;
+}
+
 Ray::Ray(vec3 posn, vec3 dirn, float t_min, float t_max)
 {
 	this->posn = normalize(posn);

@@ -8,6 +8,9 @@ public:
 	Color();
 	Color(double red, double green, double blue);
 	Color operator+(const Color& col2);
+	double getRed();
+	double getGreen();
+	double getBlue();
 };
 
 #endif

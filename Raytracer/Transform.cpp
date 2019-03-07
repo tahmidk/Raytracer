@@ -13,7 +13,7 @@ mat3 Transform::rotate(const float degrees, const vec3& axis)
   mat3 ret;
   // YOUR CODE FOR HW2 HERE
   mat3 identity = mat3(1,0,0,0,1,0,0,0,1);
-  float radians = degrees * (pi/180);
+  float radians = degrees * (PI/180);
   vec3 normalized = normalize(axis);
   mat3 aat = mat3(normalized[0]*normalized[0], normalized[0]*normalized[1], normalized[0]*normalized[2],
                   normalized[0]*normalized[1], normalized[1]*normalized[1], normalized[1]*normalized[2],
@@ -69,7 +69,7 @@ mat4 Transform::perspective(float fovy, float aspect, float zNear, float zFar)
   mat4 ret;
   // YOUR CODE FOR HW2 HERE
   // New, to implement the perspective transform as well.
-  float theta = fovy * (pi/180) / 2;
+  float theta = fovy * (PI/180) / 2;
   float d = 1/glm::tan(theta);
   ret = mat4(d/aspect,0,0,0,
         0,d,0,0,
