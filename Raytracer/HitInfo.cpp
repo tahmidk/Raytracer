@@ -20,6 +20,7 @@ using namespace std;
 	Rtrn:	None
 -------------------------------------------------------------------*/
 HitInfo::HitInfo() {
+	this->valid = false;
 	this->t_hit = numeric_limits<float>::infinity();
 	this->P_hit = vec3();
 	this->norm = vec3();
@@ -36,6 +37,7 @@ HitInfo::HitInfo() {
 	Rtrn:	None
 -------------------------------------------------------------------*/
 HitInfo::HitInfo(float t, vec3 P, vec3 N, Object * obj) {
+	this->valid = true;
 	this->t_hit = t;
 	this->P_hit = P;
 	this->norm = N;
@@ -43,6 +45,7 @@ HitInfo::HitInfo(float t, vec3 P, vec3 N, Object * obj) {
 }
 
 /*------------[ Getter Methods ]--------------*/
+bool HitInfo::is_valid()		{ return this->valid; }
 float HitInfo::get_t()			{ return this->t_hit; }
 vec3 HitInfo::get_point()		{ return this->P_hit; }
 vec3 HitInfo::get_norm()		{ return this->norm; }

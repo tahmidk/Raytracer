@@ -93,8 +93,8 @@ public:
 
 	Object ** getAllObjects();
 	Light ** getAllLights();
-	float getNumObjects();
-	float getNumLights();
+	int getNumObjects();
+	int getNumLights();
 };
 
 #endif

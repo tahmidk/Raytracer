@@ -7,8 +7,8 @@ Scene::Scene()
 
 Scene::~Scene()
 {
-	delete this->objects;
-	delete this->lights;
+	delete[] this->objects;
+	delete[] this->lights;
 }
 
 void Scene::render()
@@ -38,5 +38,5 @@ vector<vec3> Scene::getVertices()	{ return this->vertices; }
 // Scene lists
 Object ** Scene::getAllObjects()	{ return objects; }
 Light ** Scene::getAllLights()		{ return lights; }
-float Scene::getNumObjects()		{ return num_objects; }
-float Scene::getNumLights()			{ return num_lights; }
+int Scene::getNumObjects()		{ return num_objects; }
+int Scene::getNumLights()		{ return num_lights; }

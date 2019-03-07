@@ -22,7 +22,7 @@
 using namespace std;
 using namespace glm;
 
-Scene* scn;
+Scene * scn;
 
 int main(int argc, char *argv[])
 {
