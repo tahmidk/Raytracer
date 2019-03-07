@@ -32,14 +32,45 @@ Sphere::Sphere(shape typ, Color A, Color D, Color S, Color E,
 /*-------------------------------------------------------------------
 	Func:	[intersects_ray]
 	Args:	ray - the ray to calculate intersection for
+			t_hit - an output param to store the t of intersection
+					or NULL if no intersection
+			normal - an output param to store the surface normal at
+					the intersection or NULL if no intersection
 	Desc:	Using the equation of a sphere given in lecture, this
 			function determines whether the given Ray intersects this
 			sphere surface and accordingly returns all intersection
 			points
 	Rtrn:	A (potentially empty) list of intersection points
 -------------------------------------------------------------------*/
-bool Sphere::intersects_ray(Ray ray) {
-	return true;
+bool Sphere::intersects_ray(Ray ray, float * t_hit, vec3 * normal) {
+	t_hit = NULL;
+	normal = NULL;
+
+	// Given Ray :	P = P0 + P1*t
+	// And Sphere:	(P - C) dot (P - C) - R^2 = 0
+	// Solve: (P1 dot P1)t^2 + 2(P1 dot (P0 - C))t + (P0 - C) dot (P0 - C) - R^2
+	vec3 P0 = ray.get_posn();
+	vec3 P1 = ray.get_dirn();
+
+	// Initialize a, b, and c of quadratic equation
+	float a = dot(P1, P1);
+	float b = 2.0 * dot(P1, (P0 - center));
+	float c = dot(P0 - center, P0 - center) - radius*radius;
+
+	// Determine if this equation has atleast 1 solution
+	float discriminant = b*b - 4*a*c;
+	if (discriminant > 0) {
+		// Find the 2 solutions and pick the smaller one
+		float soln_1 = (-b + sqrt(discriminant)) / (2 * a);
+		float soln_2 = (-b - sqrt(discriminant)) / (2 * a);
+
+		*t_hit = (soln_1 < soln_2) ? soln_1 : soln_2;
+		*normal = normalize(ray.evaluate(*t_hit) - center);
+		return true;
+	}
+
+	// No intersection
+	return false;
 }
 
 /*--------------[ Getter methods ]--------------*/
