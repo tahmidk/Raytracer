@@ -227,6 +227,12 @@ Scene::Scene()
 {
 }
 
+Scene::~Scene()
+{
+	delete this->objects;
+	delete this->lights;
+}
+
 void Scene::render()
 {
 }

@@ -62,6 +62,7 @@ private:
 
 public:
 	Scene();
+	~Scene();
 	void render();
 };
 
