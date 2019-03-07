@@ -74,6 +74,8 @@ void Parser::parseFile(Scene * scene) {
 		
 		stack <mat4> transfstack;
 		int vertCount = 0;
+		int objCount = 0;
+		int lightCount = 0;
 		transfstack.push(mat4(1.0));  // identity
 
 		getline(in, str);
@@ -201,9 +203,50 @@ void Parser::parseFile(Scene * scene) {
 					scene->vertices[vertCount++] = newVert;
 				}
 				else if (cmd == "tri") {
-
+					//read input
+					validinput = readvals(s, 3, values);
+					if (validinput) {
+						vec4 v1 = vec4(scene->vertices[(int)values[0]], 1);
+						vec4 v2 = vec4(scene->vertices[(int)values[1]], 1);
+						vec4 v3 = vec4(scene->vertices[(int)values[2]], 1);
+						vec3 vert1 = vec3(transfstack.top() * v1);
+						vec3 vert2 = vec3(transfstack.top() * v2);
+						vec3 vert3 = vec3(transfstack.top() * v3);
+						//create new triangle
+						//scene->objects[objCount++] = new triangle();
+					}
+				} else if (cmd == "attenuation") {
+					validinput = readvals(s, 4, values);
+					if (validinput) {
+						for (int i = 0; i < 3; i++) {
+							scene->attenuation[i] = values[i];
+						}
+					}
 				}
-
+				else if (cmd == "sphere") {
+					//read input
+					validinput = readvals(s, 3, values);
+					if (validinput) {
+						vec4 v1 = vec4(scene->vertices[(int)values[0]], 1);
+						vec4 v2 = vec4(scene->vertices[(int)values[1]], 1);
+						vec4 v3 = vec4(scene->vertices[(int)values[2]], 1);
+						vec3 vert1 = vec3(transfstack.top() * v1);
+						vec3 vert2 = vec3(transfstack.top() * v2);
+						vec3 vert3 = vec3(transfstack.top() * v3);
+						//create new sphere
+						//scene->objects[objCount++] = new sphere();
+					}
+				}
+				else if (cmd == "point") {
+					//read input
+					validinput = readvals(s, 3, values);
+					if (validinput) {
+						vec3 posn = vec3(transfstack.top() * vec4(values[0], values[1], values[2], 1));
+						Color col = Color(values[3], values[4], values[5]);
+						//create the new point light
+						//scene->lights[lightCount++] = new PointLight(col, posn, scene->attenuation);
+					}
+				}
 				else {
 					cerr << "Unknown Command: " << cmd << " Skipping \n";
 				}
