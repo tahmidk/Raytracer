@@ -1,8 +1,11 @@
 #ifndef SCENE_CPP
 #define SCENE_CPP
 
+// GLM imports
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+
+// Standard library imports
 #include <vector>
 #include <stack>
 #include <iostream>
@@ -10,6 +13,8 @@
 #include <fstream>
 #include <sstream>
 #include <math.h>
+
+// Project file imports
 #include "Transform.h"
 #include "Color.h"
 #include "DirectionalLight.h"
@@ -19,6 +24,9 @@
 
 using namespace std;
 using namespace glm;
+
+#define NUM_OBJECTS 100
+#define NUM_LIGHTS 100
 
 class Scene {
 private:
@@ -41,17 +49,22 @@ private:
 	double attenuation[3];
 
 	// List of objects and lights
-	Object* objects[100];
-	Light* lights[100];
+	Object * objects[NUM_OBJECTS];
+	Light * lights[NUM_LIGHTS];
 
 	vector<vec3> vertices;
 	int maxverts;
 
 	int depth;
+	vec3 eyeinit;
+	vec3 center;
+
+	// Allow Parser class to set Scene's private fields
+	friend class Parser;
 
 public:
 	Scene();
-	void readFile(const char* filename);
+	void render();
 };
 
 #endif

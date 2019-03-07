@@ -18,6 +18,19 @@
 -------------------------------------------------------------------*/
 Parser::Parser(const char* fname) : filename(fname) {}
 
+/*-------------------------------------------------------------------
+	Func:	[initScene]
+	Args:	None
+	Desc:	Initializes a new scene based on the input file
+	Rtrn:	The new scene described by .test file
+-------------------------------------------------------------------*/
+Scene Parser::initScene() {
+	Scene * new_scene = new Scene();
+	parseFile(new_scene);
+
+	return *new_scene;
+}
+
 /*------------[ Helper Methods ]------------*/
 bool readvals(stringstream &s, const int numvals, float* values)
 {
@@ -45,12 +58,17 @@ void rightmultiply(const mat4 & M, stack<mat4> &transfstack)
 	T = T * M;
 }
 
-void Parser::parseFile() {
+/*-------------------------------------------------------------------
+	Func:	[parserFile]
+	Args:	scene - the scene reference to initialize while parsing
+	Desc:	
+	Rtrn:	None
+-------------------------------------------------------------------*/
+void Parser::parseFile(Scene * scene) {
 	string str, cmd;
 	ifstream in;
 	in.open(this->filename);
 	if (in.is_open()) {
-
 		
 		stack <mat4> transfstack;
 		int vertCount = 0;
@@ -64,58 +82,59 @@ void Parser::parseFile() {
 				s >> cmd;
 				float values[10]; // Position and color for light, colors for others
 				bool validinput; // Validity of input
-				ambient = Color(0.2, 0.2, 0.2);
-				diffuse = Color(0.0, 0.0, 0.0);
-				emission = Color(0.0, 0.0, 0.0);
-				specular = Color(0.0, 0.0, 0.0);
+				scene->ambient = Color(0.2, 0.2, 0.2);
+				scene->diffuse = Color(0.0, 0.0, 0.0);
+				scene->emission = Color(0.0, 0.0, 0.0);
+				scene->specular = Color(0.0, 0.0, 0.0);
 				// Process the light, add it to database.
 				// Lighting Command
 				if (cmd == "ambient") {
 					validinput = readvals(s, 3, values); // colors
 					if (validinput) {
-						ambient = Color(values[0], values[1], values[2]);
+						scene->ambient = Color(values[0], values[1], values[2]);
 
 					}
 				}
 				else if (cmd == "diffuse") {
 					validinput = readvals(s, 3, values);
 					if (validinput) {
-						diffuse = Color(values[0], values[1], values[2]);
+						scene->diffuse = Color(values[0], values[1], values[2]);
 
 					}
 				}
 				else if (cmd == "specular") {
 					validinput = readvals(s, 3, values);
 					if (validinput) {
-						specular = Color(values[0], values[1], values[2]);
+						scene->specular = Color(values[0], values[1], values[2]);
 
 					}
 				}
 				else if (cmd == "emission") {
 					validinput = readvals(s, 3, values);
 					if (validinput) {
-						emission = Color(values[0], values[1], values[2]);
+						scene->emission = Color(values[0], values[1], values[2]);
 					}
 				}
 				else if (cmd == "shininess") {
 					validinput = readvals(s, 1, values);
 					if (validinput) {
-						shininess = values[0];
+						scene->shininess = values[0];
 					}
 				}
 				else if (cmd == "size") {
 					validinput = readvals(s, 2, values);
 					if (validinput) {
-						w = (int)values[0]; h = (int)values[1];
+						scene->w = (int)values[0]; 
+						scene->h = (int)values[1];
 					}
 				}
 				else if (cmd == "camera") {
 					validinput = readvals(s, 10, values); // 10 values eye cen up fov
 					if (validinput) {
-						eyeinit = vec3(values[0], values[1], values[2]);
-						center = vec3(values[3], values[4], values[5]);
-						up = vec3(values[6], values[7], values[8]);
-						fovy = values[9];
+						scene->eyeinit = vec3(values[0], values[1], values[2]);
+						scene->center = vec3(values[3], values[4], values[5]);
+						scene->up = vec3(values[6], values[7], values[8]);
+						scene->fovy = values[9];
 					}
 				}
 				else if (cmd == "translate") {
@@ -170,12 +189,12 @@ void Parser::parseFile() {
 					if (validinput) {
 						int maxverts = (int)values[0];
 					}
-					vertices = vector<vec3>(maxverts);
+					scene->vertices = vector<vec3>(scene->maxverts);
 				}
 				else if (cmd == "vertex") {
 					validinput = readvals(s, 3, values);
 					vec3 newVert = vec3(values[0], values[1], values[2]);
-					vertices[vertCount++] = newVert;
+					scene->vertices[vertCount++] = newVert;
 				}
 				else if (cmd == "tri") {
 
@@ -189,7 +208,7 @@ void Parser::parseFile() {
 		}
 	}
 	else {
-		cerr << "Unable to Open Input Data File " << filename << "\n";
+		cerr << "Unable to Open Input Data File " << this->filename << "\n";
 		throw 2;
 	}
 }

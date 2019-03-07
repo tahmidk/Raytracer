@@ -16,11 +16,18 @@
 
 // Project file imports
 #include "Raytracer.h"
+#include "Parser.h"
+#include "Scene.h"
 
 using namespace std;
 
-int main()
+int main(int argc, char *argv[])
 {
+	/*
+	if (argc != 2)
+		cerr << "Unexpected number of arguments!" << endl;
+	*/
+
     // This is a test to make sure FreeImage is working
 	FreeImage_Initialise();
 	cout << "FreeImage_" << FreeImage_GetVersion() << endl;
@@ -28,9 +35,16 @@ int main()
 	FreeImage_DeInitialise();
 
 	// Read in and parse input file
+	const char * input_file = argv[1];
+	Parser parser(input_file);
+	Scene scene = parser.initScene();
 
 	// Begin Raytracing
 
 	// Render all pixels to image via FreeImage
+
+	// Clean up
+	Scene * scene_ptr = &scene;
+	delete scene_ptr;
 
 }

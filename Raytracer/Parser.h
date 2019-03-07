@@ -7,11 +7,10 @@ class Parser
 {
 public:
 	Parser(const char* filename);
-
 	Scene initScene();
 
 private:
-	void parseFile();
+	void parseFile(Scene * scene);
 
 	// Instance fields
 	const char * filename;

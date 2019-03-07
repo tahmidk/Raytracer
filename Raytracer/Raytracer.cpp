@@ -10,7 +10,6 @@
 #include "pch.h"
 #include "Raytracer.h"
 
-void trace(Ray &ray, Color * color, const int depth)
+void trace(Ray & ray, const int depth, Color * color)
 {
-
 }

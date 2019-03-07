@@ -9,12 +9,15 @@ enum shape { triangle, sphere };
 #include "Color.h"
 #include "Ray.h"
 
+using namespace glm;
+
 class Object {
 	// Public fields
 public:
-	// Constructor
+	// Constructors
+	Object() {};
 	Object(shape type, Color ambient, Color diffuse, Color specular,
-		Color emission, float shininess, glm::mat4 transform);
+		Color emission, float shininess, mat4 transform);
 
 	// Getter methods
 	shape get_type();
@@ -23,7 +26,7 @@ public:
 	Color get_specular();
 	Color get_emission();
 	float get_shininess();
-	glm::mat4 get_transf();
+	mat4 get_transf();
 
 	// Virtual methods to be implemented by specific shape
 	virtual bool intersects_ray(Ray ray) { return false; };
@@ -37,7 +40,7 @@ protected:
 	Color specular;
 	Color emission;
 	float shininess;
-	glm::mat4 transform;
+	mat4 transform;
 
 };
 

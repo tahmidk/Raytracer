@@ -21,10 +21,10 @@
 	Rtrn:	None
 -------------------------------------------------------------------*/
 Sphere::Sphere(shape typ, Color A, Color D, Color S, Color E,
-	float shininess, glm::mat4 transf, float x, float y, float z, float r) :
+	float shininess, mat4 transf, float x, float y, float z, float r) :
 	Object::Object(typ, A, D, S, E, shininess, transf)
 {
-	Point c = Point(x, y, z);
+	vec3 c(x, y, z);
 	this->center = c;
 	this->radius = r;
 }
@@ -43,5 +43,5 @@ bool Sphere::intersects_ray(Ray ray) {
 }
 
 /*--------------[ Getter methods ]--------------*/
-Point Sphere::get_center()	{ return center; }
+vec3 Sphere::get_center()	{ return center; }
 float Sphere::get_radius()	{ return radius; }

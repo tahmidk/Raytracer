@@ -24,7 +24,7 @@
 	Rtrn:	None
 -------------------------------------------------------------------*/
 Object::Object(shape type, Color ambient, Color diffuse, Color specular,
-	Color emission, float shininess, glm::mat4 transform)
+	Color emission, float shininess, mat4 transform)
 {
 	// Set object properties
 	this->type = type;
@@ -41,10 +41,10 @@ Object::Object(shape type, Color ambient, Color diffuse, Color specular,
 }
 
 /*-------------[ Getter Methods ]-------------*/
-shape Object::get_type()			{ return type; }
+shape Object::get_type()		{ return type; }
 Color Object::get_ambient()		{ return ambient; }
 Color Object::get_diffuse()		{ return diffuse; }
 Color Object::get_specular()	{ return specular; }
 Color Object::get_emission()	{ return emission; }
-float Object::get_shininess()		{ return shininess; }
-glm::mat4 Object::get_transf()		{ return transform; }
+float Object::get_shininess()	{ return shininess; }
+mat4 Object::get_transf()		{ return transform; }
