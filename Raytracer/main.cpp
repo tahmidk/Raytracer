@@ -15,8 +15,7 @@
 #include "FreeImage.h"
 
 // Project file imports
-//#include "readfile.h"
-//#include "variables.h"
+#include "Raytracer.h"
 
 using namespace std;
 

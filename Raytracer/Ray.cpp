@@ -1,3 +1,13 @@
+/*==================================================================
+	File:	[Ray.cpp]
+	Auth:	Steven Natalius
+			Tahmid Khan
+
+	Desc:	This file contains the base implementation of a Ray, 
+			defined by a start point and a direction as well as the
+			distance parameter t
+==================================================================*/
+
 #include "pch.h"
 #include "Ray.h"
 
@@ -9,3 +19,9 @@ Ray::Ray(Point posn, glm::vec3 dirn, float t_min, float t_max)
 	this->t_min = t_min;
 	this->t_max = t_max;
 }
+
+/*------------[ Getter methods ]-------------*/
+Point Ray::get_posn()		{ return posn; }
+glm::vec3 Ray::get_dirn()	{ return dirn; }
+float Ray::get_tmin()		{ return t_min; }
+float Ray::get_tmax()		{ return t_max; }

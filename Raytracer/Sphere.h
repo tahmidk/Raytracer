@@ -9,7 +9,9 @@ class Sphere : public Object
 public:
 	Sphere(shape typ, Color A, Color D, Color S, Color E,
 		float shininess, glm::mat4 transf, float x, float y, float z, float r);
-	bool intersects_ray();
+
+	// Virtual method to implement
+	bool intersects_ray(Ray ray);
 
 	// Getter methods
 	Point get_center();

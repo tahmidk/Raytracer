@@ -38,7 +38,7 @@ Sphere::Sphere(shape typ, Color A, Color D, Color S, Color E,
 			points
 	Rtrn:	A (potentially empty) list of intersection points
 -------------------------------------------------------------------*/
-bool Sphere::intersects_ray() {
+bool Sphere::intersects_ray(Ray ray) {
 	return true;
 }
 

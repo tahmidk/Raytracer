@@ -160,6 +160,7 @@
     <ClInclude Include="Point.h" />
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="Ray.h" />
+    <ClInclude Include="Raytracer.h" />
     <ClInclude Include="Sampler.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Sphere.h" />
@@ -181,6 +182,7 @@
     <ClCompile Include="Point.cpp" />
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="Ray.cpp" />
+    <ClCompile Include="Raytracer.cpp" />
     <ClCompile Include="Sampler.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Sphere.cpp" />

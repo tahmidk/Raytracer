@@ -10,7 +10,13 @@ public:
 	Ray() {};
 	Ray(Point posn, glm::vec3 dirn, float t_min, float t_max);
 
-protected:
+	// Getter methods
+	Point get_posn();
+	glm::vec3 get_dirn();
+	float get_tmin();
+	float get_tmax();
+
+private:
 	Point posn;
 	glm::vec3 dirn;
 	float t_min;

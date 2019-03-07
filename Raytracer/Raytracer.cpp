@@ -1,10 +1,16 @@
+/*==================================================================
+	File:	[Raytracer.cpp]
+	Auth:	Steven Natalius
+			Tahmid Khan
+
+	Desc:	This file contains implementation of the base raytracing
+			algorithm
+==================================================================*/
+
 #include "pch.h"
-#include "Ray.h"
-#include "Color.h"
+#include "Raytracer.h"
 
-void raytrace(Ray &ray, const int depth, Color * color);
-
-void raytrace(Ray &ray, const int depth, Color * color)
+void trace(Ray &ray, Color * color, const int depth)
 {
 
 }

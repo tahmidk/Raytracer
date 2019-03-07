@@ -7,6 +7,7 @@ enum shape { triangle, sphere };
 #include <windows.h>
 #include <glm/glm.hpp>
 #include "Color.h"
+#include "Ray.h"
 
 class Object {
 	// Public fields
@@ -25,7 +26,7 @@ public:
 	glm::mat4 get_transf();
 
 	// Virtual methods to be implemented by specific shape
-	virtual bool intersects_ray() { return false; };
+	virtual bool intersects_ray(Ray ray) { return false; };
 
 	// Protected fields
 protected:
