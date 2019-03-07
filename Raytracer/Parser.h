@@ -6,8 +6,9 @@
 class Parser
 {
 public:
+	~Parser();
 	Parser(const char* filename);
-	Scene initScene();
+	void initScene(Scene* scene);
 
 private:
 	void parseFile(Scene * scene);

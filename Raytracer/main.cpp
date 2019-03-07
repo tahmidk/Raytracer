@@ -37,14 +37,13 @@ int main(int argc, char *argv[])
 	// Read in and parse input file
 	const char * input_file = argv[1];
 	Parser parser(input_file);
-	Scene scene = parser.initScene();
+	Scene* scene = new Scene();
+	parser.initScene(scene);
 
 	// Begin Raytracing
 
 	// Render all pixels to image via FreeImage
 
 	// Clean up
-	Scene * scene_ptr = &scene;
-	delete scene_ptr;
-
+	//delete scene;
 }

@@ -10,6 +10,10 @@
 #include "pch.h"
 #include "Parser.h"
 
+Parser::~Parser()
+{
+}
+
 /*-------------------------------------------------------------------
 	Func:	Constructor: [Parser]
 	Args:	filename - the name of the file to parse
@@ -24,11 +28,8 @@ Parser::Parser(const char* fname) : filename(fname) {}
 	Desc:	Initializes a new scene based on the input file
 	Rtrn:	The new scene described by .test file
 -------------------------------------------------------------------*/
-Scene Parser::initScene() {
-	Scene * new_scene = new Scene();
-	parseFile(new_scene);
-
-	return *new_scene;
+void Parser::initScene(Scene* scene) {
+	parseFile(scene);
 }
 
 /*------------[ Helper Methods ]------------*/
