@@ -188,8 +188,10 @@ void Parser::parseFile(Scene * scene) {
 					validinput = readvals(s, 1, values);
 					if (validinput) {
 						int maxverts = (int)values[0];
+						scene->maxverts = maxverts;
 					}
 					scene->vertices = vector<vec3>(scene->maxverts);
+
 				}
 				else if (cmd == "vertex") {
 					validinput = readvals(s, 3, values);

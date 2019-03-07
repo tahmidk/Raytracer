@@ -56,8 +56,6 @@ private:
 	int maxverts;
 
 	int depth;
-	vec3 eyeinit;
-	vec3 center;
 
 	// Allow Parser class to set Scene's private fields
 	friend class Parser;

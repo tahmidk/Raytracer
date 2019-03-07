@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Scene.h"
 
+/*
 bool readvals(stringstream &s, const int numvals, float* values)
 {
 	for (int i = 0; i < numvals; i++) {
@@ -26,7 +27,8 @@ void rightmultiply(const mat4 & M, stack<mat4> &transfstack)
 	mat4 &T = transfstack.top();
 	T = T * M;
 }
-
+*/
+/*
 void Scene::readFile(const char* filename) {
 	string str, cmd;
 	ifstream in;
@@ -219,4 +221,12 @@ void Scene::readFile(const char* filename) {
 		cerr << "Unable to Open Input Data File " << filename << "\n";
 		throw 2;
 	}
+}*/
+
+Scene::Scene()
+{
+}
+
+void Scene::render()
+{
 }
