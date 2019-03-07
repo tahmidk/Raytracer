@@ -5,7 +5,7 @@ PointLight::PointLight()
 {
 }
 
-PointLight::PointLight(Color col, Point posn)
+PointLight::PointLight(Color col, Point posn, double attenuation)
 {
 }
 
