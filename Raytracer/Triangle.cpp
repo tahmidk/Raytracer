@@ -44,15 +44,68 @@ Triangle::Triangle(shape typ, Color A, Color D, Color S, Color E,
 -------------------------------------------------------------------*/
 bool Triangle::intersects_ray(Ray ray, float * t_hit, vec3 * normal)
 {
-	t_hit = NULL;
-	normal = NULL;
+	// First, get point where ray intersects plane of triangle
+	vec3 vec_AB = vert_b - vert_a;
+	vec3 vec_AC = vert_c - vert_a;
 
-	// Given Ray :	P = P0 + P1*t
-	// And Sphere:	(P - C) dot (P - C) - R^2 = 0
-	// Solve: (P1 dot P1)t^2 + 2(P1 dot (P0 - C))t + (P0 - C) dot (P0 - C) - R^2
+	// Ray parameters
+	vec3 P0 = ray.get_posn();
+	vec3 P1 = ray.get_dirn();
+	// Surface normal
+	vec3 N = normalize(cross(vec_AB, vec_AC));
+
+	float numer = dot(vert_a, N) - dot(P0, N);
+	float denom = dot(P1, N);
+
+	if (denom != 0) {
+		// It intersects, get the point on the plane where ray intersects
+		float t_plane = numer / denom;
+		vec3 P_ray = ray.evaluate(t_plane);
+
+		// See if P is in this triangle ABC using the area method
+		float area_ABC = area();
+		float area_ABP = area(vert_a, vert_b, P_ray);
+		float area_ACP = area(vert_a, vert_c, P_ray);
+		float area_BCP = area(vert_b, vert_c, P_ray);
+
+		// P is in ABC if the subtriangles' areas add up to the large triangle's
+		if (area_ABC == (area_ABP + area_ACP + area_BCP)) {
+			*t_hit = t_plane;
+			*normal = N;
+			return true;
+		}
+	}
 
 	// No intersection
+	t_hit = NULL;
+	normal = NULL;
 	return false;
+}
+
+/*-------------------------------------------------------------------
+	Func:	[area]
+	Args:	None
+	Desc:	Calculate the area of this triangle
+	Rtrn:	The area
+-------------------------------------------------------------------*/
+float Triangle::area() {
+	return area(vert_a, vert_b, vert_c);
+}
+
+/*-------------------------------------------------------------------
+	Func:	[area]
+	Args:	vert_A - the first vertex
+			vert_B - the second vertex
+			vert_C - the third vertex
+	Desc:	Calculate the area of this triangle
+	Rtrn:	The area
+-------------------------------------------------------------------*/
+float Triangle::area(vec3 vert_A, vec3 vert_B, vec3 vert_C) {
+	vec3 vec_AB = vert_B - vert_A;
+	vec3 vec_AC = vert_C - vert_A;
+
+	float area = 0.5f * length(cross(vec_AB, vec_AC));
+	return abs(area);
 }
 
 /*--------------[ Getter Methods ]--------------*/

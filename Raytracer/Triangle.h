@@ -12,6 +12,9 @@ public:
 	// Virtual method to implement
 	bool intersects_ray(Ray ray, float * t_hit, vec3 * normal);
 
+	float area();										// Area of this triangle
+	float area(vec3 vert_A, vec3 vert_B, vec3 vert_C);	// Area of specified triangle
+
 	// Getter methods
 	void getVertices(vec3 * a, vec3 * b, vec3 * c);
 
