@@ -69,6 +69,8 @@ public:
 	Scene();
 	~Scene();
 	void render();
+
+	// Getter methods
 	vec3 getCamPos();
 	vec3 getUpVector();
 	vec3 getLookAt();
@@ -77,12 +79,17 @@ public:
 	double getFovy();
 	double getHeight();
 	double getWidth();
+
 	Color getAmbient();
 	Color getDiffuse();
 	Color getEmission();
 	Color getSpecular();
 	double getShininess();
+
 	vector<vec3> getVertices();
+
+	Object ** getAllObjects();
+	Light ** getAllLights();
 };
 
 #endif

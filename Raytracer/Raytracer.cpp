@@ -22,7 +22,20 @@
 			not collide with any object, it sets color to black
 	Rtrn:	None
 -------------------------------------------------------------------*/
-void trace(Ray & ray, const int depth, Color * color)
+void trace(Ray & ray, Scene * scene)
 {
+	// Set minimum distance to collided object to infinity and object to NULL
+	float t_min = numeric_limits<float>::infinity();
+	Object * obj_hit = NULL;
 
+	// Loop over all objects in the scene scouring for intersections
+	Object ** objects = scene->getAllObjects();
+
+	Object * curr_obj = objects[0];
+	for (int obj_num = 0; curr_obj != NULL; obj_num++) {
+
+
+		// Update for next iteration
+		curr_obj = objects[obj_num + 1];
+	}
 }

@@ -20,15 +20,15 @@
 #include "Scene.h"
 
 using namespace std;
+using namespace glm;
 
 Scene* scn;
 
 int main(int argc, char *argv[])
 {
-	/*
+	// Argument validity check
 	if (argc != 2)
 		cerr << "Unexpected number of arguments!" << endl;
-	*/
 
     // This is a test to make sure FreeImage is working
 	FreeImage_Initialise();

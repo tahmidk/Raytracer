@@ -4,8 +4,10 @@
 #include "pch.h"
 #include "Ray.h"
 #include "Color.h"
+#include "Scene.h"
+#include <limits>
 
 // Function declaration
-void trace(Ray &ray, const int depth, Color * color);
+void trace(Ray &ray, Scene * scene);
 
 #endif
