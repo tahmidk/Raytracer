@@ -38,9 +38,10 @@ Sphere::Sphere(shape typ, Color A, Color D, Color S, Color E,
 					the intersection or NULL if no intersection
 	Desc:	Using the equation of a sphere given in lecture, this
 			function determines whether the given Ray intersects this
-			sphere surface and accordingly returns all intersection
-			points
-	Rtrn:	A (potentially empty) list of intersection points
+			sphere surface and accordingly returns the intersection
+			information
+	Rtrn:	True if ray intersects triangle
+			False otherwise
 -------------------------------------------------------------------*/
 bool Sphere::intersects_ray(Ray ray, float * t_hit, vec3 * normal) {
 	t_hit = NULL;
@@ -59,12 +60,18 @@ bool Sphere::intersects_ray(Ray ray, float * t_hit, vec3 * normal) {
 
 	// Determine if this equation has atleast 1 solution
 	float discriminant = b*b - 4*a*c;
-	if (discriminant > 0) {
+	if (discriminant >= 0) {
 		// Find the 2 solutions and pick the smaller one
 		float soln_1 = (-b + sqrt(discriminant)) / (2 * a);
 		float soln_2 = (-b - sqrt(discriminant)) / (2 * a);
 
-		*t_hit = (soln_1 < soln_2) ? soln_1 : soln_2;
+		if (soln_1 > 0 && soln_2 > 0)
+			// Both solutions positive. Pick smaller (closer) one
+			*t_hit = (soln_1 < soln_2) ? soln_1 : soln_2;
+		else
+			// One of the solutions is negative. Pick positive one
+			*t_hit = (soln_1 > soln_2) ? soln_1 : soln_2;
+
 		*normal = normalize(ray.evaluate(*t_hit) - center);
 		return true;
 	}
