@@ -56,7 +56,8 @@ private:
 	// List of objects and lights
 	Object * objects[NUM_OBJECTS];
 	Light * lights[NUM_LIGHTS];
-
+	int numObjects;
+	int numLights;
 	vector<vec3> vertices;
 	int maxverts;
 

@@ -214,6 +214,7 @@ void Parser::parseFile(Scene * scene) {
 						vec3 vert3 = vec3(transfstack.top() * v3);
 						//create new triangle
 						//scene->objects[objCount++] = new triangle();
+						//scene->numObjects = objCount;
 					}
 				} else if (cmd == "attenuation") {
 					validinput = readvals(s, 4, values);
@@ -235,6 +236,7 @@ void Parser::parseFile(Scene * scene) {
 						vec3 vert3 = vec3(transfstack.top() * v3);
 						//create new sphere
 						//scene->objects[objCount++] = new sphere();
+						//scene->numObjects = objCount;
 					}
 				}
 				else if (cmd == "point") {
@@ -245,6 +247,7 @@ void Parser::parseFile(Scene * scene) {
 						Color col = Color(values[3], values[4], values[5]);
 						//create the new point light
 						//scene->lights[lightCount++] = new PointLight(col, posn, scene->attenuation);
+						//scene->numLights = lightCount;
 					}
 				}
 				else {
