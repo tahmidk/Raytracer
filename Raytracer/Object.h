@@ -12,7 +12,8 @@ enum shape { triangle, sphere };
 class Object {
 	// Public fields
 public:
-	// Constructor
+	// Constructors
+	Object() {};
 	Object(shape type, Color ambient, Color diffuse, Color specular,
 		Color emission, float shininess, glm::mat4 transform);
 

@@ -156,6 +156,7 @@
     <ClInclude Include="Film.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="Parser.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="PointLight.h" />
@@ -172,6 +173,7 @@
     <ClCompile Include="Film.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Parser.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
