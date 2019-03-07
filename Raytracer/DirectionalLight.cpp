@@ -6,7 +6,7 @@ DirectionalLight::DirectionalLight()
 {
 }
 
-DirectionalLight::DirectionalLight(Color col, Point posn)
+DirectionalLight::DirectionalLight(Color col, Point posn, double attenuation)
 {
 }
 

@@ -8,7 +8,7 @@ class DirectionalLight :
 
 public:
 	DirectionalLight();
-	DirectionalLight(Color col, Point posn);
+	DirectionalLight(Color col, Point posn, double attenuation);
 
 	Color calculate_shading();
 };

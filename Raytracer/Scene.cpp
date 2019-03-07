@@ -37,6 +37,8 @@ void Scene::readFile(const char* filename) {
 		// This is done using standard STL Templates
 		stack <mat4> transfstack;
 		int vertCount = 0;
+		int objCount = 0;
+		int lightCount = 0;
 		transfstack.push(mat4(1.0));  // identity
 
 		getline(in, str);
@@ -153,7 +155,7 @@ void Scene::readFile(const char* filename) {
 				else if (cmd == "maxverts") {
 					validinput = readvals(s, 1, values);
 					if (validinput) {
-						int maxverts = (int) values[0];
+						int maxverts = (int)values[0];
 					}
 					vertices = vector<vec3>(maxverts);
 				}
@@ -162,11 +164,51 @@ void Scene::readFile(const char* filename) {
 					vec3 newVert = vec3(values[0], values[1], values[2]);
 					vertices[vertCount++] = newVert;
 				}
+				else if (cmd == "attenuation") {
+					validinput = readvals(s, 4, values);
+					if (validinput) {
+						for (int i = 0; i < 3; i++) {
+							attenuation[i] = values[i];
+						}
+					}
+				}
 				else if (cmd == "tri") {
+					//read input
+					validinput = readvals(s, 3, values);
+					if (validinput) {
+						vec4 v1 = vec4(vertices[(int)values[0]], 1);
+						vec4 v2 = vec4(vertices[(int)values[1]], 1);
+						vec4 v3 = vec4(vertices[(int)values[2]], 1);
+						vec3 vert1 = vec3(transfstack.top() * v1);
+						vec3 vert2 = vec3(transfstack.top() * v2);
+						vec3 vert3 = vec3(transfstack.top() * v3);
+						//create new triangle
+						objects[objCount++] = new triangle();
+					}
 
 				}
-
-				else {
+				else if (cmd == "sphere") {
+					//read input
+					validinput = readvals(s, 3, values);
+					if (validinput) {
+						vec4 v1 = vec4(vertices[(int)values[0]], 1);
+						vec4 v2 = vec4(vertices[(int)values[1]], 1);
+						vec4 v3 = vec4(vertices[(int)values[2]], 1);
+						vec3 vert1 = vec3(transfstack.top() * v1);
+						vec3 vert2 = vec3(transfstack.top() * v2);
+						vec3 vert3 = vec3(transfstack.top() * v3);
+						//create new sphere
+						objects[objCount++] = new sphere();
+					}
+				} else if (cmd == "point") {
+					//read input
+					validinput = readvals(s, 3, values);
+					if (validinput) {
+						vec3 posn = vec3(transfstack.top() * vec4(values[0], values[1], values[2],1));
+						Color col = Color(values[3], values[4], values[5]);
+						lights[lightCount++] = new PointLight(col, posn, attenuation);
+					}
+				} else {
 					cerr << "Unknown Command: " << cmd << " Skipping \n";
 				}
 			}

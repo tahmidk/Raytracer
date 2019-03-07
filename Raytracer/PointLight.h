@@ -7,7 +7,7 @@ class PointLight :
 {
 public:
 	PointLight();
-	PointLight(Color col, Point posn);
+	PointLight(Color col, Point posn, double attenuation);
 
 	Color calculate_shading();
 };

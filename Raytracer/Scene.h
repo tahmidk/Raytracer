@@ -12,7 +12,9 @@
 #include <math.h>
 #include "Transform.h"
 #include "Color.h"
-#include "Light.h"
+#include "DirectionalLight.h"
+#include "PointLight.h"
+#include "Sphere.h"
 #include "Object.h"
 
 using namespace std;
@@ -27,6 +29,8 @@ private:
 	vec3 up;
 	vec3 lookAt;
 	double fovy;
+	vec3 eyeinit;
+	vec3 center;
 
 	// Object fields
 	Color ambient;
@@ -37,15 +41,14 @@ private:
 	double attenuation[3];
 
 	// List of objects and lights
-	Object objects[100];
-	Light lights[100];
+	Object* objects[100];
+	Light* lights[100];
 
 	vector<vec3> vertices;
 	int maxverts;
 
 	int depth;
-	vec3 eyeinit;
-	vec3 center;
+
 public:
 	Scene();
 	void readFile(const char* filename);
