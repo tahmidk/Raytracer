@@ -2,23 +2,24 @@
 #define H_Ray
 
 #include <glm/glm.hpp>
-#include "Point.h"
+
+using namespace glm;
 
 class Ray
 {
 public:
 	Ray() {};
-	Ray(Point posn, glm::vec3 dirn, float t_min, float t_max);
+	Ray(vec3 posn, vec3 dirn, float t_min, float t_max);
 
 	// Getter methods
-	Point get_posn();
-	glm::vec3 get_dirn();
+	vec3 get_posn();
+	vec3 get_dirn();
 	float get_tmin();
 	float get_tmax();
 
 private:
-	Point posn;
-	glm::vec3 dirn;
+	vec3 posn;
+	vec3 dirn;
 	float t_min;
 	float t_max;
 };

@@ -12,7 +12,7 @@
 #include "Ray.h"
 
 
-Ray::Ray(Point posn, glm::vec3 dirn, float t_min, float t_max)
+Ray::Ray(vec3 posn, vec3 dirn, float t_min, float t_max)
 {
 	this->posn = posn;
 	this->dirn = dirn;
@@ -21,7 +21,7 @@ Ray::Ray(Point posn, glm::vec3 dirn, float t_min, float t_max)
 }
 
 /*------------[ Getter methods ]-------------*/
-Point Ray::get_posn()		{ return posn; }
-glm::vec3 Ray::get_dirn()	{ return dirn; }
-float Ray::get_tmin()		{ return t_min; }
-float Ray::get_tmax()		{ return t_max; }
+vec3 Ray::get_posn()	{ return posn; }
+vec3 Ray::get_dirn()	{ return dirn; }
+float Ray::get_tmin()	{ return t_min; }
+float Ray::get_tmax()	{ return t_max; }

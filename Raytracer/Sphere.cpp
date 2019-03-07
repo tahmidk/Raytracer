@@ -39,7 +39,20 @@ Sphere::Sphere(shape typ, Color A, Color D, Color S, Color E,
 	Rtrn:	A (potentially empty) list of intersection points
 -------------------------------------------------------------------*/
 bool Sphere::intersects_ray(Ray ray) {
-	return true;
+	// Given Ray :	P = P0 + P1*t
+	// And Sphere:	(P - C) dot (P - C) - R^2 = 0
+	// Solve equation: (P1 dot P1)t^2 + 2(P1 dot (P0 - C))t + (P0 - C) dot (P0 - C) - R^2
+	vec3 P0 = ray.get_posn();
+	vec3 P1 = ray.get_dirn();
+
+	// Initialize a, b, and c of quadratic equation
+	float a = dot(P1, P1);
+	float b = 2.0 * dot(P1, (P0 - center));
+	float c = dot(P0 - center, P0 - center) - radius*radius;
+
+	// Determine if this equation has atleast 1 solution
+	float discriminant = b*b - 4*a*c;
+	return (discriminant > 0);
 }
 
 /*--------------[ Getter methods ]--------------*/

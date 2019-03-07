@@ -61,7 +61,8 @@ void rightmultiply(const mat4 & M, stack<mat4> &transfstack)
 /*-------------------------------------------------------------------
 	Func:	[parserFile]
 	Args:	scene - the scene reference to initialize while parsing
-	Desc:	
+	Desc:	Parses the file and extracts meaningful information and
+			uses it to initialize the given scene pointer
 	Rtrn:	None
 -------------------------------------------------------------------*/
 void Parser::parseFile(Scene * scene) {
