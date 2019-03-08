@@ -22,5 +22,7 @@ Color Bucket::computeAverage()
 	for (int i = 0; i < this->colors.size(); i++) {
 		sum = sum + colors[i];
 	}
+	if (this->colors.size() == 0)
+		return Color(0.0f, 0.0f, 0.0f);
 	return sum / this->colors.size();
 }

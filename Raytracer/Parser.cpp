@@ -219,7 +219,7 @@ void Parser::parseFile(Scene * scene) {
 						cout << v3.x << " " << v3.y << " " << v3.z << endl;
 						*/
 						scene->objects[objCount++] = new Triangle(triangle, scene->ambient, scene->diffuse, 
-							scene->specular, scene->emission, scene->shininess, transfstack.top(), v1, v2, v3);
+							scene->specular, scene->emission, scene->shininess, transfstack.top(), vert1, vert2, vert3);
 						scene->num_objects = objCount;
 					}
 				} else if (cmd == "attenuation") {
