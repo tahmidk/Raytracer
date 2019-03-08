@@ -135,7 +135,7 @@ void Parser::parseFile(Scene * scene) {
 				else if (cmd == "camera") {
 					validinput = readvals(s, 10, values); // 10 values eye cen up fov
 					if (validinput) {
-						scene->eyeinit = vec3(values[0], values[1], values[2]);
+						scene->camPos = vec3(values[0], values[1], values[2]);
 						scene->center = vec3(values[3], values[4], values[5]);
 						scene->up = vec3(values[6], values[7], values[8]);
 						scene->fovy = values[9];
@@ -213,8 +213,13 @@ void Parser::parseFile(Scene * scene) {
 						vec3 vert2 = vec3(transfstack.top() * v2);
 						vec3 vert3 = vec3(transfstack.top() * v3);
 						//create new triangle
+						/*
+						cout << v1.x << " " << v1.y << " " << v1.z << endl;
+						cout << v2.x << " " << v2.y << " " << v2.z << endl;
+						cout << v3.x << " " << v3.y << " " << v3.z << endl;
+						*/
 						scene->objects[objCount++] = new Triangle(triangle, scene->ambient, scene->diffuse, 
-							scene->specular, scene->emission, scene->shininess, transfstack.top(), vert1, vert2, vert3);
+							scene->specular, scene->emission, scene->shininess, transfstack.top(), v1, v2, v3);
 						scene->num_objects = objCount;
 					}
 				} else if (cmd == "attenuation") {

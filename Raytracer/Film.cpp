@@ -42,9 +42,9 @@ void Film::writeImage(std::string path) {
 	}
 
 	//set the corresponding color values (0-255) to the output variable
-	for (int i = 0; i < height; i++) {
+	for (int i = 0; i < width; i++) {
 		std::vector<Bucket> col = pixel[i];
-		for (int j = 0; j < width; j++) {
+		for (int j = 0; j < height; j++) {
 			color.rgbRed = (BYTE) (col[j].computeAverage().getRed() * 255);
 			color.rgbGreen = (BYTE) (col[j].computeAverage().getGreen() * 255);
 			color.rgbBlue = (BYTE) (col[j].computeAverage().getBlue() * 255);

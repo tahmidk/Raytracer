@@ -11,6 +11,7 @@
 #include "pch.h"
 #include "Transform.h"
 #include "Camera.h"
+#include <iostream>
 
 /*-------------------------------------------------------------------
 	Func:	Constructor: [Scene]
@@ -28,8 +29,8 @@ Camera::Camera(vec3 eye, vec3 center, vec3 up, double fovy, double width,
 	double height)
 {
 	// Set basic camera vectors
-	this->up = normalize(cross(w, up));
 	this->w = normalize(eye - center);
+	this->up = normalize(cross(w, up));
 	this->v = glm::cross(w, this->up);
 
 	// Convert FOV-y from degrees to radians
@@ -54,8 +55,8 @@ Camera::Camera(vec3 eye, vec3 center, vec3 up, double fovy, double width,
 -------------------------------------------------------------------*/
 Ray Camera::generateRay(Sample sample, vec3 eye, int w, int h)
 {
-	float alpha = (float) ((-2) * tan(fovx / 2) * (sample.getX() - w / 2) / w);
-	float beta = (float) (2 * tan(fovy / 2) * (h / 2 - sample.getY()) / h);
+	float alpha = (float) (tan(fovx / 2) * ((sample.getX() - w / 2) / (w/2)));
+	float beta = (float) (tan(fovy / 2) * ((h / 2 - sample.getY()) / (h/2)));
 	vec3 dirn = normalize(alpha * this->up + beta * this->v - this->w);
 
 	return Ray(eye, dirn);
