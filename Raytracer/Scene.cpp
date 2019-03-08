@@ -53,10 +53,9 @@ void Scene::render(Camera & cam)
 
 		}
 	}
+	// Output the PNG file
 	film->writeImage("test.png");
 	delete film;
-
-	// Output the PNG file
 }
 
 /*--------------[ Getter Methods ]----------------*/

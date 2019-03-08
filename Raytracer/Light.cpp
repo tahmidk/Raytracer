@@ -8,5 +8,5 @@ Light::Light(Color col, vec3 posn)
 }
 
 /*------------[ Getter Methods ]------------*/
-Color Light::getColor()	{ return color; }
-vec3 Light::getPosn()	{ return posn; }
+Color Light::get_color()	{ return color; }
+vec3 Light::get_posn()	{ return posn; }
