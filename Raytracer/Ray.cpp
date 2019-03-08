@@ -69,6 +69,8 @@ Ray::Ray(HitInfo hit_info, Ray ray_in) {
 	// Use Snell's law to compute reflected ray: v_out = v_in - 2(v_in dot n)n
 	vec3 v_out = v_in - 2*dot(v_in, normal)*normal;
 
+	this->posn = hit_info.get_point();
+	this->dirn = normalize(v_out);
 }
 
 /*-------------------------------------------------------------------
