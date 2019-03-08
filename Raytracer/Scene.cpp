@@ -26,8 +26,8 @@ Scene::Scene()
 
 Scene::~Scene()
 {
-	delete[] this->objects;
-	delete[] this->lights;
+	//delete[] this->objects;
+	//delete[] this->lights;
 }
 
 /*-------------------------------------------------------------------

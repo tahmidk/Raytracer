@@ -15,8 +15,8 @@
 Film::Film()
 {
 	//set the initial pixel output to black.
-	pixel = vector<vector<Color>>(scn->getHeight(), 
-		vector<Color>(scn->getWidth(), Color(0.0, 0.0, 0.0)));
+	pixel = vector<vector<Color>>((int) scn->getHeight(), 
+		vector<Color>((int) scn->getWidth(), Color(0.0, 0.0, 0.0)));
 }
 
 /*-------------------------------------------------------------------
@@ -29,7 +29,7 @@ Film::Film()
 void Film::writeImage(string path) {
 	int bits = 24;
 	FreeImage_Initialise();
-	FIBITMAP* bitmap = FreeImage_Allocate(scn->getWidth(), scn->getHeight(), bits);
+	FIBITMAP* bitmap = FreeImage_Allocate((int) scn->getWidth(), (int) scn->getHeight(), bits);
 	RGBQUAD color;
 	//check if we can allocate bitmap
 	if (!bitmap)
@@ -38,9 +38,9 @@ void Film::writeImage(string path) {
 	for (int i = 0; i < scn->getWidth(); i++) {
 		vector<Color> col = pixel[i];
 		for (int j = 0; j < scn->getHeight(); j++) {
-			color.rgbRed = col[j].getRed() * 255;
-			color.rgbGreen = col[j].getGreen() * 255;
-			color.rgbBlue = col[j].getBlue() * 255;
+			color.rgbRed = (BYTE) (col[j].getRed() * 255);
+			color.rgbGreen = (BYTE) (col[j].getGreen() * 255);
+			color.rgbBlue = (BYTE) (col[j].getBlue() * 255);
 			FreeImage_SetPixelColor(bitmap, i, j, &color);
 		}
 	}
