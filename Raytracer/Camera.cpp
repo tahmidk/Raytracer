@@ -30,8 +30,8 @@ Camera::Camera(vec3 eye, vec3 center, vec3 up, double fovy, double width,
 {
 	// Set basic camera vectors
 	this->w = normalize(eye - center);
-	this->up = normalize(cross(up, w));
-	this->v = glm::cross(w, this->up);
+	this->u = normalize(cross(up, w));
+	this->v = glm::cross(w, this->u);
 
 	// Convert FOV-y from degrees to radians
 	this->fovy = fovy * PI  / 180.0;
@@ -56,8 +56,8 @@ Camera::Camera(vec3 eye, vec3 center, vec3 up, double fovy, double width,
 Ray Camera::generateRay(Sample sample, vec3 eye, int w, int h)
 {
 	float alpha = (float) (tan(fovx / 2) * (sample.getX() - float(w)/2.0f) / (float(w)/2.0f));
-	float beta = (float) (tan(fovy / 2) * (float(h)/2.0f - sample.getY()) / (float(h)/2.0f));
-	vec3 dirn = normalize(alpha * this->up + beta * this->v - this->w);
+	float beta = (float) (-1 * tan(fovy / 2) * (float(h)/2.0f - sample.getY()) / (float(h)/2.0f));
+	vec3 dirn = normalize(alpha * this->u + beta * this->v - this->w);
 
 	return Ray(eye, dirn);
 }

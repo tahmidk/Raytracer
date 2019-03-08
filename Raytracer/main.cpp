@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
 		scn->getFovy(), scn->getWidth(), scn->getHeight());
 
 	// Begin Raytracing/render process
-	scn->render(cam, "test1.png");
+	scn->render(cam, "test7.png");
 
 	// Clean up
 	FreeImage_DeInitialise();

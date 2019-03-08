@@ -48,7 +48,13 @@ void Scene::render(Camera & cam, std::string path)
 			Ray raySample = cam.generateRay(sample, camPos, w, h);
 			HitInfo hit = trace(raySample, this);
 			if (hit.is_valid()) {
-				film->commit(sample, Color(1.0f, 0.0f, 0.0f));
+				if (hit.get_object()->get_type() == triangle) {
+					film->commit(sample, Color(1.0f, 0.0f, 0.0f));
+				}
+				if (hit.get_object()->get_type() == sphere) {
+					film->commit(sample, Color(1.0f, 1.0f, 1.0f));
+				}
+
 				//film->commit(sample, hit.get_object()->get_ambient());
 			}
 

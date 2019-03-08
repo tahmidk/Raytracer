@@ -15,7 +15,7 @@ class Camera
 // Private fields
 private:
 	vec3 w;
-	vec3 up;
+	vec3 u;
 	vec3 v;
 	// Fields of view
 	double fovx, fovy;
