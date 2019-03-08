@@ -28,7 +28,7 @@ Parser::Parser(const char* fname) : filename(fname) {}
 	Desc:	Initializes a new scene based on the input file
 	Rtrn:	The new scene described by .test file
 -------------------------------------------------------------------*/
-void Parser::initScene(Scene* scene) {
+void Parser::initScene(Scene * scene) {
 	parseFile(scene);
 }
 
