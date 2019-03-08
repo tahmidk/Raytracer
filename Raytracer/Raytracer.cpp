@@ -43,7 +43,6 @@ HitInfo trace(Ray & ray, Scene * scene)
 		if (intersects && (t_hit > 0)  && (t_hit < t_min)) {
 			// Collision detected
 			collision = true;
-			//std::cout << "Collision detected" << std::endl;
 			// Update iterative variables
 			t_min = t_hit;
 			norm_hit = norm;
