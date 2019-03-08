@@ -10,6 +10,7 @@
 
 #include "pch.h"
 #include "Film.h"
+#include <iostream>
 
 Film::Film() {
 
@@ -20,8 +21,8 @@ Film::Film(int width, int height)
 	this->width = width;
 	this->height = height;
 	//set the initial pixel output to black.
-	pixel = std::vector<std::vector<Bucket>>((int) height, 
-		std::vector<Bucket>((int) width, Bucket()));
+	pixel = std::vector<std::vector<Bucket>>((int) width, 
+		std::vector<Bucket>((int) height, Bucket()));
 }
 
 /*-------------------------------------------------------------------
@@ -56,5 +57,6 @@ void Film::writeImage(std::string path) {
 }
 
 void Film::commit(Sample& sample, Color& col) {
+	//std::cout << sample.getX() << " " << sample.getY() << std::endl;
 	this->pixel[sample.getX()][sample.getY()].addColor(col);
 }
