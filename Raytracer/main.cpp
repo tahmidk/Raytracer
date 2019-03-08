@@ -18,6 +18,7 @@
 #include "Raytracer.h"
 #include "Parser.h"
 #include "Scene.h"
+#include "Triangle.h"
 
 using namespace std;
 using namespace glm;

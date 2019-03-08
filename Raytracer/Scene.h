@@ -21,7 +21,6 @@
 #include "PointLight.h"
 #include "Sphere.h"
 #include "Object.h"
-#include "Sampler.h"
 #include "Camera.h"
 
 using namespace std;

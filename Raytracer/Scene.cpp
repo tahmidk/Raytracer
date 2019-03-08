@@ -44,8 +44,8 @@ void Scene::render(Camera cam)
 	
 	// NOTE: Wrap this in some loop over all samples
 	{
-		Ray ray_sample = cam.generateRay();
-		HitInfo hit_info = trace(ray_sample, this);
+		//Ray ray_sample() = cam.generateRay();
+		//HitInfo hit_info = trace(ray_sample, this);
 		// Commit the color to film
 	}
 }
@@ -58,8 +58,8 @@ vec3 Scene::getLookAt()				{ return this->lookAt; }
 vec3 Scene::getEyeInit()			{ return this->eyeinit; }
 vec3 Scene::getCenter()				{ return this->center; }
 double Scene::getFovy()				{ return this->fovy; }
-double Scene::getHeight()			{ return this->h; }
 double Scene::getWidth()			{ return this->w; }
+double Scene::getHeight()			{ return this->h; }
 
 // Lighting and Material fields
 Color Scene::getAmbient()			{ return this->ambient; }

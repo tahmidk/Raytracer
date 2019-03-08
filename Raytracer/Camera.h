@@ -1,7 +1,14 @@
 #ifndef H_Camera
 #define H_Camera
 
-#include "Scene.h"
+// Standard library imports
+#include <glm/glm.hpp>
+
+// Project file imports
+#include "Sampler.h"
+#include "Ray.h"
+
+using namespace glm;
 
 class Camera
 {
@@ -15,11 +22,11 @@ private:
 
 // Public fields
 public:
-	Camera();
-	~Camera();
+	Camera(vec3 eye, vec3 center, vec3 up, double fovy, double width, double height);
 
 	// Utility functions
-	Ray generateRay(Sampler sample);
+	Ray generateRay(Sampler sample, vec3 eye, int w, int h);
+
 };
 
 #endif
