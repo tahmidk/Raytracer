@@ -78,7 +78,7 @@ public:
 	~Scene();
 
 	// Utility methods
-	void render(Camera & cam, std::string path);
+	void render(Camera & cam, string path);
 
 	// Getter methods
 	vec3 getCamPos();
