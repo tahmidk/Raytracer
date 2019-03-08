@@ -23,6 +23,7 @@
 using namespace std;
 using namespace glm;
 
+// Note: scn is declared as a Scene* and it's accessible in external files
 Scene * scn;
 
 int main(int argc, char *argv[])
@@ -39,15 +40,19 @@ int main(int argc, char *argv[])
 	// Read in and parse input file
 	const char * input_file = argv[1];
 	Parser parser(input_file);
-	//note that scn is declared as a Scene* and it's accessible in external files
+
+	// Initialize environment
 	scn = new Scene();
 	parser.initScene(scn);
+	Camera cam(scn->getCamPos(), scn->getLookAt(), scn->getUpVector(), 
+		scn->getFovy(), scn->getWidth(), scn->getHeight());
 
-	// Begin Raytracing
+	// Begin Raytracing/render process
+	scn->render(cam);
 
 	// Render all pixels to image via FreeImage
 
 	// Clean up
 	FreeImage_DeInitialise();
-	//delete scene;
+	delete scn;
 }

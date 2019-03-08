@@ -74,7 +74,7 @@ public:
 	Scene();
 	~Scene();
 
-	void render(Camera cam);
+	void render(Camera & cam);
 
 	// Getter methods
 	vec3 getCamPos();

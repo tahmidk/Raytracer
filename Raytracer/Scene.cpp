@@ -38,16 +38,18 @@ Scene::~Scene()
 			by raytracing and writes the final image file
 	Rtrn:	None
 -------------------------------------------------------------------*/
-void Scene::render(Camera cam)
-{
+void Scene::render(Camera & cam)
+{ 
 	// Make a new image of size (this->w) by (this->h)
 	
 	// NOTE: Wrap this in some loop over all samples
 	{
-		//Ray ray_sample() = cam.generateRay();
+		//Ray ray_sample() = cam.generateRay(sample, camPos, w, h);
 		//HitInfo hit_info = trace(ray_sample, this);
 		// Commit the color to film
 	}
+
+	// Output the PNG file
 }
 
 /*--------------[ Getter Methods ]----------------*/
