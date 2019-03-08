@@ -22,6 +22,8 @@
 #include "Sphere.h"
 #include "Object.h"
 #include "Camera.h"
+#include "Sampler.h"
+#include "Film.h"
 
 using namespace std;
 using namespace glm;
@@ -66,6 +68,7 @@ private:
 
 	int depth;
 
+	Film * film;
 	// Allow Parser class to set Scene's private fields
 	friend class Parser;
 

@@ -82,3 +82,8 @@ bool Sphere::intersects_ray(Ray ray, float * t_hit, vec3 * normal) {
 /*--------------[ Getter methods ]--------------*/
 vec3 Sphere::get_center()	{ return center; }
 float Sphere::get_radius()	{ return radius; }
+
+Color Sphere::getAmbient()
+{
+	return this->ambient;
+}

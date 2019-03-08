@@ -15,7 +15,7 @@ public:
 	// Getter methods
 	vec3 get_center();
 	float get_radius();
-
+	Color getAmbient();
 protected:
 	vec3 center;
 	float radius;

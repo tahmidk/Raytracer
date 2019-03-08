@@ -3,20 +3,24 @@
 
 // Standard library imports
 #include <vector>
+#include <string>
 
 // Project file imports
-#include "Scene.h"
+#include "Sampler.h"
+#include "Color.h"
 #include "Camera.h"
 #include "FreeImage.h"
 
 class Film
 {
 private:
-	std::vector<vector<Color>> pixel;
+	std::vector<std::vector<Color>> pixel;
+	int width, height;
 public:
 	Film();
+	Film(int width, int height);
 
-	void writeImage(string path);
+	void writeImage(std::string path);
 	void commit(Sampler& sample, Color& col);
 };
 

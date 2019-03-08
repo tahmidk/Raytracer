@@ -11,12 +11,17 @@
 #include "pch.h"
 #include "Film.h"
 
+Film::Film() {
 
-Film::Film()
+}
+
+Film::Film(int width, int height)
 {
+	this->width = width;
+	this->height = height;
 	//set the initial pixel output to black.
-	pixel = vector<vector<Color>>(scn->getHeight(), 
-		vector<Color>(scn->getWidth(), Color(0.0, 0.0, 0.0)));
+	pixel = std::vector<std::vector<Color>>((int) height, 
+		std::vector<Color>((int) width, Color(0.0, 0.0, 0.0)));
 }
 
 /*-------------------------------------------------------------------
@@ -26,21 +31,21 @@ Film::Film()
 			http://graphics.stanford.edu/courses/cs148-10-summer/docs/UsingFreeImage.pdf
 	Rtrn:	None
 -------------------------------------------------------------------*/
-void Film::writeImage(string path) {
+void Film::writeImage(std::string path) {
 	int bits = 24;
 	FreeImage_Initialise();
-	FIBITMAP* bitmap = FreeImage_Allocate(scn->getWidth(), scn->getHeight(), bits);
+	FIBITMAP* bitmap = FreeImage_Allocate((int) width, (int) height, bits);
 	RGBQUAD color;
 	//check if we can allocate bitmap
 	if (!bitmap)
 		exit(1);
 	//set the corresponding color values (0-255) to the output variable
-	for (int i = 0; i < scn->getWidth(); i++) {
-		vector<Color> col = pixel[i];
-		for (int j = 0; j < scn->getHeight(); j++) {
-			color.rgbRed = col[j].getRed() * 255;
-			color.rgbGreen = col[j].getGreen() * 255;
-			color.rgbBlue = col[j].getBlue() * 255;
+	for (int i = 0; i < width; i++) {
+		std::vector<Color> col = pixel[i];
+		for (int j = 0; j < height; j++) {
+			color.rgbRed = (BYTE) (col[j].getRed() * 255);
+			color.rgbGreen = (BYTE) (col[j].getGreen() * 255);
+			color.rgbBlue = (BYTE) (col[j].getBlue() * 255);
 			FreeImage_SetPixelColor(bitmap, i, j, &color);
 		}
 	}

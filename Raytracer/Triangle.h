@@ -17,7 +17,7 @@ public:
 
 	// Getter methods
 	void getVertices(vec3 * a, vec3 * b, vec3 * c);
-
+	Color getAmbient();
 protected:
 	vec3 vert_a;
 	vec3 vert_b;
