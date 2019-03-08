@@ -37,8 +37,10 @@ void Film::writeImage(std::string path) {
 	FIBITMAP* bitmap = FreeImage_Allocate((int) width, (int) height, bits);
 	RGBQUAD color;
 	//check if we can allocate bitmap
-	if (!bitmap)
+	if (!bitmap) {
 		exit(1);
+	}
+
 	//set the corresponding color values (0-255) to the output variable
 	for (int i = 0; i < width; i++) {
 		std::vector<Color> col = pixel[i];

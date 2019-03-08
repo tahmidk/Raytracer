@@ -55,7 +55,7 @@ HitInfo trace(Ray & ray, Scene * scene)
 	}
 
 	// At least 1 collision detected
-	if (collision = true)
+	if (collision == true)
 		return HitInfo(t_min, ray.evaluate(t_min), norm_hit, obj_hit);
 
 	// Not collisions w/ any of the objects in this scene
