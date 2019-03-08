@@ -55,8 +55,8 @@ Camera::Camera(vec3 eye, vec3 center, vec3 up, double fovy, double width,
 -------------------------------------------------------------------*/
 Ray Camera::generateRay(Sample sample, vec3 eye, int w, int h)
 {
-	float alpha = (float) (tan(fovx / 2) * ((sample.getX() - w / 2) / (w/2)));
-	float beta = (float) (tan(fovy / 2) * ((h / 2 - sample.getY()) / (h/2)));
+	float alpha = tan(fovx / 2) * (sample.getX() - float(w)/2.0f) / (float(w)/2.0f);
+	float beta = tan(fovy / 2) * (float(h)/2.0f - sample.getY()) / (float(h)/2.0f);
 	vec3 dirn = normalize(alpha * this->up + beta * this->v - this->w);
 
 	return Ray(eye, dirn);
