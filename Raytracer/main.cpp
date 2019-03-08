@@ -34,7 +34,6 @@ int main(int argc, char *argv[])
 	FreeImage_Initialise();
 	cout << "FreeImage_" << FreeImage_GetVersion() << endl;
 	cout << FreeImage_GetCopyrightMessage() << endl;
-	FreeImage_DeInitialise();
 
 	// Read in and parse input file
 	const char * input_file = argv[1];
@@ -42,10 +41,12 @@ int main(int argc, char *argv[])
 	//note that scn is declared as a Scene* and it's accessible in external files
 	scn = new Scene();
 	parser.initScene(scn);
+
 	// Begin Raytracing
 
 	// Render all pixels to image via FreeImage
 
 	// Clean up
+	FreeImage_DeInitialise();
 	//delete scene;
 }

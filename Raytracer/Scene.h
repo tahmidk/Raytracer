@@ -22,6 +22,7 @@
 #include "Sphere.h"
 #include "Object.h"
 #include "Sampler.h"
+#include "Camera.h"
 
 using namespace std;
 using namespace glm;
@@ -34,7 +35,9 @@ class Scene;
 extern Scene* scn;
 
 class Scene {
+// Private fields
 private:
+	// Width and Height
 	int w, h;
 
 	// Camera fields
@@ -67,11 +70,12 @@ private:
 	// Allow Parser class to set Scene's private fields
 	friend class Parser;
 
+// Public fields
 public:
 	Scene();
 	~Scene();
 
-	void render();
+	void render(Camera cam);
 
 	// Getter methods
 	vec3 getCamPos();
