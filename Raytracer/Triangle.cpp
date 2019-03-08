@@ -115,3 +115,8 @@ void Triangle::getVertices(vec3 * a, vec3 * b, vec3 * c)
 	b = &(this->vert_b);
 	c = &(this->vert_c);
 }
+
+Color Triangle::getAmbient()
+{
+	return this->ambient;
+}

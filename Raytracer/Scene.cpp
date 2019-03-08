@@ -41,9 +41,22 @@ Scene::~Scene()
 void Scene::render(Camera & cam)
 { 
 	// Make a new image of size (this->w) by (this->h)
-	
+	film = new Film();
 	// NOTE: Wrap this in some loop over all samples
 	{
+		for (int i = 0; i < w; i++) {
+			for (int j = 0; j < h; j++) {
+				Sampler sample = Sampler(i, j);
+				Ray raySample = cam.generateRay(sample, camPos, w, h);
+				HitInfo hit = trace(raySample, this);
+				if (hit.is_valid()) {
+					film->commit(sample, hit.get_object->getAmbient());
+				}
+
+			}
+		}
+		film->writeImage("test.png");
+		delete film;
 		//Ray ray_sample() = cam.generateRay(sample, camPos, w, h);
 		//HitInfo hit_info = trace(ray_sample, this);
 		//if(hit_info.is_valid())
