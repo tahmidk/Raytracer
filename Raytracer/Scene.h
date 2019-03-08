@@ -22,7 +22,7 @@
 #include "Sphere.h"
 #include "Object.h"
 #include "Camera.h"
-#include "Sampler.h"
+#include "Sample.h"
 #include "Film.h"
 
 using namespace std;

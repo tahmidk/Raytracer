@@ -167,7 +167,7 @@
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="Raytracer.h" />
-    <ClInclude Include="Sampler.h" />
+    <ClInclude Include="Sample.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="Transform.h" />
@@ -192,7 +192,7 @@
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="Ray.cpp" />
     <ClCompile Include="Raytracer.cpp" />
-    <ClCompile Include="Sampler.cpp" />
+    <ClCompile Include="Sample.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="Transform.cpp" />

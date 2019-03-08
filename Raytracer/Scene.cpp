@@ -44,7 +44,7 @@ void Scene::render(Camera & cam)
 	film = new Film();
 	for (int i = 0; i < w; i++) {
 		for (int j = 0; j < h; j++) {
-			Sampler sample = Sampler(i, j);
+			Sample sample = Sample(i, j);
 			Ray raySample = cam.generateRay(sample, camPos, w, h);
 			HitInfo hit = trace(raySample, this);
 			if (hit.is_valid()) {

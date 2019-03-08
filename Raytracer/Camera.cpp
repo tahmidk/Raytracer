@@ -52,7 +52,7 @@ Camera::Camera(vec3 eye, vec3 center, vec3 up, double fovy, double width,
 			in the arguments
 	Rtrn:	None
 -------------------------------------------------------------------*/
-Ray Camera::generateRay(Sampler sample, vec3 eye, int w, int h)
+Ray Camera::generateRay(Sample sample, vec3 eye, int w, int h)
 {
 	float alpha = (float) ((-2) * tan(fovx / 2) * (sample.getX() - w / 2) / w);
 	float beta = (float) (2 * tan(fovy / 2) * (h / 2 - sample.getY()) / h);

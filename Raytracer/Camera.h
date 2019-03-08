@@ -5,7 +5,7 @@
 #include <glm/glm.hpp>
 
 // Project file imports
-#include "Sampler.h"
+#include "Sample.h"
 #include "Ray.h"
 
 using namespace glm;
@@ -25,7 +25,7 @@ public:
 	Camera(vec3 eye, vec3 center, vec3 up, double fovy, double width, double height);
 
 	// Utility functions
-	Ray generateRay(Sampler sample, vec3 eye, int w, int h);
+	Ray generateRay(Sample sample, vec3 eye, int w, int h);
 
 };
 

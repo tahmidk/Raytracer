@@ -6,7 +6,7 @@
 #include <string>
 
 // Project file imports
-#include "Sampler.h"
+#include "Sample.h"
 #include "Color.h"
 #include "Camera.h"
 #include "FreeImage.h"
@@ -21,7 +21,7 @@ public:
 	Film(int width, int height);
 
 	void writeImage(std::string path);
-	void commit(Sampler& sample, Color& col);
+	void commit(Sample& sample, Color& col);
 };
 
 #endif

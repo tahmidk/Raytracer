@@ -53,6 +53,6 @@ void Film::writeImage(std::string path) {
 	FreeImage_Save(FIF_PNG, bitmap, path.c_str(), 0);
 }
 
-void Film::commit(Sampler& sample, Color& col) {
+void Film::commit(Sample& sample, Color& col) {
 	this->pixel[sample.getX()][sample.getY()] = this->pixel[sample.getX()][sample.getY()] + col;
 }
