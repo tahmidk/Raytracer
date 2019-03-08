@@ -41,20 +41,21 @@ Scene::~Scene()
 void Scene::render(Camera & cam)
 { 
 	// Make a new image of size (this->w) by (this->h)
-	film = new Film();
+	film = new Film(w, h);
 	for (int i = 0; i < w; i++) {
 		for (int j = 0; j < h; j++) {
 			Sample sample = Sample(i, j);
 			Ray raySample = cam.generateRay(sample, camPos, w, h);
 			HitInfo hit = trace(raySample, this);
 			if (hit.is_valid()) {
-				film->commit(sample, hit.get_object()->get_ambient());
+				film->commit(sample, Color(1.0f, 0.0f, 0.0f));
+				//film->commit(sample, hit.get_object()->get_ambient());
 			}
 
 		}
 	}
 	// Output the PNG file
-	film->writeImage("test.png");
+	film->writeImage("test1.png");
 	delete film;
 }
 
