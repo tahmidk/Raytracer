@@ -1,16 +1,23 @@
 #ifndef H_Ray
 #define H_Ray
 
+// Standard library imports
 #include <glm/glm.hpp>
+
+// Project file imports
+#include "Light.h"
+#include "HitInfo.h"
 
 using namespace glm;
 
 class Ray
 {
 public:
-	Ray() {};
-	Ray(vec3 posn, vec3 dirn);
-	Ray(vec3 posn, vec3 dirn, float t_min, float t_max);
+	Ray() {};							// Default constructor
+	Ray(vec3 posn, vec3 dirn);			// General ray constructor
+	Ray(vec3 posn, Light light);		// Used to generate a ray towards a light source
+	Ray(HitInfo hit_info, Ray ray_in);	// Used to generate reflected rays at a hit point
+	Ray(vec3 posn, vec3 dirn, float t_min, float t_max);	// Restricted Ray constructor
 
 	// Utility methods
 	vec3 evaluate(float t);

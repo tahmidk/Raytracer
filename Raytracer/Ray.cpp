@@ -12,7 +12,7 @@
 #include "Ray.h"
 
 /*-------------------------------------------------------------------
-	Func:	Constructor: [Ray]
+	Func:	General Constructor: [Ray]
 	Args:	posn - the start position of the ray
 			dirn - the direction of the ray
 	Desc:	Constructs a Ray object represented by the equation:
@@ -23,15 +23,52 @@
 Ray::Ray(vec3 posn, vec3 dirn)
 {
 	this->posn = posn;
-	this->dirn = dirn;
+	this->dirn = normalize(dirn);
 }
 
+/*-------------------------------------------------------------------
+	Func:	Restricted Constructor: [Ray]
+	Args:	posn - the start position of the ray
+			dirn - the direction of the ray
+			t_min - the minimum possible t value to consider
+			t_max - the maximum possible t value to consider
+	Desc:	Constructs a restricted Ray object represented by the equation:
+				{ Ray = posn + dirn*t }		for		t_min <= t <= t_max
+	Rtrn:	None
+-------------------------------------------------------------------*/
 Ray::Ray(vec3 posn, vec3 dirn, float t_min, float t_max)
 {
-	this->posn = normalize(posn);
+	this->posn = posn;
 	this->dirn = normalize(dirn);
 	this->t_min = t_min;
 	this->t_max = t_max;
+}
+
+/*-------------------------------------------------------------------
+	Func:	Light Ray Constructor: [Ray]
+	Args:	posn - the start position of the ray
+			light - the light source to direct ray towards
+	Desc:	Generates a light ray from a point towards a light source
+	Rtrn:	None
+-------------------------------------------------------------------*/
+Ray::Ray(vec3 posn, Light light) {
+
+}
+
+/*-------------------------------------------------------------------
+	Func:	Reflected Ray Constructor: [Ray]
+	Args:	hit_info - the collision data at the point of reflection
+			ray_in - the approaching ray
+	Desc:	Generates a light ray from a point towards a light source
+	Rtrn:	None
+-------------------------------------------------------------------*/
+Ray::Ray(HitInfo hit_info, Ray ray_in) {
+	vec3 normal = hit_info.get_norm();
+	vec3 v_in = ray_in.get_dirn();
+
+	// Use Snell's law to compute reflected ray: v_out = v_in - 2(v_in dot n)n
+	vec3 v_out = v_in - 2*dot(v_in, normal)*normal;
+
 }
 
 /*-------------------------------------------------------------------

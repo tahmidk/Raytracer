@@ -14,8 +14,8 @@ public:
 	virtual Color calculate_shading() { return Color(); };
 
 	// Getter methods
-	Color getColor();
-	vec3 getPosn();
+	Color get_color();
+	vec3 get_posn();
 
 protected:
 	Color color;

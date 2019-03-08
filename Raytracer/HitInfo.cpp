@@ -40,7 +40,7 @@ HitInfo::HitInfo(float t, vec3 P, vec3 N, Object * obj) {
 	this->valid = true;
 	this->t_hit = t;
 	this->P_hit = P;
-	this->norm = N;
+	this->norm = normalize(N);
 	this->obj_hit = obj;
 }
 

@@ -50,8 +50,6 @@ int main(int argc, char *argv[])
 	// Begin Raytracing/render process
 	scn->render(cam);
 
-	// Render all pixels to image via FreeImage
-
 	// Clean up
 	FreeImage_DeInitialise();
 	delete scn;
