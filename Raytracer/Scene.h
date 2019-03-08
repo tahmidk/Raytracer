@@ -21,7 +21,7 @@
 #include "PointLight.h"
 #include "Sphere.h"
 #include "Object.h"
-#include "Sampler.h"
+#include "Camera.h"
 
 using namespace std;
 using namespace glm;
@@ -34,7 +34,9 @@ class Scene;
 extern Scene* scn;
 
 class Scene {
+// Private fields
 private:
+	// Width and Height
 	int w, h;
 
 	// Camera fields
@@ -55,9 +57,10 @@ private:
 
 	// List of objects and lights
 	Object * objects[NUM_OBJECTS];
+	int num_objects;
 	Light * lights[NUM_LIGHTS];
-	int numObjects;
-	int numLights;
+	int num_lights;
+
 	vector<vec3> vertices;
 	int maxverts;
 
@@ -66,10 +69,15 @@ private:
 	// Allow Parser class to set Scene's private fields
 	friend class Parser;
 
+// Public fields
 public:
 	Scene();
 	~Scene();
-	void render();
+
+	// Utility methods
+	void render(Camera & cam);
+
+	// Getter methods
 	vec3 getCamPos();
 	vec3 getUpVector();
 	vec3 getLookAt();
@@ -78,12 +86,19 @@ public:
 	double getFovy();
 	double getHeight();
 	double getWidth();
+
 	Color getAmbient();
 	Color getDiffuse();
 	Color getEmission();
 	Color getSpecular();
 	double getShininess();
+
 	vector<vec3> getVertices();
+
+	Object ** getAllObjects();
+	Light ** getAllLights();
+	int getNumObjects();
+	int getNumLights();
 };
 
 #endif

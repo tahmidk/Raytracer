@@ -12,7 +12,9 @@ public:
 	Ray(vec3 posn, vec3 dirn);
 	Ray(vec3 posn, vec3 dirn, float t_min, float t_max);
 
+	// Utility methods
 	vec3 evaluate(float t);
+	Ray transformRay(mat4 transf);
 
 	// Getter methods
 	vec3 get_posn();

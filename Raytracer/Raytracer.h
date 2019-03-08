@@ -1,11 +1,16 @@
 #ifndef H_Raytracer
 #define H_Raytracer
 
-#include "pch.h"
+// Standard library imports
+#include <limits>
+
+// Project file imports
 #include "Ray.h"
 #include "Color.h"
+#include "Scene.h"
+#include "HitInfo.h"
 
 // Function declaration
-void trace(Ray &ray, const int depth, Color * color);
+HitInfo trace(Ray &ray, Scene * scene);
 
 #endif

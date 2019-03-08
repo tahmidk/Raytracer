@@ -18,34 +18,41 @@
 #include "Raytracer.h"
 #include "Parser.h"
 #include "Scene.h"
+#include "Triangle.h"
 
 using namespace std;
+using namespace glm;
 
-Scene* scn;
+// Note: scn is declared as a Scene* and it's accessible in external files
+Scene * scn;
 
 int main(int argc, char *argv[])
 {
-	/*
+	// Argument validity check
 	if (argc != 2)
 		cerr << "Unexpected number of arguments!" << endl;
-	*/
 
     // This is a test to make sure FreeImage is working
 	FreeImage_Initialise();
 	cout << "FreeImage_" << FreeImage_GetVersion() << endl;
 	cout << FreeImage_GetCopyrightMessage() << endl;
-	FreeImage_DeInitialise();
 
 	// Read in and parse input file
 	const char * input_file = argv[1];
 	Parser parser(input_file);
-	//note that scn is declared as a Scene* and it's accessible in external files
+
+	// Initialize environment
 	scn = new Scene();
 	parser.initScene(scn);
-	// Begin Raytracing
+	Camera cam(scn->getCamPos(), scn->getLookAt(), scn->getUpVector(), 
+		scn->getFovy(), scn->getWidth(), scn->getHeight());
+
+	// Begin Raytracing/render process
+	scn->render(cam);
 
 	// Render all pixels to image via FreeImage
 
 	// Clean up
-	//delete scene;
+	FreeImage_DeInitialise();
+	delete scn;
 }

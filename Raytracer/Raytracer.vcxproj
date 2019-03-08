@@ -159,7 +159,7 @@
     <ClInclude Include="Color.h" />
     <ClInclude Include="DirectionalLight.h" />
     <ClInclude Include="Film.h" />
-    <ClInclude Include="Intersection.h" />
+    <ClInclude Include="HitInfo.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Parser.h" />
@@ -178,7 +178,7 @@
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="DirectionalLight.cpp" />
     <ClCompile Include="Film.cpp" />
-    <ClCompile Include="Intersection.cpp" />
+    <ClCompile Include="HitInfo.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Parser.cpp" />

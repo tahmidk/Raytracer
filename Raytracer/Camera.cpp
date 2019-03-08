@@ -1,33 +1,62 @@
+/*==================================================================
+	File:	[Camera.cpp]
+	Auth:	Steven Natalius
+			Tahmid Khan
+
+	Desc:	This file builds a basic camera and implements methods
+			to cast rays from said camera to a given pixel location
+==================================================================*/
+
+// Project file imports
 #include "pch.h"
+#include "Transform.h"
 #include "Camera.h"
-#include <math.h>
 
-Camera::Camera()
+/*-------------------------------------------------------------------
+	Func:	Constructor: [Scene]
+	Args:	eye - the position of the camera
+			center - the output of lookAt
+			up - the up direction of the camera
+			fovy - the vertical field of view in degrees
+			width - the width of the image plane
+			height - the height of the image plane
+	Desc:	Constructor derives camera vectors and initializes all
+			camera parameters
+	Rtrn:	None
+-------------------------------------------------------------------*/
+Camera::Camera(vec3 eye, vec3 center, vec3 up, double fovy, double width, 
+	double height)
 {
-	up = glm::normalize(scn->getCamPos() - scn->getLookAt());
-	w = glm::normalize(glm::cross(w, scn->getUpVector()));
-	v = glm::cross(w, up);
-	fovy = scn->getFovy() * PI  / 180.0;
-	double z = tan(fovy / 2);
+	// Set basic camera vectors
+	this->up = normalize(eye - center);
+	this->w = normalize(cross(w, up));
+	this->v = glm::cross(w, up);
 
-	z = (1 / z) * scn->getHeight() / 2;
-	fovx = 2 * atan((scn->getWidth() / 2) / z);
+	// Convert FOV-y from degrees to radians
+	this->fovy = fovy * PI  / 180.0;
+
+	// Initialize FOV-x
+	double z = tan(this->fovy / 2);
+	z = (1 / z) * height / 2;
+	this->fovx = 2 * atan((width / 2) / z);
 }
 
-
-Camera::~Camera()
+/*-------------------------------------------------------------------
+	Func:	[generateRay]
+	Args:	sample - the sample to serve as the endpoint of the Ray
+			eye - the position of the camera
+			w - the scene width
+			h - the scene height
+	Desc:	This method casts a ray with the start point being this
+			camera and the endpoint being the pixel sample indicated 
+			in the arguments
+	Rtrn:	None
+-------------------------------------------------------------------*/
+Ray Camera::generateRay(Sampler sample, vec3 eye, int w, int h)
 {
-}
-
-Ray Camera::generateRay(Sampler sample)
-{
-	vec3 camPos = scn->getCamPos();
-	int h = scn->getHeight();
-	int w = scn->getWidth();
-
 	float alpha = (-2) * tan(fovx / 2) * (sample.getX() - w / 2) / w;
 	float beta = 2 * tan(fovy / 2) * (h / 2 - sample.getY()) / h;
+	vec3 dirn = normalize(alpha * this->up + beta * this->v - this->w);
 
-	vec3 dirn = glm::normalize(alpha * this->up + beta * this->v - this->w);
-	return Ray(camPos, dirn);
+	return Ray(eye, dirn);
 }

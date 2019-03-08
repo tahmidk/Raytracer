@@ -47,6 +47,31 @@ vec3 Ray::evaluate(float t)
 	return eval;
 }
 
+/*-------------------------------------------------------------------
+	Func:	[transformRay]
+	Args:	transf - the 4x4 transformation matrix
+	Desc:	Returns the ray resulting from transforming this ray with
+			the given transformation matrix. Does not mutate this Ray
+	Rtrn:	The transformed Ray
+-------------------------------------------------------------------*/
+Ray Ray::transformRay(mat4 transf) {
+	// Convert ray components to homogeneous coordinates
+	vec4 posn_hom = vec4(posn.x, posn.y, posn.z, 1.0f);
+	vec4 dirn_hom = vec4(dirn.x, dirn.y, dirn.z, 0.0f);
+	normalize(dirn_hom);
+
+	// Apply transformation to both
+	vec4 posn_transf = transf * posn_hom;
+	vec4 dirn_transf = transf * dirn_hom;
+	normalize(dirn_transf);
+
+	// Reconvert back to vec3
+	vec3 posn_new = vec3(posn_transf.x, posn_transf.y, posn_transf.z);
+	vec3 dirn_new = vec3(dirn_transf.x, dirn_transf.y, dirn_transf.z);
+
+	return Ray(posn_new, dirn_new, this->t_min, this->t_max);
+}
+
 /*------------[ Getter methods ]-------------*/
 vec3 Ray::get_posn()	{ return posn; }
 vec3 Ray::get_dirn()	{ return dirn; }

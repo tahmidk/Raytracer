@@ -1,8 +1,12 @@
 #ifndef H_Film
 #define H_Film
 
+// Standard library imports
 #include <vector>
+
+// Project file imports
 #include "Scene.h"
+#include "Camera.h"
 #include "FreeImage.h"
 
 class Film

@@ -1,3 +1,13 @@
+/*==================================================================
+	File:	[Film.cpp]
+	Auth:	Steven Natalius
+			Tahmid Khan
+
+	Desc:	This file represents the film where all output colors
+			will be stored and eventually rendered as a physical
+			PNG file
+==================================================================*/
+
 #include "pch.h"
 #include "Film.h"
 
@@ -9,7 +19,13 @@ Film::Film()
 		vector<Color>(scn->getWidth(), Color(0.0, 0.0, 0.0)));
 }
 
-//writeImage function based on http://graphics.stanford.edu/courses/cs148-10-summer/docs/UsingFreeImage.pdf
+/*-------------------------------------------------------------------
+	Func:	[writeImage]
+	Args:	path - the path/filename of the file to write
+	Desc:	Renders the actual PNG image. [writeImage] function based on 
+			http://graphics.stanford.edu/courses/cs148-10-summer/docs/UsingFreeImage.pdf
+	Rtrn:	None
+-------------------------------------------------------------------*/
 void Film::writeImage(string path) {
 	int bits = 24;
 	FreeImage_Initialise();

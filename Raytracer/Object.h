@@ -1,18 +1,20 @@
 #ifndef H_Object
 #define H_Object
 
-//#include "variables.h"
 enum shape { triangle, sphere };
 
+// Standard library imports
 #include <windows.h>
 #include <glm/glm.hpp>
+
+// Project file imports
 #include "Color.h"
 #include "Ray.h"
 
 using namespace glm;
 
 class Object {
-	// Public fields
+// Public fields
 public:
 	// Constructors
 	Object() {};
@@ -29,9 +31,9 @@ public:
 	mat4 get_transf();
 
 	// Virtual methods to be implemented by specific shape
-	virtual bool intersects_ray(Ray ray) { return false; };
+	virtual bool intersects_ray(Ray ray, float * t_hit, vec3 * normal) { return true; };
 
-	// Protected fields
+// Protected fields
 protected:
 	// Instance fields of an object include shape, position and material properties
 	shape type;
