@@ -38,7 +38,7 @@ Scene::~Scene()
 			by raytracing and writes the final image file
 	Rtrn:	None
 -------------------------------------------------------------------*/
-void Scene::render(Camera & cam)
+void Scene::render(Camera & cam, std::string path)
 { 
 	// Make a new image of size (this->w) by (this->h)
 	film = new Film(w, h);
@@ -55,7 +55,7 @@ void Scene::render(Camera & cam)
 		}
 	}
 	// Output the PNG file
-	film->writeImage("test1.png");
+	film->writeImage(path);
 	delete film;
 }
 
