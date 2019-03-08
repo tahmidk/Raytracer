@@ -27,6 +27,12 @@ Color Color::operator+(const Color& col2) {
 	return ret;
 }
 
+Color Color::operator/(int c)
+{
+	if(c != 0)
+		return Color(this->r/c, this->g/c, this->b/c);
+}
+
 /*---------------[ Getter Methods ]----------------*/
 double Color::getRed()		{ return this->r; }
 double Color::getGreen()	{ return this->g; }
