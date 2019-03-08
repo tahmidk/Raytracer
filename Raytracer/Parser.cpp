@@ -213,8 +213,9 @@ void Parser::parseFile(Scene * scene) {
 						vec3 vert2 = vec3(transfstack.top() * v2);
 						vec3 vert3 = vec3(transfstack.top() * v3);
 						//create new triangle
-						//scene->objects[objCount++] = new triangle();
-						//scene->numObjects = objCount;
+						scene->objects[objCount++] = new Triangle(triangle, scene->ambient, scene->diffuse, 
+							scene->specular, scene->emission, scene->shininess, transfstack.top(), vert1, vert2, vert3);
+						scene->num_objects = objCount;
 					}
 				} else if (cmd == "attenuation") {
 					validinput = readvals(s, 4, values);

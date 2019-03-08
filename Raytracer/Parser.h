@@ -2,6 +2,8 @@
 #define H_Parser
 
 #include "Scene.h"
+#include "Triangle.h"
+#include "Sphere.h"
 
 class Parser
 {

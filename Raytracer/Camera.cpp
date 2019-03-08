@@ -28,9 +28,9 @@ Camera::Camera(vec3 eye, vec3 center, vec3 up, double fovy, double width,
 	double height)
 {
 	// Set basic camera vectors
-	this->up = normalize(eye - center);
-	this->w = normalize(cross(w, up));
-	this->v = glm::cross(w, up);
+	this->up = normalize(cross(w, up));
+	this->w = normalize(eye - center);
+	this->v = glm::cross(w, this->up);
 
 	// Convert FOV-y from degrees to radians
 	this->fovy = fovy * PI  / 180.0;

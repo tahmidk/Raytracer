@@ -48,6 +48,7 @@ void Scene::render(Camera & cam, std::string path)
 			Ray raySample = cam.generateRay(sample, camPos, w, h);
 			HitInfo hit = trace(raySample, this);
 			if (hit.is_valid()) {
+				std::cout << hit.get_point().x << " " << hit.get_point().y << " " << hit.get_point().z << " intersects" << std::endl;
 				film->commit(sample, Color(1.0f, 0.0f, 0.0f));
 				//film->commit(sample, hit.get_object()->get_ambient());
 			}
