@@ -74,6 +74,7 @@ public:
 	Scene();
 	~Scene();
 
+	// Utility methods
 	void render(Camera & cam);
 
 	// Getter methods

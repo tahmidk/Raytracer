@@ -46,7 +46,8 @@ void Scene::render(Camera & cam)
 	{
 		//Ray ray_sample() = cam.generateRay(sample, camPos, w, h);
 		//HitInfo hit_info = trace(ray_sample, this);
-		// Commit the color to film
+		//if(hit_info.is_valid())
+			//Commit the color to film
 	}
 
 	// Output the PNG file
