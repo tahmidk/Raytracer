@@ -136,9 +136,10 @@ void Parser::parseFile(Scene * scene) {
 					validinput = readvals(s, 10, values); // 10 values eye cen up fov
 					if (validinput) {
 						scene->camPos = vec3(values[0], values[1], values[2]);
-						scene->center = vec3(values[3], values[4], values[5]);
+						scene->lookAt = vec3(values[3], values[4], values[5]);
 						scene->up = vec3(values[6], values[7], values[8]);
 						scene->fovy = values[9];
+
 					}
 				}
 				else if (cmd == "translate") {
@@ -232,17 +233,14 @@ void Parser::parseFile(Scene * scene) {
 				}
 				else if (cmd == "sphere") {
 					//read input
-					validinput = readvals(s, 3, values);
+					validinput = readvals(s, 4, values);
 					if (validinput) {
-						vec4 v1 = vec4(scene->vertices[(int)values[0]], 1);
-						vec4 v2 = vec4(scene->vertices[(int)values[1]], 1);
-						vec4 v3 = vec4(scene->vertices[(int)values[2]], 1);
-						vec3 vert1 = vec3(transfstack.top() * v1);
-						vec3 vert2 = vec3(transfstack.top() * v2);
-						vec3 vert3 = vec3(transfstack.top() * v3);
+						vec3 center = vec3(values[0], values[1], values[2]);
+						double radius = values[3];
 						//create new sphere
-						//scene->objects[objCount++] = new sphere();
-						//scene->numObjects = objCount;
+						scene->objects[objCount++] = new Sphere(sphere, scene->ambient, scene->diffuse, 
+							scene->specular, scene->emission, scene->shininess, transfstack.top(), (float) center.x, (float) center.y, (float) center.z, (float) radius);
+						scene->num_objects = objCount;
 					}
 				}
 				else if (cmd == "point") {
