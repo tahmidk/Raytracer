@@ -6,8 +6,7 @@
 class Sphere : public Object
 {
 public:
-	Sphere(shape typ, Color A, Color D, Color S, Color E,
-		float shininess, mat4 transf, float x, float y, float z, float r);
+	Sphere(Material mat, mat4 transf, float x, float y, float z, float r);
 
 	// Virtual method to implement
 	bool intersects_ray(Ray ray, float * t_hit, vec3 * normal);
@@ -15,7 +14,7 @@ public:
 	// Getter methods
 	vec3 get_center();
 	float get_radius();
-	Color getAmbient();
+
 protected:
 	vec3 center;
 	float radius;

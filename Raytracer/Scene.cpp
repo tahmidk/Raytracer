@@ -32,13 +32,14 @@ Scene::~Scene()
 
 /*-------------------------------------------------------------------
 	Func:	[render]
-	Args:	None
+	Args:	cam - the camera
+			path - file path and name of the output PNG file
 	Desc:	The main function responsible for rendering the output
 			image. Iteratively calculates the color of each pixel
 			by raytracing and writes the final image file
 	Rtrn:	None
 -------------------------------------------------------------------*/
-void Scene::render(Camera & cam, std::string path)
+void Scene::render(Camera & cam, string path)
 { 
 	// Make a new image of size (this->w) by (this->h)
 	film = new Film(w, h);
@@ -49,10 +50,10 @@ void Scene::render(Camera & cam, std::string path)
 			HitInfo hit = trace(raySample, this);
 			if (hit.is_valid()) {
 				if (hit.get_object()->get_type() == triangle) {
-					film->commit(sample, Color(1.0f, 0.0f, 0.0f));
+					film->commit(sample, COLORS::red);
 				}
 				if (hit.get_object()->get_type() == sphere) {
-					film->commit(sample, Color(1.0f, 1.0f, 1.0f));
+					film->commit(sample, COLORS::white);
 				}
 
 				//film->commit(sample, hit.get_object()->get_ambient());
@@ -76,17 +77,15 @@ double Scene::getFovy()				{ return this->fovy; }
 double Scene::getWidth()			{ return this->w; }
 double Scene::getHeight()			{ return this->h; }
 
-// Lighting and Material fields
+// Lighting and Material Property fields
 Color Scene::getAmbient()			{ return this->ambient; }
-Color Scene::getDiffuse()			{ return this->diffuse; }
-Color Scene::getEmission()			{ return this->emission; }
-Color Scene::getSpecular()			{ return this->specular; }
-double Scene::getShininess()		{ return this->shininess; }
-
-vector<vec3> Scene::getVertices()	{ return this->vertices; }
+double * Scene::getAttenuation()	{ return this->attenuation; }
+int Scene::getMaxDepth()			{ return this->depth; }
 
 // Scene lists
 Object ** Scene::getAllObjects()	{ return objects; }
 Light ** Scene::getAllLights()		{ return lights; }
 int Scene::getNumObjects()		{ return num_objects; }
 int Scene::getNumLights()		{ return num_lights; }
+
+vector<vec3> Scene::getVertices()	{ return this->vertices; }

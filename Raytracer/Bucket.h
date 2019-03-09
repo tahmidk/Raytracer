@@ -1,17 +1,23 @@
 #ifndef H_Bucket
 #define H_Bucket
 
+// Standard library imports
 #include <vector>
 
+// Project file imports
 #include "Color.h"
+
+using namespace std;
 
 class Bucket
 {
 private:
-	std::vector<Color> colors;
+	vector<Color> colors;
+
 public:
-	Bucket();
-	~Bucket();
+	Bucket() {};
+
+	// Utilite methods
 	void addColor(Color col2);
 	Color computeAverage();
 };

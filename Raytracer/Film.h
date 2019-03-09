@@ -22,7 +22,7 @@ public:
 	Film(int width, int height);
 
 	void writeImage(std::string path);
-	void commit(Sample& sample, Color& col);
+	void commit(Sample& sample, const Color& col);
 };
 
 #endif

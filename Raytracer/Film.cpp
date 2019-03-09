@@ -56,7 +56,6 @@ void Film::writeImage(std::string path) {
 	FreeImage_Save(FIF_PNG, bitmap, path.c_str(), 0);
 }
 
-void Film::commit(Sample& sample, Color& col) {
-	//std::cout << sample.getX() << " " << sample.getY() << std::endl;
+void Film::commit(Sample& sample, const Color& col) {
 	this->pixel[sample.getX()][sample.getY()].addColor(col);
 }

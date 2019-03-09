@@ -20,12 +20,11 @@
 	Desc:	Constructor that initializes all relevant instance fields
 	Rtrn:	None
 -------------------------------------------------------------------*/
-Sphere::Sphere(shape typ, Color A, Color D, Color S, Color E,
-	float shininess, mat4 transf, float x, float y, float z, float r) :
-	Object::Object(typ, A, D, S, E, shininess, transf)
+Sphere::Sphere(Material mat, mat4 transf, float x, float y, float z, float r) :
+	Object::Object(mat, transf)
 {
-	vec3 c(x, y, z);
-	this->center = c;
+	this->obj_type = sphere;
+	this->center = vec3(x, y, z);
 	this->radius = r;
 }
 
@@ -82,8 +81,3 @@ bool Sphere::intersects_ray(Ray ray, float * t_hit, vec3 * normal) {
 /*--------------[ Getter methods ]--------------*/
 vec3 Sphere::get_center()	{ return center; }
 float Sphere::get_radius()	{ return radius; }
-
-Color Sphere::getAmbient()
-{
-	return this->ambient;
-}

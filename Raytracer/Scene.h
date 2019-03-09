@@ -33,29 +33,26 @@ using namespace glm;
 
 class Scene;
 
-extern Scene* scn;
+extern Scene * scn;
 
 class Scene {
-// Private fields
+	// Private fields
 private:
 	// Width and Height
 	int w, h;
 
 	// Camera fields
 	vec3 camPos;
+	vec3 eyeinit;
 	vec3 up;
 	vec3 lookAt;
 	double fovy;
-	vec3 eyeinit;
 	vec3 center;
 
-	// Object fields
+	// General fields for other classes
 	Color ambient;
-	Color diffuse;
-	Color emission;
-	Color specular;
-	double shininess;
-	double attenuation[3];
+	double attenuation[3] = {1, 0, 0};
+	int depth;
 
 	// List of objects and lights
 	Object * objects[NUM_OBJECTS];
@@ -63,12 +60,11 @@ private:
 	Light * lights[NUM_LIGHTS];
 	int num_lights;
 
-	vector<vec3> vertices;
 	int maxverts;
-
-	int depth;
+	vector<vec3> vertices;
 
 	Film * film;
+
 	// Allow Parser class to set Scene's private fields
 	friend class Parser;
 
@@ -91,10 +87,8 @@ public:
 	double getWidth();
 
 	Color getAmbient();
-	Color getDiffuse();
-	Color getEmission();
-	Color getSpecular();
-	double getShininess();
+	double * getAttenuation();
+	int getMaxDepth();
 
 	vector<vec3> getVertices();
 

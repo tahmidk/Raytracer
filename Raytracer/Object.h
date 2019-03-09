@@ -1,14 +1,15 @@
 #ifndef H_Object
 #define H_Object
 
-enum shape { triangle, sphere };
+enum shape { object, triangle, sphere };
 
 // Standard library imports
 #include <windows.h>
 #include <glm/glm.hpp>
 
 // Project file imports
-#include "Color.h"
+#include "Material.h"
+//#include "Color.h"
 #include "Ray.h"
 
 using namespace glm;
@@ -18,16 +19,11 @@ class Object {
 public:
 	// Constructors
 	Object() {};
-	Object(shape type, Color ambient, Color diffuse, Color specular,
-		Color emission, float shininess, mat4 transform);
+	Object(Material obj_mat, mat4 obj_transf);
 
 	// Getter methods
 	shape get_type();
-	Color get_ambient();
-	Color get_diffuse();
-	Color get_specular();
-	Color get_emission();
-	float get_shininess();
+	Material get_material();
 	mat4 get_transf();
 
 	// Virtual methods to be implemented by specific shape
@@ -35,14 +31,9 @@ public:
 
 // Protected fields
 protected:
-	// Instance fields of an object include shape, position and material properties
-	shape type;
-	Color ambient;
-	Color diffuse;
-	Color specular;
-	Color emission;
-	float shininess;
-	mat4 transform;
+	shape obj_type;
+	Material obj_material;
+	mat4 obj_transf;
 
 };
 

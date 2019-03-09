@@ -19,10 +19,10 @@
 	Desc:	Constructor that initializes all relevant instance fields
 	Rtrn:	None
 -------------------------------------------------------------------*/
-Triangle::Triangle(shape typ, Color A, Color D, Color S, Color E, 
-	float shininess, mat4 transf, vec3 vert_a, vec3 vert_b, vec3 vert_c) :
-	Object::Object(typ, A, D, S, E, shininess, transf)
+Triangle::Triangle(Material mat, mat4 transf, vec3 vert_a, vec3 vert_b, vec3 vert_c) :
+	Object::Object(mat, transf)
 {
+	this->obj_type = triangle;
 	this->vert_a = vert_a;
 	this->vert_b = vert_b;
 	this->vert_c = vert_c;
@@ -114,9 +114,4 @@ void Triangle::getVertices(vec3 * a, vec3 * b, vec3 * c)
 	a = &(this->vert_a);
 	b = &(this->vert_b);
 	c = &(this->vert_c);
-}
-
-Color Triangle::getAmbient()
-{
-	return this->ambient;
 }

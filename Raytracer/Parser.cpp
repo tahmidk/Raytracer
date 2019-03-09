@@ -71,6 +71,10 @@ void Parser::parseFile(Scene * scene) {
 	ifstream in;
 	in.open(this->filename);
 	if (in.is_open()) {
+		Color diffuse;
+		Color emission;
+		Color specular;
+		double shininess = 0.0;
 		
 		stack <mat4> transfstack;
 		int vertCount = 0;
@@ -87,9 +91,9 @@ void Parser::parseFile(Scene * scene) {
 				float values[10]; // Position and color for light, colors for others
 				bool validinput; // Validity of input
 				scene->ambient = Color(0.2, 0.2, 0.2);
-				scene->diffuse = Color(0.0, 0.0, 0.0);
-				scene->emission = Color(0.0, 0.0, 0.0);
-				scene->specular = Color(0.0, 0.0, 0.0);
+				diffuse = Color(0.0, 0.0, 0.0);
+				emission = Color(0.0, 0.0, 0.0);
+				specular = Color(0.0, 0.0, 0.0);
 				// Process the light, add it to database.
 				// Lighting Command
 				if (cmd == "ambient") {
@@ -102,27 +106,27 @@ void Parser::parseFile(Scene * scene) {
 				else if (cmd == "diffuse") {
 					validinput = readvals(s, 3, values);
 					if (validinput) {
-						scene->diffuse = Color(values[0], values[1], values[2]);
+						diffuse = Color(values[0], values[1], values[2]);
 
 					}
 				}
 				else if (cmd == "specular") {
 					validinput = readvals(s, 3, values);
 					if (validinput) {
-						scene->specular = Color(values[0], values[1], values[2]);
+						specular = Color(values[0], values[1], values[2]);
 
 					}
 				}
 				else if (cmd == "emission") {
 					validinput = readvals(s, 3, values);
 					if (validinput) {
-						scene->emission = Color(values[0], values[1], values[2]);
+						emission = Color(values[0], values[1], values[2]);
 					}
 				}
 				else if (cmd == "shininess") {
 					validinput = readvals(s, 1, values);
 					if (validinput) {
-						scene->shininess = values[0];
+						shininess = values[0];
 					}
 				}
 				else if (cmd == "size") {
@@ -213,14 +217,11 @@ void Parser::parseFile(Scene * scene) {
 						vec3 vert1 = vec3(transfstack.top() * v1);
 						vec3 vert2 = vec3(transfstack.top() * v2);
 						vec3 vert3 = vec3(transfstack.top() * v3);
-						//create new triangle
-						/*
-						cout << v1.x << " " << v1.y << " " << v1.z << endl;
-						cout << v2.x << " " << v2.y << " " << v2.z << endl;
-						cout << v3.x << " " << v3.y << " " << v3.z << endl;
-						*/
-						scene->objects[objCount++] = new Triangle(triangle, scene->ambient, scene->diffuse, 
-							scene->specular, scene->emission, scene->shininess, transfstack.top(), vert1, vert2, vert3);
+
+						// Create new triangle
+						Material obj_mat(diffuse, emission, specular, shininess);
+						scene->objects[objCount++] = new Triangle(obj_mat, transfstack.top(), 
+							vert1, vert2, vert3);
 						scene->num_objects = objCount;
 					}
 				} else if (cmd == "attenuation") {
@@ -237,9 +238,11 @@ void Parser::parseFile(Scene * scene) {
 					if (validinput) {
 						vec3 center = vec3(values[0], values[1], values[2]);
 						double radius = values[3];
-						//create new sphere
-						scene->objects[objCount++] = new Sphere(sphere, scene->ambient, scene->diffuse, 
-							scene->specular, scene->emission, scene->shininess, transfstack.top(), (float) center.x, (float) center.y, (float) center.z, (float) radius);
+
+						// Create new sphere
+						Material obj_mat(diffuse, emission, specular, shininess);
+						scene->objects[objCount++] = new Sphere(obj_mat, transfstack.top(), 
+							(float) center.x, (float) center.y, (float) center.z, (float) radius);
 						scene->num_objects = objCount;
 					}
 				}

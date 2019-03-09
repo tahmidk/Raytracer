@@ -7,11 +7,24 @@ private:
 public:
 	Color();
 	Color(double red, double green, double blue);
+
+	// Operator overloads
 	Color operator+(const Color& col2);
 	Color operator/(int c);
+
+	// Getter methods
 	double getRed();
 	double getGreen();
 	double getBlue();
 };
+
+// Define common colors for convenience
+namespace COLORS {
+	const Color black = Color();
+	const Color red = Color(1.0f, 0.0f, 0.0f);
+	const Color green = Color(0.0f, 1.0f, 0.0f);
+	const Color blue = Color(0.0f, 0.0f, 1.0f);
+	const Color white  = Color(1.0f, 1.0f, 1.0f);
+}
 
 #endif
