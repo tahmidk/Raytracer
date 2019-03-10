@@ -10,7 +10,9 @@ public:
 
 	// Operator overloads
 	Color operator+(const Color& col2);
-	Color operator/(int c);
+	Color operator/(float c);
+	Color operator*(float c);
+	Color operator*(Color other);
 
 	// Getter methods
 	double getRed();

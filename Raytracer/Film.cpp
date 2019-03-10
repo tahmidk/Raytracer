@@ -12,17 +12,16 @@
 #include "Film.h"
 #include <iostream>
 
-Film::Film() {
+using namespace std;
 
-}
+Film::Film() {}
 
 Film::Film(int width, int height)
 {
 	this->width = width;
 	this->height = height;
 	//set the initial pixel output to black.
-	pixel = std::vector<std::vector<Bucket>>((int) width, 
-		std::vector<Bucket>((int) height, Bucket()));
+	pixel = vector<vector<Bucket>>((int) width, vector<Bucket>((int) height, Bucket()));
 }
 
 /*-------------------------------------------------------------------
@@ -32,7 +31,7 @@ Film::Film(int width, int height)
 			http://graphics.stanford.edu/courses/cs148-10-summer/docs/UsingFreeImage.pdf
 	Rtrn:	None
 -------------------------------------------------------------------*/
-void Film::writeImage(std::string path) {
+void Film::writeImage(string path) {
 	int bits = 24;
 	FreeImage_Initialise();
 	FIBITMAP* bitmap = FreeImage_Allocate((int) width, (int) height, bits);
@@ -44,7 +43,7 @@ void Film::writeImage(std::string path) {
 
 	//set the corresponding color values (0-255) to the output variable
 	for (int i = 0; i < width; i++) {
-		std::vector<Bucket> col = pixel[i];
+		vector<Bucket> col = pixel[i];
 		for (int j = 0; j < height; j++) {
 			color.rgbRed = (BYTE) (col[j].computeAverage().getRed() * 255);
 			color.rgbGreen = (BYTE) (col[j].computeAverage().getGreen() * 255);

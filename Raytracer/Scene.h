@@ -24,19 +24,18 @@
 #include "Camera.h"
 #include "Sample.h"
 #include "Film.h"
+#include "HitInfo.h"
 
-using namespace std;
 using namespace glm;
+using namespace std;
 
-#define NUM_OBJECTS 100
-#define NUM_LIGHTS 100
-
-class Scene;
-
-extern Scene * scn;
+// Important constants
+constexpr int NUM_OBJECTS = 100;
+constexpr int NUM_LIGHTS = 100;
+constexpr float EPSILON = 0.001f;
 
 class Scene {
-	// Private fields
+// Private fields
 private:
 	// Width and Height
 	int w, h;
@@ -50,6 +49,7 @@ private:
 	vec3 center;
 
 	// General fields for other classes
+	vector<vec3> vertices;
 	Color ambient;
 	double attenuation[3] = {1, 0, 0};
 	int depth;
@@ -60,10 +60,6 @@ private:
 	Light * lights[NUM_LIGHTS];
 	int num_lights;
 
-	int maxverts;
-	vector<vec3> vertices;
-
-	Film * film;
 
 	// Allow Parser class to set Scene's private fields
 	friend class Parser;
@@ -75,6 +71,7 @@ public:
 
 	// Utility methods
 	void render(Camera & cam, string path);
+	Color determine_color(HitInfo * hit_info, const int depth);
 
 	// Getter methods
 	vec3 getCamPos();

@@ -16,7 +16,8 @@ using namespace std;
 /*-------------------------------------------------------------------
 	Func:	Default Constructor [HitInfo]
 	Args:	None
-	Desc:	Defaults all instance fields to trivial initializations
+	Desc:	Defaults all instance fields to degenerate initializations
+			HitInfo's made this way do not count as valid intersections
 	Rtrn:	None
 -------------------------------------------------------------------*/
 HitInfo::HitInfo() {

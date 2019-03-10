@@ -9,7 +9,7 @@ public:
 	Sphere(Material mat, mat4 transf, float x, float y, float z, float r);
 
 	// Virtual method to implement
-	bool intersects_ray(Ray ray, float * t_hit, vec3 * normal);
+	bool intersects_ray(Ray & ray, float * t_hit, vec3 * normal);
 
 	// Getter methods
 	vec3 get_center();

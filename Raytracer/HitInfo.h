@@ -1,9 +1,12 @@
 #ifndef H_HitInfo
 #define H_HitInfo
 
+// Standard library imports
 #include <glm/glm.hpp>
-#include "Object.h"
 #include <limits>
+
+// Project file imports
+#include "Object.h"
 
 using namespace glm;
 

@@ -9,7 +9,6 @@ enum shape { object, triangle, sphere };
 
 // Project file imports
 #include "Material.h"
-//#include "Color.h"
 #include "Ray.h"
 
 using namespace glm;
@@ -27,7 +26,7 @@ public:
 	mat4 get_transf();
 
 	// Virtual methods to be implemented by specific shape
-	virtual bool intersects_ray(Ray ray, float * t_hit, vec3 * normal) { return true; };
+	virtual bool intersects_ray(Ray & ray, float * t_hit, vec3 * normal) { return true; };
 
 // Protected fields
 protected:

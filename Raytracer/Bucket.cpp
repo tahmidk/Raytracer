@@ -38,5 +38,6 @@ Color Bucket::computeAverage()
 	for (Color col: this->colors)
 		sum = sum + col;
 	
-	return (sum / this->colors.size());
+	Color ret = (sum / (float) this->colors.size());
+	return ret;
 }

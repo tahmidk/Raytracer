@@ -42,7 +42,7 @@ Sphere::Sphere(Material mat, mat4 transf, float x, float y, float z, float r) :
 	Rtrn:	True if ray intersects triangle
 			False otherwise
 -------------------------------------------------------------------*/
-bool Sphere::intersects_ray(Ray ray, float * t_hit, vec3 * normal) {
+bool Sphere::intersects_ray(Ray & ray, float * t_hit, vec3 * normal) {
 	// Given Ray :	P = P0 + P1*t
 	// And Sphere:	(P - C) dot (P - C) - R^2 = 0
 	// Solve: (P1 dot P1)t^2 + 2(P1 dot (P0 - C))t + (P0 - C) dot (P0 - C) - R^2
@@ -67,6 +67,13 @@ bool Sphere::intersects_ray(Ray ray, float * t_hit, vec3 * normal) {
 		else
 			// One of the solutions is negative. Pick positive one
 			*t_hit = (soln_1 > soln_2) ? soln_1 : soln_2;
+
+		// Make sure t_hit is at least larger than Ray's t_min
+		if (*t_hit < ray.get_tmin()) {
+			t_hit = NULL;
+			normal = NULL;
+			return false;
+		}
 
 		*normal = normalize(ray.evaluate(*t_hit) - center);
 		return true;

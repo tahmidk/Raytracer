@@ -2,15 +2,17 @@
 #define H_DirectionalLight
 
 #include "Light.h"
-class DirectionalLight :
-	public Light
+
+class DirectionalLight : public Light
 {
-
 public:
+	// Constructors
 	DirectionalLight();
-	DirectionalLight(Color col, vec3 posn, double attenuation);
+	DirectionalLight(Color col, vec3 posn);
 
-	Color calculate_shading();
+	// Utility virtual function
+	Color calculate_shading(HitInfo * hit_info, vec3 eye, double * attenuation);
+	vec3 get_towards_dirn(vec3 from);
 };
 
 #endif

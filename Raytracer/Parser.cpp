@@ -197,9 +197,8 @@ void Parser::parseFile(Scene * scene) {
 					validinput = readvals(s, 1, values);
 					if (validinput) {
 						int maxverts = (int)values[0];
-						scene->maxverts = maxverts;
+						scene->vertices = vector<vec3>(maxverts);
 					}
-					scene->vertices = vector<vec3>(scene->maxverts);
 
 				}
 				else if (cmd == "vertex") {
@@ -252,9 +251,22 @@ void Parser::parseFile(Scene * scene) {
 					if (validinput) {
 						vec3 posn = vec3(transfstack.top() * vec4(values[0], values[1], values[2], 1));
 						Color col = Color(values[3], values[4], values[5]);
-						//create the new point light
-						//scene->lights[lightCount++] = new PointLight(col, posn, scene->attenuation);
-						//scene->numLights = lightCount;
+
+						// Create the new point light
+						scene->lights[lightCount++] = new PointLight(col, posn);
+						scene->num_lights = lightCount;
+					}
+				}
+				else if (cmd == "directional") {
+					//read input
+					validinput = readvals(s, 3, values);
+					if (validinput) {
+						vec3 dirn = vec3(transfstack.top() * vec4(values[0], values[1], values[2], 1));
+						Color col = Color(values[3], values[4], values[5]);
+
+						// Create the new point light
+						scene->lights[lightCount++] = new DirectionalLight(col, dirn);
+						scene->num_lights = lightCount;
 					}
 				}
 				else {

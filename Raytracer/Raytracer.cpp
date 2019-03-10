@@ -28,7 +28,8 @@ HitInfo trace(Ray & ray, Scene * scene)
 
 	// Set minimum distance to collided object to infinity and object to NULL
 	float t_min = numeric_limits<float>::infinity();
-	vec3 norm_hit;
+	vec3 P_hit;		// A variable to hold point of collision in world-coord
+	vec3 norm_hit;	// A variable to hold surface normal at point of contact
 	Object * obj_hit = NULL;
 
 	// Loop over all objects in the scene scouring for intersections
@@ -38,14 +39,22 @@ HitInfo trace(Ray & ray, Scene * scene)
 		float t_hit;	// Output parameter to store t parameter at hit location
 		vec3 norm;		// Output parameter to store surface normal
 
-		// If the intersection is closer to the ray origin, record it
-		bool intersects = curr_obj->intersects_ray(ray, &t_hit, &norm);
-		if (intersects && (t_hit > 0)  && (t_hit < t_min)) {
+		// Transform ray by inverse M before running the intersection test
+		mat4 M = curr_obj->get_transf();
+		mat4 M_inv = inverse(M);
+		Ray ray_transf = ray.transformRay(M_inv);
+		bool intersects = curr_obj->intersects_ray(ray_transf, &t_hit, &norm);
+
+		// If the intersection is closer to the ray origin, record it as long
+		// as it's also greater than the minimum allowed t for this array
+		if (intersects && (t_hit > ray.get_tmin())  && (t_hit < t_min)) {
 			// Collision detected
 			collision = true;
-			// Update iterative variables
+
+			// Appropriately re-untransform and update point and surface normal at hit point
 			t_min = t_hit;
-			norm_hit = norm;
+			P_hit = vec3(M * vec4(ray_transf.evaluate(t_min), 1.0f));
+			norm_hit = vec3(transpose(M_inv) * vec4(norm, 0.0f));
 			obj_hit = curr_obj;
 		}
 
@@ -55,7 +64,7 @@ HitInfo trace(Ray & ray, Scene * scene)
 
 	// At least 1 collision detected
 	if (collision == true)
-		return HitInfo(t_min, ray.evaluate(t_min), norm_hit, obj_hit);
+		return HitInfo(t_min, P_hit, norm_hit, obj_hit);
 
 	// Not collisions w/ any of the objects in this scene
 	return HitInfo();

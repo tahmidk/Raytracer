@@ -24,36 +24,24 @@ Ray::Ray(vec3 posn, vec3 dirn)
 {
 	this->posn = posn;
 	this->dirn = normalize(dirn);
+	this->t_min = 0;
 }
 
 /*-------------------------------------------------------------------
 	Func:	Restricted Constructor: [Ray]
 	Args:	posn - the start position of the ray
 			dirn - the direction of the ray
-			t_min - the minimum possible t value to consider
-			t_max - the maximum possible t value to consider
+			epsilon - very small epsilon shift value to prevent rounding 
+				errors when checking for intersections
 	Desc:	Constructs a restricted Ray object represented by the equation:
 				{ Ray = posn + dirn*t }		for		t_min <= t <= t_max
 	Rtrn:	None
 -------------------------------------------------------------------*/
-Ray::Ray(vec3 posn, vec3 dirn, float t_min, float t_max)
+Ray::Ray(vec3 posn, vec3 dirn, float epsilon)
 {
 	this->posn = posn;
 	this->dirn = normalize(dirn);
-	this->t_min = t_min;
-	this->t_max = t_max;
-}
-
-/*-------------------------------------------------------------------
-	Func:	Light Ray Constructor: [Ray]
-	Args:	posn - the start position of the ray
-			light - the light source to direct ray towards
-	Desc:	Generates a light ray from a point towards a light source
-	Rtrn:	None
--------------------------------------------------------------------*/
-Ray::Ray(vec3 posn, Light light) {
-	this->posn = posn;
-	this->dirn = normalize(light.get_posn() - posn);
+	this->t_min = epsilon;
 }
 
 /*-------------------------------------------------------------------
@@ -108,12 +96,10 @@ Ray Ray::transformRay(mat4 transf) {
 	// Reconvert back to vec3
 	vec3 posn_new = vec3(posn_transf.x, posn_transf.y, posn_transf.z);
 	vec3 dirn_new = vec3(dirn_transf.x, dirn_transf.y, dirn_transf.z);
-
-	return Ray(posn_new, dirn_new, this->t_min, this->t_max);
+	return Ray(posn_new, dirn_new, this->t_min);
 }
 
 /*------------[ Getter methods ]-------------*/
 vec3 Ray::get_posn()	{ return posn; }
 vec3 Ray::get_dirn()	{ return dirn; }
 float Ray::get_tmin()	{ return t_min; }
-float Ray::get_tmax()	{ return t_max; }

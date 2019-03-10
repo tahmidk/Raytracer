@@ -42,7 +42,7 @@ Triangle::Triangle(Material mat, mat4 transf, vec3 vert_a, vec3 vert_b, vec3 ver
 	Rtrn:	True if ray intersects triangle
 			False otherwise
 -------------------------------------------------------------------*/
-bool Triangle::intersects_ray(Ray ray, float * t_hit, vec3 * normal)
+bool Triangle::intersects_ray(Ray & ray, float * t_hit, vec3 * normal)
 {
 	// First, get point where ray intersects plane of triangle
 	vec3 vec_AB = vert_b - vert_a;
@@ -58,8 +58,14 @@ bool Triangle::intersects_ray(Ray ray, float * t_hit, vec3 * normal)
 	float denom = dot(P1, N);
 
 	if (denom != 0) {
-		// It intersects, get the point on the plane where ray intersects
 		float t_plane = numer / denom;
+		if (t_plane < ray.get_tmin()){
+			t_hit = NULL;
+			normal = NULL;
+			return false;
+		}
+
+		// It intersects, get the point on the plane where ray intersects
 		vec3 P_ray = ray.evaluate(t_plane);
 
 		// See if P is in this triangle ABC using the area method

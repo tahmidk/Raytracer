@@ -27,10 +27,20 @@ Color Color::operator+(const Color& col2) {
 	return ret;
 }
 
-Color Color::operator/(int c)
+Color Color::operator/(const float c)
 {
 	if(c != 0)
 		return Color(this->r/c, this->g/c, this->b/c);
+
+	return COLORS::black;
+}
+
+Color Color::operator*(const float c) {
+	return Color(r*c, g*c, b*c);
+}
+
+Color Color::operator*(Color other) {
+	return Color(r*other.r, g*other.g, b*other.b);
 }
 
 /*---------------[ Getter Methods ]----------------*/

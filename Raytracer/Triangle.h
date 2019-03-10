@@ -9,7 +9,7 @@ public:
 	Triangle(Material mat, mat4 transf, vec3 vert_a, vec3 vert_b, vec3 vert_c);
 
 	// Virtual method to implement
-	bool intersects_ray(Ray ray, float * t_hit, vec3 * normal);
+	bool intersects_ray(Ray & ray, float * t_hit, vec3 * normal);
 
 	float area();										// Area of this triangle
 	float area(vec3 vert_A, vec3 vert_B, vec3 vert_C);	// Area of specified triangle
