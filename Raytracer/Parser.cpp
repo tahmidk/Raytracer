@@ -244,9 +244,9 @@ void Parser::parseFile(Scene * scene) {
 				}
 				else if (cmd == "point") {
 					//read input
-					validinput = readvals(s, 3, values);
+					validinput = readvals(s, 6, values);
 					if (validinput) {
-						vec3 posn = vec3(transfstack.top() * vec4(values[0], values[1], values[2], 1));
+						vec3 posn = vec3(values[0], values[1], values[2]);
 						Color col = Color(values[3], values[4], values[5]);
 
 						// Create the new point light
@@ -256,9 +256,9 @@ void Parser::parseFile(Scene * scene) {
 				}
 				else if (cmd == "directional") {
 					//read input
-					validinput = readvals(s, 3, values);
+					validinput = readvals(s, 6, values);
 					if (validinput) {
-						vec3 dirn = vec3(transfstack.top() * vec4(values[0], values[1], values[2], 1));
+						vec3 dirn = vec3(values[0], values[1], values[2]);
 						Color col = Color(values[3], values[4], values[5]);
 
 						// Create the new point light

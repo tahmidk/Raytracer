@@ -12,7 +12,7 @@
 
 // Constructors do constructor stuff
 DirectionalLight::DirectionalLight() {}
-DirectionalLight::DirectionalLight(Color col, vec3 posn) {}
+DirectionalLight::DirectionalLight(Color col, vec3 posn) : Light(col, posn) {}
 
 /*-------------------------------------------------------------------
 	Func:	[calculate_shading]
