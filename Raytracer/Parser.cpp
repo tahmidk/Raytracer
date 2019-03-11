@@ -246,11 +246,13 @@ void Parser::parseFile(Scene * scene) {
 					//read input
 					validinput = readvals(s, 6, values);
 					if (validinput) {
-						vec4 posn = vec4(vec3(values[0], values[1], values[2]), 1);
+						vec3 posn = vec3(values[0], values[1], values[2]);
+						//vec4 posn = vec4(vec3(values[0], values[1], values[2]), 1);
 						Color col = Color(values[3], values[4], values[5]);
 
 						// Create the new point light
-						scene->lights[lightCount++] = new PointLight(col, vec3(transfstack.top() * posn));
+						scene->lights[lightCount++] = new PointLight(col, posn);
+						//scene->lights[lightCount++] = new PointLight(col, vec3(transfstack.top() * posn));
 						scene->num_lights = lightCount;
 					}
 				}
@@ -258,11 +260,13 @@ void Parser::parseFile(Scene * scene) {
 					//read input
 					validinput = readvals(s, 6, values);
 					if (validinput) {
-						vec4 dirn = vec4(vec3(values[0], values[1], values[2]), 0);
+						vec3 dirn = vec3(values[0], values[1], values[2]);
+						//vec4 dirn = vec4(vec3(values[0], values[1], values[2]), 0);
 						Color col = Color(values[3], values[4], values[5]);
 
 						// Create the new point light
-						scene->lights[lightCount++] = new DirectionalLight(col, vec3(transfstack.top() * dirn));
+						scene->lights[lightCount++] = new DirectionalLight(col, dirn);
+						//scene->lights[lightCount++] = new DirectionalLight(col, vec3(transfstack.top() * dirn));
 						scene->num_lights = lightCount;
 					}
 				}
