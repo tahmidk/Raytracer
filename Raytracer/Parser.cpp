@@ -210,9 +210,9 @@ void Parser::parseFile(Scene * scene) {
 						vec4 v1 = vec4(scene->vertices[(int)values[0]], 1);
 						vec4 v2 = vec4(scene->vertices[(int)values[1]], 1);
 						vec4 v3 = vec4(scene->vertices[(int)values[2]], 1);
-						vec3 vert1 = vec3(transfstack.top() * v1);
-						vec3 vert2 = vec3(transfstack.top() * v2);
-						vec3 vert3 = vec3(transfstack.top() * v3);
+						vec3 vert1 = vec3(v1);
+						vec3 vert2 = vec3(v2);
+						vec3 vert3 = vec3(v3);
 
 						// Create new triangle
 						Material obj_mat(scene->diffuse, scene->ambient, scene->emission, scene->specular, scene->shininess);
@@ -244,25 +244,25 @@ void Parser::parseFile(Scene * scene) {
 				}
 				else if (cmd == "point") {
 					//read input
-					validinput = readvals(s, 3, values);
+					validinput = readvals(s, 6, values);
 					if (validinput) {
-						vec3 posn = vec3(transfstack.top() * vec4(values[0], values[1], values[2], 1));
+						vec4 posn = vec4(vec3(values[0], values[1], values[2]), 1);
 						Color col = Color(values[3], values[4], values[5]);
 
 						// Create the new point light
-						scene->lights[lightCount++] = new PointLight(col, posn);
+						scene->lights[lightCount++] = new PointLight(col, vec3(transfstack.top() * posn));
 						scene->num_lights = lightCount;
 					}
 				}
 				else if (cmd == "directional") {
 					//read input
-					validinput = readvals(s, 3, values);
+					validinput = readvals(s, 6, values);
 					if (validinput) {
-						vec3 dirn = vec3(transfstack.top() * vec4(values[0], values[1], values[2], 1));
+						vec4 dirn = vec4(vec3(values[0], values[1], values[2]), 0);
 						Color col = Color(values[3], values[4], values[5]);
 
 						// Create the new point light
-						scene->lights[lightCount++] = new DirectionalLight(col, dirn);
+						scene->lights[lightCount++] = new DirectionalLight(col, vec3(transfstack.top() * dirn));
 						scene->num_lights = lightCount;
 					}
 				}

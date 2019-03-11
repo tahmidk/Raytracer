@@ -23,7 +23,7 @@
 Ray::Ray(vec3 posn, vec3 dirn)
 {
 	this->posn = posn;
-	this->dirn = normalize(dirn);
+	this->dirn = dirn;
 	this->t_min = 0;
 }
 
@@ -40,7 +40,7 @@ Ray::Ray(vec3 posn, vec3 dirn)
 Ray::Ray(vec3 posn, vec3 dirn, float epsilon)
 {
 	this->posn = posn;
-	this->dirn = normalize(dirn);
+	this->dirn = dirn;
 	this->t_min = epsilon;
 }
 
@@ -86,12 +86,12 @@ Ray Ray::transformRay(mat4 transf) {
 	// Convert ray components to homogeneous coordinates
 	vec4 posn_hom = vec4(posn.x, posn.y, posn.z, 1.0f);
 	vec4 dirn_hom = vec4(dirn.x, dirn.y, dirn.z, 0.0f);
-	normalize(dirn_hom);
+	//normalize(dirn_hom);
 
 	// Apply transformation to both
 	vec4 posn_transf = transf * posn_hom;
 	vec4 dirn_transf = transf * dirn_hom;
-	normalize(dirn_transf);
+	//normalize(dirn_transf);
 
 	// Reconvert back to vec3
 	vec3 posn_new = vec3(posn_transf.x, posn_transf.y, posn_transf.z);
