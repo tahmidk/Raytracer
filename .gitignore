@@ -271,3 +271,5 @@ Raytracer/FreeImage.dll
 Raytracer/FreeImage.dll
 *.test
 *.png
+*.dll
+Raytracer/FreeImage.dll
