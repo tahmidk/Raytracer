@@ -103,6 +103,7 @@ Color Scene::determine_color(HitInfo * hit_info, const int depth)
 	// Extract material data from HitInfo
 	Material obj_mat = hit_info->get_object()->get_material();
 	Color diffuse = obj_mat.get_diffuse();
+	Color ambient = obj_mat.get_ambient();
 	Color emission = obj_mat.get_emission();
 	Color specular = obj_mat.get_specular();
 	double shininess = obj_mat.get_shininess();
@@ -128,7 +129,7 @@ Color Scene::determine_color(HitInfo * hit_info, const int depth)
 
 	// For each visible light, do the respective calculations
 	// I = A + E + (Li / attenuation)*(D*max(N dot L, 0) + S*max(N dot H, 0)^s) for each visible light
-	Color finalCol = this->ambient + emission;
+	Color finalCol = ambient + emission;
 	for (Light light : visibleLights) {
 		Color shading = light.calculate_shading(hit_info, this->camPos, attenuation);
 		finalCol = finalCol + shading;

@@ -8,10 +8,11 @@ class Material
 // Public fields
 public:
 	Material();
-	Material(Color diffuse, Color emission, Color specular, double shininess);
+	Material(Color diffuse, Color ambient, Color emission, Color specular, double shininess);
 
 	// Getter methods
 	Color get_diffuse();
+	Color get_ambient();
 	Color get_emission();
 	Color get_specular();
 	double get_shininess();
@@ -19,6 +20,7 @@ public:
 // Private fields
 private:
 	Color diffuse;
+	Color ambient;
 	Color emission;
 	Color specular;
 	double shininess;

@@ -218,7 +218,7 @@ void Parser::parseFile(Scene * scene) {
 						vec3 vert3 = vec3(transfstack.top() * v3);
 
 						// Create new triangle
-						Material obj_mat(scene->diffuse, scene->emission, scene->specular, scene->shininess);
+						Material obj_mat(scene->diffuse, scene->ambient, scene->emission, scene->specular, scene->shininess);
 						scene->objects[objCount++] = new Triangle(obj_mat, transfstack.top(), 
 							vert1, vert2, vert3);
 						scene->num_objects = objCount;
@@ -239,7 +239,7 @@ void Parser::parseFile(Scene * scene) {
 						double radius = values[3];
 
 						// Create new sphere
-						Material obj_mat(scene->diffuse, scene->emission, scene->specular, scene->shininess);
+						Material obj_mat(scene->diffuse, scene->ambient, scene->emission, scene->specular, scene->shininess);
 						scene->objects[objCount++] = new Sphere(obj_mat, transfstack.top(), 
 							(float) center.x, (float) center.y, (float) center.z, (float) radius);
 						scene->num_objects = objCount;

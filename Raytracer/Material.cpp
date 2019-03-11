@@ -35,9 +35,10 @@ Material::Material() {
 	Desc:	Constructor initializes all fields properly
 	Rtrn:	None
 -------------------------------------------------------------------*/
-Material::Material(Color diffuse, Color emission, Color specular, double shininess)
+Material::Material(Color diffuse, Color ambient, Color emission, Color specular, double shininess)
 {
 	this->diffuse = diffuse;
+	this->ambient = ambient;
 	this->emission = emission;
 	this->specular = specular;
 	this->shininess = shininess;
@@ -45,6 +46,7 @@ Material::Material(Color diffuse, Color emission, Color specular, double shinine
 
 /*------------[ Getter Methods ]--------------*/
 Color Material::get_diffuse()		{ return diffuse; }
+Color Material::get_ambient()		{ return ambient; }
 Color Material::get_emission()		{ return emission; }
 Color Material::get_specular()		{ return specular; }
 double Material::get_shininess()	{ return shininess; }
