@@ -55,7 +55,7 @@ private:
 	Color emission;
 	Color specular;
 	double shininess;
-	double attenuation[3] = {1, 0, 0};
+	double attenuation[3];
 	int depth;
 
 	// List of objects and lights

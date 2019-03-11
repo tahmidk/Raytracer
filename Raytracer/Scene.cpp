@@ -32,6 +32,15 @@ Scene::Scene()
 	// Nullify all lights
 	for (int i = 0; i < NUM_LIGHTS; i++)
 		this->lights[i] = NULL;
+	this->ambient = Color(0.2f, 0.2f, 0.2f);
+	this->diffuse = COLORS::black;
+	this->emission = COLORS::black;
+	this->specular = COLORS::black;
+	this->shininess = 1.0f;
+	this->attenuation[0] = 1.0f;
+	this->attenuation[1] = 0.0f;
+	this->attenuation[2] = 0.0f;
+	this->depth = 5;
 }
 
 /*-------------------------------------------------------------------

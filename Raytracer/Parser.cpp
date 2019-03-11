@@ -90,10 +90,7 @@ void Parser::parseFile(Scene * scene) {
 				s >> cmd;
 				float values[10]; // Position and color for light, colors for others
 				bool validinput; // Validity of input
-				scene->ambient = Color(0.2, 0.2, 0.2);
-				scene->diffuse = Color(0.0, 0.0, 0.0);
-				scene->emission = Color(0.0, 0.0, 0.0);
-				scene->specular = Color(0.0, 0.0, 0.0);
+
 				// Process the light, add it to database.
 				// Lighting Command
 				if (cmd == "ambient") {
