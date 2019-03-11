@@ -51,6 +51,10 @@ private:
 	// General fields for other classes
 	vector<vec3> vertices;
 	Color ambient;
+	Color diffuse;
+	Color emission;
+	Color specular;
+	double shininess;
 	double attenuation[3] = {1, 0, 0};
 	int depth;
 
