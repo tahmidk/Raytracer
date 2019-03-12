@@ -271,6 +271,13 @@ void Parser::parseFile(Scene * scene) {
 				else if (cmd == "output") {
 					s >> scene->path;
 				}
+				else if (cmd == "maxdepth") {
+					//read input
+					validinput = readvals(s, 1, values);
+					if (validinput) {
+						scene->depth = values[0];
+					}
+				}
 				else {
 					cerr << "Unknown Command: " << cmd << " Skipping \n";
 				}
