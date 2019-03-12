@@ -40,6 +40,7 @@ Scene::Scene()
 	this->attenuation[1] = 0.0f;
 	this->attenuation[2] = 0.0f;
 	this->depth = 5;
+	this->path = "test.png";
 }
 
 /*-------------------------------------------------------------------
@@ -165,5 +166,10 @@ Object ** Scene::getAllObjects()	{ return objects; }
 Light ** Scene::getAllLights()		{ return lights; }
 int Scene::getNumObjects()		{ return num_objects; }
 int Scene::getNumLights()		{ return num_lights; }
+
+std::string Scene::getPath()
+{
+	return this->path;
+}
 
 vector<vec3> Scene::getVertices()	{ return this->vertices; }
