@@ -30,8 +30,8 @@ using namespace glm;
 using namespace std;
 
 // Important constants
-constexpr int NUM_OBJECTS = 100;
-constexpr int NUM_LIGHTS = 100;
+constexpr int NUM_OBJECTS = 2000;
+constexpr int NUM_LIGHTS = 2000;
 constexpr float EPSILON = 0.001f;
 
 class Scene {
