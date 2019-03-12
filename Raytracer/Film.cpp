@@ -56,5 +56,7 @@ void Film::writeImage(string path) {
 }
 
 void Film::commit(Sample& sample, const Color& col) {
-	this->pixel[sample.getX()][sample.getY()].addColor(col);
+	int x = (int) sample.getX();
+	int y = (int) sample.getY();
+	this->pixel[x][y].addColor(col);
 }

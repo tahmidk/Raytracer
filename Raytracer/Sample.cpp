@@ -7,14 +7,14 @@ Sample::Sample()
 }
 
 Sample::Sample(int x, int y) {
-	this->x = x;
-	this->y = y;
+	this->x = x + 0.5f;
+	this->y = y + 0.5f;
 }
 
-int Sample::getX() {
+float Sample::getX() {
 	return this->x;
 }
 
-int Sample::getY() {
+float Sample::getY() {
 	return this->y;
 }

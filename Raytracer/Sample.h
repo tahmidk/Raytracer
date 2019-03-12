@@ -4,13 +4,13 @@
 class Sample
 {
 private:
-	int x, y;
+	float x, y;
 
 public:
 	Sample();
 	Sample(int x, int y);
-	int getX();
-	int getY();
+	float getX();
+	float getY();
 };
 
 #endif // !H_Sampler
