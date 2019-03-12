@@ -59,7 +59,7 @@ Ray::Ray(vec3 norm, vec3 posn, Ray ray_in) {
 	vec3 v_out = v_in - 2*dot(v_in, norm)*norm;
 
 	this->posn = posn;
-	this->dirn = normalize(v_out);
+	this->dirn = v_out;
 }
 
 /*-------------------------------------------------------------------

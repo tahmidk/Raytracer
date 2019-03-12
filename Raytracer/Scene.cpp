@@ -78,18 +78,9 @@ void Scene::render(Camera & cam, string path)
 			Ray raySample = cam.generateRay(sample, camPos, w, h);
 			HitInfo hit = trace(raySample, this);
 			if (hit.is_valid()) {
-				/* // Milestone code
-				if (hit.get_object()->get_type() == triangle) {
-					film->commit(sample, COLORS::green);
-				}
-				if (hit.get_object()->get_type() == sphere) {
-					film->commit(sample, COLORS::white);
-				}
-				*/
-				Color hit_color = determine_color(&hit, this->depth);
+				Color hit_color = determine_color(&hit, raySample, this->depth);
 				film->commit(sample, hit_color);
 			}
-
 		}
 	}
 
@@ -102,12 +93,13 @@ void Scene::render(Camera & cam, string path)
 /*-------------------------------------------------------------------
 	Func:	[determine_color]
 	Args:	hit_info - the collision data to base color calculations on
+			depth - the maximum recursive depth
 	Desc:	The main function responsible for rendering the output
 			image. Iteratively calculates the color of each pixel
 			by raytracing and writes the final image file
 	Rtrn:	None
 -------------------------------------------------------------------*/
-Color Scene::determine_color(HitInfo * hit_info, const int depth)
+Color Scene::determine_color(HitInfo * hit_info, Ray & ray_in, const int depth)
 {
 	// Extract material data from HitInfo
 	Material obj_mat = hit_info->get_object()->get_material();
@@ -137,6 +129,17 @@ Color Scene::determine_color(HitInfo * hit_info, const int depth)
 
 		// Update for next iteration
 		curr_light = lights[light_num + 1];
+	}
+
+	// Finally, do recursive ray tracing for reflections
+	if (depth > 0) {
+		Ray reflectedRay = Ray(hit_info->get_norm(), hit_info->get_point(), ray_in);
+		HitInfo hit = trace(reflectedRay, this);
+		if (hit.is_valid()) {
+			int new_depth = this->depth - 1;
+			Color hit_color = determine_color(&hit, reflectedRay, new_depth);
+			finalCol = finalCol + hit_color;
+		}
 	}
 
 	return finalCol;
