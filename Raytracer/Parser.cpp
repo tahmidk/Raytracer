@@ -268,6 +268,9 @@ void Parser::parseFile(Scene * scene) {
 						scene->num_lights = lightCount;
 					}
 				}
+				else if (cmd == "output") {
+					s >> scene->path;
+				}
 				else {
 					cerr << "Unknown Command: " << cmd << " Skipping \n";
 				}

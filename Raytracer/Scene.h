@@ -64,6 +64,8 @@ private:
 	Light * lights[NUM_LIGHTS];
 	int num_lights;
 
+	// Path for output
+	std::string path;
 
 	// Allow Parser class to set Scene's private fields
 	friend class Parser;
@@ -97,6 +99,7 @@ public:
 	Light ** getAllLights();
 	int getNumObjects();
 	int getNumLights();
+	std::string getPath();
 };
 
 #endif
