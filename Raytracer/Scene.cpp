@@ -14,9 +14,6 @@
 #include "HitInfo.h"
 #include "Raytracer.h"
 
-// Standard library imports
-#include <list>
-
 /*-------------------------------------------------------------------
 	Func:	Constructor: [Scene]
 	Args:	None
@@ -32,6 +29,8 @@ Scene::Scene()
 	// Nullify all lights
 	for (int i = 0; i < NUM_LIGHTS; i++)
 		this->lights[i] = NULL;
+
+	// Store defaults
 	this->ambient = Color(0.2f, 0.2f, 0.2f);
 	this->diffuse = COLORS::black;
 	this->emission = COLORS::black;
@@ -117,11 +116,11 @@ Color Scene::determine_color(HitInfo * hit_info, const int depth)
 	Color specular = obj_mat.get_specular();
 	double shininess = obj_mat.get_shininess();
 
-	// Determine which lights illuminate this hit point
-	list<Light> visibleLights;
-
+	// For each visible light, do the respective calculations
+	// I = A + E + (Li / attenuation)*(D*max(N dot L, 0) + S*max(N dot H, 0)^s) for each visible light
 	Light ** lights = getAllLights();
 	Light * curr_light = lights[0];
+	Color finalCol = ambient + emission;
 	for (int light_num = 0; curr_light != NULL; light_num++) {
 		// Light is visible iff its shadow ray does not collide with another object
 		vec3 P0 = hit_info->get_point();
@@ -129,19 +128,14 @@ Color Scene::determine_color(HitInfo * hit_info, const int depth)
 		Ray shadowRay(P0, P1, EPSILON);
 
 		HitInfo collision = trace(shadowRay, this);
-		if (!collision.is_valid())
-			visibleLights.push_back(*curr_light);
+		if (!collision.is_valid()) {
+			// Compute shading for this light
+			Color shading = curr_light->calculate_shading(hit_info, this->camPos, attenuation);
+			finalCol = finalCol + shading;
+		}
 
 		// Update for next iteration
 		curr_light = lights[light_num + 1];
-	}
-
-	// For each visible light, do the respective calculations
-	// I = A + E + (Li / attenuation)*(D*max(N dot L, 0) + S*max(N dot H, 0)^s) for each visible light
-	Color finalCol = ambient + emission;
-	for (Light light : visibleLights) {
-		Color shading = light.calculate_shading(hit_info, this->camPos, attenuation);
-		finalCol = finalCol + shading;
 	}
 
 	return finalCol;

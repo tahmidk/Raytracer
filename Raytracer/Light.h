@@ -16,12 +16,8 @@ public:
 	Light(Color col, vec3 posn);
 
 	// Utility virtual function to implement in children class
-	virtual Color calculate_shading(HitInfo * hit_info, vec3 eye, double * attenuation){ 
-		return COLORS::blue; 
-	};
-	virtual vec3 get_towards_dirn(vec3 from) { 
-		return vec3(); 
-	};
+	virtual Color calculate_shading(HitInfo * hit_info, vec3 eye, double * attenuation) { return COLORS::blue; };
+	virtual vec3 get_towards_dirn(vec3 from) { return vec3(); };
 
 	// Getter methods
 	Color get_color();
