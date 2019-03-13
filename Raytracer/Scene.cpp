@@ -78,8 +78,11 @@ void Scene::render(Camera & cam, string path)
 			Ray raySample = cam.generateRay(sample, camPos, w, h);
 			HitInfo hit = trace(raySample, this);
 			if (hit.is_valid()) {
-				Color hit_color = determine_color(&hit, raySample, this->depth);
-				film->commit(sample, hit_color);
+				Color hit_color = determine_color(&hit);
+				Color refl_color = determine_reflection(raySample, &hit);
+
+				Color final_color = hit_color + refl_color;
+				film->commit(sample, final_color);
 			}
 		}
 	}
@@ -94,12 +97,11 @@ void Scene::render(Camera & cam, string path)
 	Func:	[determine_color]
 	Args:	hit_info - the collision data to base color calculations on
 			depth - the maximum recursive depth
-	Desc:	The main function responsible for rendering the output
-			image. Iteratively calculates the color of each pixel
-			by raytracing and writes the final image file
-	Rtrn:	None
+	Desc:	Determines the immediate color of a ray intersection using
+			the given collision data
+	Rtrn:	The color of intersection
 -------------------------------------------------------------------*/
-Color Scene::determine_color(HitInfo * hit_info, Ray & ray_in, const int depth)
+Color Scene::determine_color(HitInfo * hit_info)
 {
 	// Extract material data from HitInfo
 	Material obj_mat = hit_info->get_object()->get_material();
@@ -118,7 +120,8 @@ Color Scene::determine_color(HitInfo * hit_info, Ray & ray_in, const int depth)
 		// Light is visible iff its shadow ray does not collide with another object
 		vec3 P0 = hit_info->get_point();
 		vec3 P1 = curr_light->get_towards_dirn(P0);
-		Ray shadowRay(P0, P1, EPSILON);
+		float t_max = curr_light->get_tmax(P0);
+		Ray shadowRay(P0, P1, t_max);
 
 		HitInfo collision = trace(shadowRay, this);
 		if (!collision.is_valid()) {
@@ -131,20 +134,46 @@ Color Scene::determine_color(HitInfo * hit_info, Ray & ray_in, const int depth)
 		curr_light = lights[light_num + 1];
 	}
 
-	// Finally, do recursive ray tracing for reflections
-	/*
-	if (depth > 0) {
-		Ray reflectedRay = Ray(hit_info->get_norm(), hit_info->get_point(), ray_in);
-		HitInfo hit = trace(reflectedRay, this);
-		if (hit.is_valid()) {
-			int new_depth = this->depth - 1;
-			Color hit_color = determine_color(&hit, reflectedRay, new_depth);
-			finalCol = finalCol + hit_color;
-		}
-	}
-	*/
-
 	return finalCol;
+}
+
+/*-------------------------------------------------------------------
+	Func:	[determine_reflection]
+	Args:	ray_in - the incident ray
+	Desc:	Determines reflective colors via recursive raytracing
+	Rtrn:	The color of reflection
+-------------------------------------------------------------------*/
+Color Scene::determine_reflection(Ray & ray_in, HitInfo * hit_info)
+{
+	return _determine_reflection(ray_in, hit_info, Color(), this->depth);
+}
+
+/*-------------------------------------------------------------------
+	Func:	[_determine_reflection]
+	Args:	ray_in - the incident ray
+			accum - the accumulative color
+			depth - the current recursive depth
+	Desc:	Helper method to determine_reflection() function using
+			tail recursive raytracing to calculate the reflective
+			colors in the Scene
+	Rtrn:	The color of reflection
+-------------------------------------------------------------------*/
+Color Scene::_determine_reflection(Ray & ray_in, HitInfo * hit_info, Color & accum, const int depth)
+{
+	// Base case
+	if(depth == 0)
+		return accum;
+
+	// Recursive case
+	Ray ray_refl = Ray(hit_info->get_norm(), hit_info->get_point(), ray_in);
+	HitInfo hit_refl = trace(ray_refl, this);
+	if (hit_refl.is_valid()) {
+		Color reflectivity = hit_refl.get_object()->get_material().get_specular();
+		accum = accum + reflectivity * determine_color(&hit_refl);
+		return _determine_reflection(ray_refl, &hit_refl, accum, depth - 1);
+	}
+
+	return accum;
 }
 
 /*--------------[ Getter Methods ]----------------*/

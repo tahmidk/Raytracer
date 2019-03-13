@@ -8,8 +8,12 @@
 			time parameter t
 ==================================================================*/
 
+// Project file imports
 #include "pch.h"
 #include "Ray.h"
+
+// Standard library imports
+#include <limits>
 
 /*-------------------------------------------------------------------
 	Func:	General Constructor: [Ray]
@@ -24,24 +28,25 @@ Ray::Ray(vec3 posn, vec3 dirn)
 {
 	this->posn = posn;
 	this->dirn = dirn;
-	this->t_min = 0;
+	this->t_min = EPSILON;
+	this->t_max = std::numeric_limits<float>::infinity();
 }
 
 /*-------------------------------------------------------------------
 	Func:	Restricted Constructor: [Ray]
 	Args:	posn - the start position of the ray
 			dirn - the direction of the ray
-			epsilon - very small epsilon shift value to prevent rounding 
-				errors when checking for intersections
+			t_max - the maximum t to consider for collisions
 	Desc:	Constructs a restricted Ray object represented by the equation:
 				{ Ray = posn + dirn*t }		for		t_min <= t <= t_max
 	Rtrn:	None
 -------------------------------------------------------------------*/
-Ray::Ray(vec3 posn, vec3 dirn, float epsilon)
+Ray::Ray(vec3 posn, vec3 dirn, float t_max)
 {
 	this->posn = posn;
 	this->dirn = dirn;
-	this->t_min = epsilon;
+	this->t_min = EPSILON;
+	this->t_max = t_max;
 }
 
 /*-------------------------------------------------------------------
@@ -49,17 +54,20 @@ Ray::Ray(vec3 posn, vec3 dirn, float epsilon)
 	Args:	norm - the surface normal at the reflection point
 			posn - the point of reflection
 			ray_in - the incident ray
-	Desc:	Generates a light ray from a point towards a light source
+	Desc:	Generates a reflection ray according to Snell's Law
 	Rtrn:	None
 -------------------------------------------------------------------*/
 Ray::Ray(vec3 norm, vec3 posn, Ray ray_in) {
-	vec3 v_in = ray_in.get_dirn();
+	vec3 v_in = normalize(ray_in.get_dirn());
+	norm = normalize(norm);
 
 	// Use Snell's law to compute reflected ray: v_out = v_in - 2(v_in dot n)n
 	vec3 v_out = v_in - 2*dot(v_in, norm)*norm;
 
 	this->posn = posn;
 	this->dirn = v_out;
+	this->t_min = EPSILON;
+	this->t_max = std::numeric_limits<float>::infinity();
 }
 
 /*-------------------------------------------------------------------
@@ -96,10 +104,11 @@ Ray Ray::transformRay(mat4 transf) {
 	// Reconvert back to vec3
 	vec3 posn_new = vec3(posn_transf.x, posn_transf.y, posn_transf.z);
 	vec3 dirn_new = vec3(dirn_transf.x, dirn_transf.y, dirn_transf.z);
-	return Ray(posn_new, dirn_new, this->t_min);
+	return Ray(posn_new, dirn_new, this->t_max);
 }
 
 /*------------[ Getter methods ]-------------*/
 vec3 Ray::get_posn()	{ return posn; }
 vec3 Ray::get_dirn()	{ return dirn; }
 float Ray::get_tmin()	{ return t_min; }
+float Ray::get_tmax()	{ return t_max; }

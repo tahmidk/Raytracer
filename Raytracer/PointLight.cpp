@@ -46,3 +46,26 @@ Color PointLight::calculate_shading(HitInfo * hit_info, vec3 eye_pos, double * a
 vec3 PointLight::get_towards_dirn(vec3 from) {
 	return normalize(this->posn - from);
 }
+
+/*-------------------------------------------------------------------
+	Func:	[get_tmax]
+	Args:	from - the from-point
+	Desc:	This method calculates the t-value at which a ray pointed
+			towards this light from the given point would intersect
+			the light itself. Used to restrict shadow rays
+	Rtrn:	The t value
+-------------------------------------------------------------------*/
+float PointLight::get_tmax(vec3 from)
+{
+	vec3 dirn = get_towards_dirn(from);
+
+	float t_max = 0.0f;
+	if(dirn.x != 0.0f)
+		t_max = ((this->posn).x - from.x) / dirn.x;
+	else if (dirn.y != 0.0f)
+		t_max = ((this->posn).y - from.y) / dirn.y;
+	else if (dirn.z != 0.0f)
+		t_max = ((this->posn).z - from.z) / dirn.z;
+
+	return t_max;
+}

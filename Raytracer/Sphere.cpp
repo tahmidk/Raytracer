@@ -69,7 +69,7 @@ bool Sphere::intersects_ray(Ray & ray, float * t_hit, vec3 * normal) {
 			*t_hit = (soln_1 > soln_2) ? soln_1 : soln_2;
 
 		// Make sure t_hit is at least larger than Ray's t_min
-		if (*t_hit < ray.get_tmin()) {
+		if (*t_hit < ray.get_tmin() || *t_hit > ray.get_tmax()) {
 			t_hit = NULL;
 			normal = NULL;
 			return false;

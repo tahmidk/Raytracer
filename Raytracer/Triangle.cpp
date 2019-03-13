@@ -59,7 +59,7 @@ bool Triangle::intersects_ray(Ray & ray, float * t_hit, vec3 * normal)
 
 	if (denom != 0) {
 		float t_plane = numer / denom;
-		if (t_plane < ray.get_tmin()){
+		if (t_plane < ray.get_tmin() || t_plane > ray.get_tmax()){
 			t_hit = NULL;
 			normal = NULL;
 			return false;
