@@ -48,3 +48,16 @@ Color DirectionalLight::calculate_shading(HitInfo * hit_info, vec3 eye_pos, doub
 vec3 DirectionalLight::get_towards_dirn(vec3 from) {
 	return (-1.0f * this->posn);
 }
+
+/*-------------------------------------------------------------------
+	Func:	[get_tmax]
+	Args:	from - the from-point
+	Desc:	This method calculates the t-value at which a ray pointed
+			towards this light from the given point would intersect
+			the light itself. Used to restrict shadow rays. For directional
+			lights, this it just infinity
+	Rtrn:	The t value
+-------------------------------------------------------------------*/
+float DirectionalLight::get_tmax(vec3 from) {
+	return std::numeric_limits<float>::infinity();
+}

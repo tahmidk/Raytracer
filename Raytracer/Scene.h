@@ -32,7 +32,6 @@ using namespace std;
 // Important constants
 constexpr int NUM_OBJECTS = 2000;
 constexpr int NUM_LIGHTS = 2000;
-constexpr float EPSILON = 0.001f;
 
 class Scene {
 // Private fields
@@ -65,7 +64,11 @@ private:
 	int num_lights;
 
 	// Path for output
-	std::string path;
+	string path;
+
+	// Private helper methods
+	Color determine_reflection(Ray & ray_in, HitInfo * hit_info);
+	Color _determine_reflection(Ray & ray_in, HitInfo * hit_info, Color & accum, const int depth);
 
 	// Allow Parser class to set Scene's private fields
 	friend class Parser;
@@ -77,7 +80,7 @@ public:
 
 	// Utility methods
 	void render(Camera & cam, string path);
-	Color determine_color(HitInfo * hit_info, Ray & ray_in, const int depth);
+	Color determine_color(HitInfo * hit_info);
 
 	// Getter methods
 	vec3 getCamPos();
