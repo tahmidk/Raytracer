@@ -132,7 +132,7 @@ Color Scene::determine_color(HitInfo * hit_info, Ray & ray_in, const int depth)
 	}
 
 	// Finally, do recursive ray tracing for reflections
-	/*
+	
 	if (depth > 0) {
 		Ray reflectedRay = Ray(hit_info->get_norm(), hit_info->get_point(), ray_in);
 		HitInfo hit = trace(reflectedRay, this);
@@ -142,7 +142,7 @@ Color Scene::determine_color(HitInfo * hit_info, Ray & ray_in, const int depth)
 			finalCol = finalCol + hit_color;
 		}
 	}
-	*/
+
 
 	return finalCol;
 }

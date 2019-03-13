@@ -275,7 +275,7 @@ void Parser::parseFile(Scene * scene) {
 					//read input
 					validinput = readvals(s, 1, values);
 					if (validinput) {
-						scene->depth = values[0];
+						scene->depth = (int) values[0];
 					}
 				}
 				else {
