@@ -79,9 +79,9 @@ void Scene::render(Camera & cam, string path)
 			HitInfo hit = trace(raySample, this);
 			if (hit.is_valid()) {
 				Color hit_color = determine_color(&hit);
-				Color refl_color = determine_reflection(raySample, &hit);
+				//Color refl_color = determine_reflection(raySample, &hit);
 
-				Color final_color = hit_color + refl_color;
+				Color final_color = hit_color; //+ refl_color;
 				film->commit(sample, final_color);
 			}
 		}
@@ -168,8 +168,21 @@ Color Scene::_determine_reflection(Ray & ray_in, HitInfo * hit_info, Color & acc
 	Ray ray_refl = Ray(hit_info->get_norm(), hit_info->get_point(), ray_in);
 	HitInfo hit_refl = trace(ray_refl, this);
 	if (hit_refl.is_valid()) {
+		// Calculate attenuation
+		float atten = 1.0f;
+		if (!(attenuation[0] == 0.0 && attenuation[1] == 0.0 && attenuation[2] == 0.0)) {
+			float dist = length(hit_info->get_point() - hit_refl.get_point());
+			atten = (float)(attenuation[0] + attenuation[1] * dist + attenuation[2] * dist*dist);
+			// Sanity check in case attenuation is still 0
+			if (attenuation == 0) {
+				cerr << "Attenuation is still 0!" << endl;
+				atten = 1;
+			}
+		}
+
+		// Calculate reflection
 		Color reflectivity = hit_refl.get_object()->get_material().get_specular();
-		accum = accum + reflectivity * determine_color(&hit_refl);
+		accum = accum + reflectivity * determine_color(&hit_refl) * atten;
 		return _determine_reflection(ray_refl, &hit_refl, accum, depth - 1);
 	}
 

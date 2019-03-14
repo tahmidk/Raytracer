@@ -221,7 +221,7 @@ void Parser::parseFile(Scene * scene) {
 						scene->num_objects = objCount;
 					}
 				} else if (cmd == "attenuation") {
-					validinput = readvals(s, 4, values);
+					validinput = readvals(s, 3, values);
 					if (validinput) {
 						for (int i = 0; i < 3; i++) {
 							scene->attenuation[i] = values[i];
