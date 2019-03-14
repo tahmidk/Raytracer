@@ -69,13 +69,14 @@ bool Triangle::intersects_ray(Ray & ray, float * t_hit, vec3 * normal)
 		vec3 P_ray = ray.evaluate(t_plane);
 
 		// See if P is in this triangle ABC using the area method
-		float area_ABC = area();
 		float area_ABP = area(vert_a, vert_b, P_ray);
 		float area_ACP = area(vert_a, vert_c, P_ray);
 		float area_BCP = area(vert_b, vert_c, P_ray);
+		float partial_area = area_ABP + area_ACP + area_BCP;
+		float total_area = area();
 
-		// P is in ABC if the subtriangles' areas add up to the large triangle's
-		if (area_ABC == (area_ABP + area_ACP + area_BCP)) {
+		// P is in ABC if the subtriangles' areas roughly add up to the large triangle's
+		if (partial_area <= total_area + TOLERANCE && partial_area >= total_area - TOLERANCE) {
 			*t_hit = t_plane;
 			*normal = N;
 			return true;

@@ -33,7 +33,6 @@ int main(int argc, char *argv[])
 		cerr << "Unexpected number of arguments!" << endl;
 
     // This is a test to make sure FreeImage is working
-	FreeImage_Initialise();
 	cout << "FreeImage_" << FreeImage_GetVersion() << endl;
 	cout << FreeImage_GetCopyrightMessage() << endl;
 
@@ -51,6 +50,5 @@ int main(int argc, char *argv[])
 	scn->render(cam, scn->getPath());
 
 	// Clean up
-	FreeImage_DeInitialise();
 	delete scn;
 }

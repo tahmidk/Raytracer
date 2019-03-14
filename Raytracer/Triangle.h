@@ -3,6 +3,9 @@
 
 #include "Object.h"
 
+// This is a tolerance value when testing intersections
+constexpr float TOLERANCE = 0.0001f;
+
 class Triangle : public Object
 {
 public:

@@ -12,8 +12,6 @@
 #include "Film.h"
 #include <iostream>
 
-using namespace std;
-
 Film::Film() {}
 
 Film::Film(int width, int height)
@@ -21,7 +19,7 @@ Film::Film(int width, int height)
 	this->width = width;
 	this->height = height;
 	//set the initial pixel output to black.
-	pixel = vector<vector<Bucket>>((int) width, vector<Bucket>((int) height, Bucket()));
+	this->pixel = vector<vector<Color>>(width, vector<Color>(height, COLORS::black));
 }
 
 /*-------------------------------------------------------------------
@@ -43,20 +41,27 @@ void Film::writeImage(string path) {
 
 	//set the corresponding color values (0-255) to the output variable
 	for (int i = 0; i < width; i++) {
-		vector<Bucket> col = pixel[i];
+		vector<Color> col = pixel[i];
 		for (int j = 0; j < height; j++) {
-			color.rgbRed = (BYTE) (col[j].computeAverage().getRed() * 255);
-			color.rgbGreen = (BYTE) (col[j].computeAverage().getGreen() * 255);
-			color.rgbBlue = (BYTE) (col[j].computeAverage().getBlue() * 255);
+			color.rgbRed = (BYTE) (col[j].getRed() * 255.0);
+			color.rgbGreen = (BYTE) (col[j].getGreen() * 255.0);
+			color.rgbBlue = (BYTE) (col[j].getBlue() * 255.0);
 			FreeImage_SetPixelColor(bitmap, i, j, &color);
 		}
 	}
 	//save the file to the specified path with .png format
 	FreeImage_Save(FIF_PNG, bitmap, path.c_str(), 0);
+	FreeImage_DeInitialise();
 }
 
 void Film::commit(Sample& sample, const Color& col) {
 	int x = (int) sample.getX();
 	int y = (int) sample.getY();
-	this->pixel[x][y].addColor(col);
+
+	if (x == 124 && y == 270)
+		cout << endl;
+
+	this->pixel[x][y] = col;
 }
+
+

@@ -10,13 +10,15 @@
 #include "Color.h"
 #include "Camera.h"
 #include "FreeImage.h"
-#include "Bucket.h"
+
+using namespace std;
 
 class Film
 {
 private:
-	std::vector<std::vector<Bucket>> pixel;
+	vector<vector<Color>> pixel;
 	int width, height;
+
 public:
 	Film();
 	Film(int width, int height);

@@ -44,6 +44,6 @@ Color Color::operator*(Color other) {
 }
 
 /*---------------[ Getter Methods ]----------------*/
-double Color::getRed()		{ return this->r; }
-double Color::getGreen()	{ return this->g; }
-double Color::getBlue()		{ return this->b; }
+double Color::getRed()		{ return (this->r > 1.0) ? 1.0 : this->r; }
+double Color::getGreen()	{ return (this->g > 1.0) ? 1.0 : this->g; }
+double Color::getBlue()		{ return (this->b > 1.0) ? 1.0 : this->b; }
