@@ -76,7 +76,8 @@ public:
 
 	// Utility methods
 	void render(Camera & cam, string path);
-	Color determine_color(HitInfo * hit_info, Ray & ray_in, vec3 eye, const int depth);
+	Color determine_color(HitInfo * hit_info, Ray & ray_in);
+	Color _determine_color(HitInfo * hit_info, Ray & ray_in, vec3 eye, const int depth);
 
 	// Getter methods
 	vec3 getCamPos();

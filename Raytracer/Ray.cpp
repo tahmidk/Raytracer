@@ -58,14 +58,14 @@ Ray::Ray(vec3 posn, vec3 dirn, float t_max)
 	Rtrn:	None
 -------------------------------------------------------------------*/
 Ray::Ray(vec3 norm, vec3 posn, Ray ray_in) {
-	vec3 v_in = normalize(ray_in.get_dirn());
+	vec3 v_in = ray_in.get_dirn();
 	norm = normalize(norm);
 
 	// Use Snell's law to compute reflected ray: v_out = v_in - 2(v_in dot n)n
 	vec3 v_out = v_in - 2*dot(v_in, norm)*norm;
 
 	this->posn = posn;
-	this->dirn = normalize(v_out);
+	this->dirn = v_out;
 	this->t_min = EPSILON;
 	this->t_max = std::numeric_limits<float>::infinity();
 }

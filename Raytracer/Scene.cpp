@@ -80,7 +80,7 @@ void Scene::render(Camera & cam, string path)
 			Ray raySample = cam.generateRay(sample, camPos, w, h);
 			HitInfo hit = trace(raySample, this);
 			if (hit.is_valid()) {
-				Color hit_color = determine_color(&hit, raySample, this->camPos, this->depth);
+				Color hit_color = determine_color(&hit, raySample);
 				film->commit(sample, hit_color);
 			}
 		}
@@ -92,18 +92,33 @@ void Scene::render(Camera & cam, string path)
 	delete film;
 }
 
-
 /*-------------------------------------------------------------------
 	Func:	[determine_color]
 	Args:	hit_info - the collision data to base color calculations on
+			ray_in - the incoming ray
+			eye - the relative eye/camera position
 			depth - the maximum recursive depth
-	Desc:	Determines the immediate color of a ray intersection using
-			the given collision data
+	Desc:	Determines the final color of a ray intersection using the 
+			given collision data and incoming ray
 	Rtrn:	The color of intersection
 -------------------------------------------------------------------*/
-Color Scene::determine_color(HitInfo * hit_info, Ray & ray_in, vec3 eye, const int depth)
+Color Scene::determine_color(HitInfo * hit_info, Ray & ray_in) {
+	return _determine_color(hit_info, ray_in, this->camPos, this->depth);
+}
+
+/*-------------------------------------------------------------------
+	Func:	[_determine_color]
+	Args:	hit_info - the collision data to base color calculations on
+			ray_in - the incoming ray
+			eye - the relative eye/camera position 
+			depth - the maximum recursive depth
+	Desc:	A helper recursive method that determines the final color of 
+			a ray intersection using the given collision data
+	Rtrn:	The color of intersection
+-------------------------------------------------------------------*/
+Color Scene::_determine_color(HitInfo * hit_info, Ray & ray_in, vec3 eye, const int depth)
 {
-	// Base case, return black
+	// Base case
 	if (depth == 0)
 		return Color();
 
@@ -143,8 +158,8 @@ Color Scene::determine_color(HitInfo * hit_info, Ray & ray_in, vec3 eye, const i
 	HitInfo hit_refl = trace(ray_refl, this);
 	if (hit_refl.is_valid()) {
 		// Calculate reflection
-		vec3 new_eye = hit_refl.get_point();
-		return finalCol + (specular * determine_color(&hit_refl, ray_refl, new_eye, depth - 1));
+		vec3 new_eye = hit_info->get_point();
+		return finalCol + (specular * _determine_color(&hit_refl, ray_refl, new_eye, depth - 1));
 	}
 
 	return finalCol;
