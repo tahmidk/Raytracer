@@ -66,9 +66,6 @@
     <ClInclude Include="Sample.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Bucket.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Material.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -126,9 +123,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Sample.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Bucket.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Material.cpp">

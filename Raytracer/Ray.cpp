@@ -65,7 +65,7 @@ Ray::Ray(vec3 norm, vec3 posn, Ray ray_in) {
 	vec3 v_out = v_in - 2*dot(v_in, norm)*norm;
 
 	this->posn = posn;
-	this->dirn = v_out;
+	this->dirn = normalize(v_out);
 	this->t_min = EPSILON;
 	this->t_max = std::numeric_limits<float>::infinity();
 }
@@ -94,12 +94,10 @@ Ray Ray::transformRay(mat4 transf) {
 	// Convert ray components to homogeneous coordinates
 	vec4 posn_hom = vec4(posn.x, posn.y, posn.z, 1.0f);
 	vec4 dirn_hom = vec4(dirn.x, dirn.y, dirn.z, 0.0f);
-	//normalize(dirn_hom);
 
 	// Apply transformation to both
 	vec4 posn_transf = transf * posn_hom;
 	vec4 dirn_transf = transf * dirn_hom;
-	//normalize(dirn_transf);
 
 	// Reconvert back to vec3
 	vec3 posn_new = vec3(posn_transf.x, posn_transf.y, posn_transf.z);

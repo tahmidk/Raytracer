@@ -33,14 +33,18 @@ int main(int argc, char *argv[])
 		cerr << "Unexpected number of arguments!" << endl;
 
     // This is a test to make sure FreeImage is working
-	cout << "FreeImage_" << FreeImage_GetVersion() << endl;
-	cout << FreeImage_GetCopyrightMessage() << endl;
+	cerr << "FreeImage_" << FreeImage_GetVersion() << endl;
+	cerr << FreeImage_GetCopyrightMessage() << endl;
+
 
 	// Read in and parse input file
 	const char * input_file = argv[1];
+	cerr << "\nParsing \"" << input_file << "\"..." << endl;
 	Parser parser(input_file);
 
+
 	// Initialize environment
+	cerr << "Initializing scene..." << endl;
 	scn = new Scene();
 	parser.initScene(scn);
 	Camera cam(scn->getCamPos(), scn->getLookAt(), scn->getUpVector(), 

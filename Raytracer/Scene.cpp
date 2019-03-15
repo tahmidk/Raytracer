@@ -70,27 +70,24 @@ Scene::~Scene()
 -------------------------------------------------------------------*/
 void Scene::render(Camera & cam, string path)
 {
+	cerr << "Rendering scene..." << endl;
+
 	// Make a new image of size (this->w) by (this->h)
 	Film * film = new Film(w, h);
 	for (int pixel_x = 0; pixel_x < w; pixel_x++) {
 		for (int pixel_y = 0; pixel_y < h; pixel_y++) {
-			if (pixel_x == 124 && pixel_y == 270)
-				cout << endl;
-
 			Sample sample = Sample(pixel_x, pixel_y);
 			Ray raySample = cam.generateRay(sample, camPos, w, h);
 			HitInfo hit = trace(raySample, this);
 			if (hit.is_valid()) {
-				Color hit_color = determine_color(&hit);
-				//Color refl_color = determine_reflection(raySample, &hit);
-
-				Color final_color = hit_color; //+ refl_color;
-				film->commit(sample, final_color);
+				Color hit_color = determine_color(&hit, raySample, this->camPos, this->depth);
+				film->commit(sample, hit_color);
 			}
 		}
 	}
 
 	// Output the PNG file
+	cerr << "Writing to image file..." << endl;
 	film->writeImage(path);
 	delete film;
 }
@@ -104,8 +101,12 @@ void Scene::render(Camera & cam, string path)
 			the given collision data
 	Rtrn:	The color of intersection
 -------------------------------------------------------------------*/
-Color Scene::determine_color(HitInfo * hit_info)
+Color Scene::determine_color(HitInfo * hit_info, Ray & ray_in, vec3 eye, const int depth)
 {
+	// Base case, return black
+	if (depth == 0)
+		return Color();
+
 	// Extract material data from HitInfo
 	Material obj_mat = hit_info->get_object()->get_material();
 	Color diffuse = obj_mat.get_diffuse();
@@ -129,7 +130,7 @@ Color Scene::determine_color(HitInfo * hit_info)
 		HitInfo collision = trace(shadowRay, this);
 		if (!collision.is_valid()) {
 			// Compute shading for this light
-			Color shading = curr_light->calculate_shading(hit_info, this->camPos, attenuation);
+			Color shading = curr_light->calculate_shading(hit_info, eye, attenuation);
 			finalCol = finalCol + shading;
 		}
 
@@ -137,21 +138,31 @@ Color Scene::determine_color(HitInfo * hit_info)
 		curr_light = lights[light_num + 1];
 	}
 
+	// Finally, do tail recursive reflection calculations
+	Ray ray_refl = Ray(hit_info->get_norm(), hit_info->get_point(), ray_in);
+	HitInfo hit_refl = trace(ray_refl, this);
+	if (hit_refl.is_valid()) {
+		// Calculate reflection
+		vec3 new_eye = hit_refl.get_point();
+		return finalCol + (specular * determine_color(&hit_refl, ray_refl, new_eye, depth - 1));
+	}
+
 	return finalCol;
 }
 
+/*
 /*-------------------------------------------------------------------
 	Func:	[determine_reflection]
 	Args:	ray_in - the incident ray
 	Desc:	Determines reflective colors via recursive raytracing
 	Rtrn:	The color of reflection
--------------------------------------------------------------------*/
+-------------------------------------------------------------------/
 Color Scene::determine_reflection(Ray & ray_in, HitInfo * hit_info)
 {
 	return _determine_reflection(ray_in, hit_info, Color(), this->depth);
 }
 
-/*-------------------------------------------------------------------
+/-------------------------------------------------------------------
 	Func:	[_determine_reflection]
 	Args:	ray_in - the incident ray
 			accum - the accumulative color
@@ -160,7 +171,7 @@ Color Scene::determine_reflection(Ray & ray_in, HitInfo * hit_info)
 			tail recursive raytracing to calculate the reflective
 			colors in the Scene
 	Rtrn:	The color of reflection
--------------------------------------------------------------------*/
+-------------------------------------------------------------------/
 Color Scene::_determine_reflection(Ray & ray_in, HitInfo * hit_info, Color & accum, const int depth)
 {
 	// Base case
@@ -179,18 +190,19 @@ Color Scene::_determine_reflection(Ray & ray_in, HitInfo * hit_info, Color & acc
 			// Sanity check in case attenuation is still 0
 			if (attenuation == 0) {
 				cerr << "Attenuation is still 0!" << endl;
-				atten = 1;
+				atten = 1.0f;
 			}
 		}
 
 		// Calculate reflection
-		Color reflectivity = hit_refl.get_object()->get_material().get_specular();
-		accum = accum + reflectivity * determine_color(&hit_refl) * atten;
+		Color reflectivity = hit_info->get_object()->get_material().get_specular();
+		accum = reflectivity * (accum + determine_color(&hit_refl)); //* (1.0f/atten));
 		return _determine_reflection(ray_refl, &hit_refl, accum, depth - 1);
 	}
 
 	return accum;
 }
+*/
 
 /*--------------[ Getter Methods ]----------------*/
 // Camera fields

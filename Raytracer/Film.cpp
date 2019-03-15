@@ -57,10 +57,6 @@ void Film::writeImage(string path) {
 void Film::commit(Sample& sample, const Color& col) {
 	int x = (int) sample.getX();
 	int y = (int) sample.getY();
-
-	if (x == 124 && y == 270)
-		cout << endl;
-
 	this->pixel[x][y] = col;
 }
 

@@ -66,10 +66,6 @@ private:
 	// Path for output
 	string path;
 
-	// Private helper methods
-	Color determine_reflection(Ray & ray_in, HitInfo * hit_info);
-	Color _determine_reflection(Ray & ray_in, HitInfo * hit_info, Color & accum, const int depth);
-
 	// Allow Parser class to set Scene's private fields
 	friend class Parser;
 
@@ -80,7 +76,7 @@ public:
 
 	// Utility methods
 	void render(Camera & cam, string path);
-	Color determine_color(HitInfo * hit_info);
+	Color determine_color(HitInfo * hit_info, Ray & ray_in, vec3 eye, const int depth);
 
 	// Getter methods
 	vec3 getCamPos();
