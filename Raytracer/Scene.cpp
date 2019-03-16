@@ -76,21 +76,11 @@ void Scene::render(Camera & cam, string path)
 
 	// Make a new image of size (this->w) by (this->h)
 	Film * film = new Film(w, h);
-	vec2 Q1(w/4, h/4);
-	vec2 Q2(w*3/4, h/4);
-	vec2 Q3(w/4, h*3/4);
-	vec2 Q4(w*3/4, h*3/4);
 	for (int pixel_x = 0; pixel_x < w; pixel_x++) {
 		for (int pixel_y = 0; pixel_y < h; pixel_y++) {
-			// Progress by quadrants
-			if (pixel_x == (int) Q1.x && pixel_y == (int) Q1.x)
-				cerr << "Reached Q1" << endl;
-			else if (pixel_x == (int) Q2.x && pixel_y == (int) Q2.x)
-				cerr << "Reached Q2" << endl;
-			else if (pixel_x == (int) Q3.x && pixel_y == (int) Q3.x)
-				cerr << "Reached Q3" << endl;
-			else if (pixel_x == (int) Q4.x && pixel_y == (int) Q4.x)
-				cerr << "Reached Q4" << endl;
+			// Half-way Progress
+			if (pixel_x == w/2 && pixel_y == h/2)
+				cerr << "Reached center" << endl;
 
 			// Cast and trace ray
 			Sample sample = Sample(pixel_x, pixel_y);
