@@ -82,25 +82,12 @@ bool BVHNode::intersect_node(Ray & ray, HitInfo * hit_info)
 	// Ray hit both children
 	if (hit_left && hit_right) {
 		// Left child hit first
-		if (t_left < t_right) {
-			if (!this->node_left->intersect_node(ray, hit_info))
-				if (!this->node_right->intersect_node(ray, hit_info))
-					return false;
-				else
-					return true;
-			else
-				return true;
-		}
-		// Right child hit first
-		else {
-			if (!this->node_right->intersect_node(ray, hit_info))
-				if (!this->node_left->intersect_node(ray, hit_info))
-					return false;
-				else
-					return true;
-			else
-				return true;
-		}
+		HitInfo hit_left, hit_right;
+		this->node_left->intersect_node(ray, &hit_left);
+		this->node_right->intersect_node(ray, &hit_right);
+
+		*hit_info = (hit_left.get_t() < hit_right.get_t()) ? hit_left : hit_right;
+		return true;
 	}
 	// Ray only hit left child
 	else if (hit_left)

@@ -10,6 +10,8 @@
 // Standard imports
 #include "pch.h"
 #include <iostream>
+#include <iomanip>
+#include <chrono>
 
 // FreeImage library
 #include "FreeImage.h"
@@ -50,8 +52,13 @@ int main(int argc, char *argv[])
 	Camera cam(scn->getCamPos(), scn->getLookAt(), scn->getUpVector(), 
 		scn->getFovy(), scn->getWidth(), scn->getHeight());
 
-	// Begin Raytracing/render process
+	// Begin Raytracing/render and time the process
+	auto start = chrono::steady_clock::now();
 	scn->render(cam, scn->getPath());
+	auto end = chrono::steady_clock::now();
+
+	auto elapsed = chrono::duration_cast<chrono::seconds>(end - start).count();
+	cerr << "Elapsed Time: " << fixed << setprecision(2) << (elapsed/60.0f) << " min" << endl;
 
 	// Clean up
 	delete scn;

@@ -10,6 +10,8 @@
 #include "pch.h"
 #include "Sphere.h"
 
+#include <algorithm>
+
 /*-------------------------------------------------------------------
 	Func:	Constructor: [Sphere]
 	Args:	All args of Object
@@ -134,16 +136,16 @@ vec2 Sphere::bounds(axis a) {
 	// Choose the appropriate bounds along axis a
 	switch (a){
 		case axis_x:
-			ret[0] = (r14 - sqrt(r14*r14 - r44 * r11)) / r44; // x_min
-			ret[1] = (r14 + sqrt(r14*r14 - r44 * r11)) / r44; // x_max
+			ret[0] = std::min((r14 + sqrt(r14*r14 - r44 * r11)) / r44, (r14 - sqrt(r14*r14 - r44 * r11)) / r44);
+			ret[1] = std::max((r14 + sqrt(r14*r14 - r44 * r11)) / r44, (r14 - sqrt(r14*r14 - r44 * r11)) / r44);
 			break;
 		case axis_y:
-			ret[0] = (r24 - sqrt(r24*r24 - r44 * r22)) / r44; // y_min
-			ret[1] = (r24 + sqrt(r24*r24 - r44 * r22)) / r44; // y_max
+			ret[0] = std::min((r24 + sqrt(r24*r24 - r44 * r22)) / r44, (r24 - sqrt(r24*r24 - r44 * r22)) / r44);
+			ret[1] = std::max((r24 + sqrt(r24*r24 - r44 * r22)) / r44, (r24 - sqrt(r24*r24 - r44 * r22)) / r44);
 			break;
 		case axis_z:
-			ret[0] = (r34 - sqrt(r34*r34 - r44 * r33)) / r44; // z_min
-			ret[1] = (r34 + sqrt(r34*r34 - r44 * r33)) / r44; // z_max
+			ret[0] = std::min((r34 + sqrt(r34*r34 - r44 * r33)) / r44, (r34 - sqrt(r34*r34 - r44 * r33)) / r44);
+			ret[1] = std::max((r34 + sqrt(r34*r34 - r44 * r33)) / r44, (r34 - sqrt(r34*r34 - r44 * r33)) / r44);
 			break;
 		default:
 			break;

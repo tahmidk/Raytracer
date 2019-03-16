@@ -11,6 +11,7 @@
 #include "BVHTree.h"
 
 #include <algorithm>
+#include <vector>
 #include <iostream>
 
 /*----------------------[ Comparators ]------------------------*/
@@ -18,24 +19,21 @@ bool comparator_x(Object * obj1, Object * obj2)
 {
 	float obj1_x = obj1->get_centroid().x;
 	float obj2_x = obj2->get_centroid().x;
-	bool ret = (obj1_x < obj2_x) ? true : false;
-	return ret;
+	return (obj1_x < obj2_x);
 }
 
 bool comparator_y(Object * obj1, Object * obj2)
 {
 	float obj1_y = obj1->get_centroid().y;
 	float obj2_y = obj2->get_centroid().y;
-	bool ret = (obj1_y < obj2_y) ? true : false;
-	return ret;
+	return (obj1_y < obj2_y);
 }
 
 bool comparator_z(Object * obj1, Object * obj2)
 {
 	float obj1_z = obj1->get_centroid().z;
 	float obj2_z = obj2->get_centroid().z;
-	bool ret = (obj1_z < obj2_z) ? true : false;
-	return ret;
+	return (obj1_z < obj2_z);
 }
 
 BVHTree::BVHTree()
@@ -139,7 +137,12 @@ void BVHTree::_build(BVHNode * node) {
 
 	// First split this node using Midpoint Splitting Algorithm
 	BoundingBox node_box = node->get_box();
-	list<Object*> node_objects = node_box.get_objects();
+	//vector<Object*> node_objects(node_box.get_objects().begin(), node_box.get_objects().end());
+	list<Object*> node_objects_list = node_box.get_objects();
+	vector<Object*> node_objects;
+	node_objects.reserve(node_objects_list.size());
+	copy(node_objects_list.begin(), node_objects_list.end(), back_inserter(node_objects));
+
 	float midpoint;
 	axis a = node->longest_axis();
 	switch (a){
@@ -187,13 +190,13 @@ void BVHTree::_build(BVHNode * node) {
 		// Sort by the longest axis
 		switch (a){
 			case axis_x:
-				//std::sort(node_objects.begin(), node_objects.end(), comparator_x);
+				std::sort(node_objects.begin(), node_objects.end(), comparator_x);
 				break;
 			case axis_y:
-				//std::sort(node_objects.begin(), node_objects.end(), comparator_y);
+				std::sort(node_objects.begin(), node_objects.end(), comparator_y);
 				break;
 			case axis_z:
-				//std::sort(node_objects.begin(), node_objects.end(), comparator_z);
+				std::sort(node_objects.begin(), node_objects.end(), comparator_z);
 				break;
 			default:
 				break;

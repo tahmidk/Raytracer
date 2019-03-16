@@ -10,6 +10,8 @@
 #include "pch.h"
 #include "Raytracer.h"
 
+#include <iostream>
+
 Raytracer::Raytracer()
 {
 	this->objects = nullptr;
@@ -31,7 +33,9 @@ Raytracer::Raytracer(bool acceleration, Object ** objects)
 {
 	this->objects = objects;
 	this->accelerated = acceleration;
+	cerr << "Building BVH tree...    ";
 	this->bvh = (acceleration) ? BVHTree(objects) : BVHTree();
+	cerr << "Complete!" << endl;
 }
 
 /*-------------------------------------------------------------------
