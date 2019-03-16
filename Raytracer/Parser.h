@@ -4,6 +4,8 @@
 #include "Scene.h"
 #include "Triangle.h"
 #include "Sphere.h"
+#include "PointLight.h"
+#include "DirectionalLight.h"
 
 class Parser
 {

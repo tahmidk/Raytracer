@@ -10,18 +10,56 @@
 #include "pch.h"
 #include "Raytracer.h"
 
+Raytracer::Raytracer()
+{
+	this->objects = nullptr;
+	this->accelerated = false;
+	this->bvh = BVHTree();
+}
+
+/*-------------------------------------------------------------------
+	Func:	Constructor: [Raytracer]
+	Args:	acceleration - use acceleration or not
+
+	Desc:	This function traces the given ray to see if it collides
+			with any objects initialized in the scene. If so, it
+			returns the appropriate collision data stored in a HitInfo
+			object
+	Rtrn:	The HitInfo object representing the closest collision
+-------------------------------------------------------------------*/
+Raytracer::Raytracer(bool acceleration, Object ** objects)
+{
+	this->objects = objects;
+	this->accelerated = acceleration;
+	if (acceleration)
+		this->bvh = BVHTree(objects);
+}
+
 /*-------------------------------------------------------------------
 	Func:	[trace]
 	Args:	ray - the ray to evaluate for collisions
-			depth - the maximum recursive depth to consider
-			color - a reference to the color variable to manipulate
+	Desc:	Delegates to either the normal trace implementation or
+			the accelerate trace implementation
+	Rtrn:	The HitInfo object representing the closest collision
+-------------------------------------------------------------------*/
+HitInfo Raytracer::trace(Ray & ray)
+{
+	if (this->accelerated)
+		return trace_accel(ray);
+
+	return trace_normal(ray);
+}
+
+/*-------------------------------------------------------------------
+	Func:	[trace_normal]
+	Args:	ray - the ray to evaluate for collisions
 	Desc:	This function traces the given ray to see if it collides
 			with any objects initialized in the scene. If so, it 
 			returns the appropriate collision data stored in a HitInfo 
 			object
 	Rtrn:	The HitInfo object representing the closest collision
 -------------------------------------------------------------------*/
-HitInfo trace(Ray & ray, Scene * scene)
+HitInfo Raytracer::trace_normal(Ray & ray)
 {
 	// True if at least 1 Ray-Scene collision detected, false otherwise
 	bool collision = false;
@@ -30,12 +68,12 @@ HitInfo trace(Ray & ray, Scene * scene)
 	float t_min = numeric_limits<float>::infinity();
 	vec3 P_hit;		// A variable to hold point of collision in world-coord
 	vec3 norm_hit;	// A variable to hold surface normal at point of contact
-	Object * obj_hit = NULL;
+	Object * obj_hit = nullptr;
 
 	// Loop over all objects in the scene scouring for intersections
-	Object ** objects = scene->getAllObjects();
+	Object ** objects = this->objects;
 	Object * curr_obj = objects[0];
-	for (int obj_num = 0; curr_obj != NULL; obj_num++) {
+	for (int obj_num = 0; curr_obj != nullptr; obj_num++) {
 		float t_hit;	// Output parameter to store t parameter at hit location
 		vec3 norm;		// Output parameter to store surface normal
 
@@ -67,5 +105,24 @@ HitInfo trace(Ray & ray, Scene * scene)
 		return HitInfo(t_min, P_hit, norm_hit, obj_hit);
 
 	// Not collisions w/ any of the objects in this scene
+	return HitInfo();
+}
+
+/*-------------------------------------------------------------------
+	Func:	[trace_accel]
+	Args:	ray - the ray to evaluate for collisions
+	Desc:	Same as [trace] but using an acceleration structure in the
+			form of a BVH Tree
+	Rtrn:	The HitInfo object representing the closest collision
+-------------------------------------------------------------------*/
+HitInfo Raytracer::trace_accel(Ray & ray)
+{
+	BVHTree bvh(this->objects);
+	HitInfo hit_info;
+	
+	bool collision = bvh.intersect(ray, &hit_info);
+	if (collision == true)
+		return hit_info;
+
 	return HitInfo();
 }

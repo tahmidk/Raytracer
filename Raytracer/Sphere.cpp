@@ -26,6 +26,11 @@ Sphere::Sphere(Material mat, mat4 transf, float x, float y, float z, float r) :
 	this->obj_type = sphere;
 	this->center = vec3(x, y, z);
 	this->radius = r;
+
+	this->x_bounds = bounds(axis_x);
+	this->y_bounds = bounds(axis_y);
+	this->z_bounds = bounds(axis_z);
+	this->centroid = calc_centroid();
 }
 
 /*-------------------------------------------------------------------
@@ -83,6 +88,68 @@ bool Sphere::intersects_ray(Ray & ray, float * t_hit, vec3 * normal) {
 	t_hit = NULL;
 	normal = NULL;
 	return false;
+}
+
+/*-------------------------------------------------------------------
+	Func:	[calc_centroid]
+	Args:	None
+	Desc:	Calculates and returns this primitive's centroid
+	Rtrn:	The position of its transformed centroid
+-------------------------------------------------------------------*/
+vec3 Sphere::calc_centroid()
+{
+	vec4 centroid = this->obj_transf * vec4(this->center, 1.0f);
+	centroid = centroid / centroid.w;
+	return vec3(centroid.x, centroid.y, centroid.z);
+}
+
+/*-------------------------------------------------------------------
+	Func:	[bounds]
+	Args:	a - the axis to consider
+	Desc:	Calculates and returns the minimum and maximum bounds of
+			this sphere along the given axis
+	Rtrn:	A vector with the first element representing x_min and
+			the second representing x_max
+-------------------------------------------------------------------*/
+vec2 Sphere::bounds(axis a) {
+	vec2 ret(0.0f);
+
+	// Credit to: https://blog.yiningkarlli.com/2013/02/bounding-boxes-for-ellipsoids.html
+	// for method to bound ellipsoid
+	mat4 unit_sphere = mat4(
+		1.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, -1.0f
+	);
+	mat4 R = this->obj_transf * inverse(unit_sphere) * transpose(this->obj_transf);
+	float r11 = R[0][0];
+	float r14 = R[3][0];
+	float r22 = R[1][1];
+	float r24 = R[3][1];
+	float r33 = R[2][2];
+	float r34 = R[3][2];
+	float r44 = R[3][3];
+
+	// Choose the appropriate bounds along axis a
+	switch (a){
+		case axis_x:
+			ret[0] = (r14 - sqrt(r14*r14 - r44 * r11)) / r44; // x_min
+			ret[1] = (r14 + sqrt(r14*r14 - r44 * r11)) / r44; // x_max
+			break;
+		case axis_y:
+			ret[0] = (r24 - sqrt(r24*r24 - r44 * r22)) / r44; // y_min
+			ret[1] = (r24 + sqrt(r24*r24 - r44 * r22)) / r44; // y_max
+			break;
+		case axis_z:
+			ret[0] = (r34 - sqrt(r34*r34 - r44 * r33)) / r44; // z_min
+			ret[1] = (r34 + sqrt(r34*r34 - r44 * r33)) / r44; // z_max
+			break;
+		default:
+			break;
+	}
+
+	return ret;
 }
 
 /*--------------[ Getter methods ]--------------*/

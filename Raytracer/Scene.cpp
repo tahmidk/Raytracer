@@ -11,7 +11,6 @@
 // Project file imports
 #include "pch.h"
 #include "Scene.h"
-#include "HitInfo.h"
 #include "Raytracer.h"
 
 /*-------------------------------------------------------------------
@@ -72,13 +71,16 @@ void Scene::render(Camera & cam, string path)
 {
 	cerr << "Rendering scene..." << endl;
 
+	// Initialize the tracer
+	this->raytracer = Raytracer(ACCELERATE, objects);
+
 	// Make a new image of size (this->w) by (this->h)
 	Film * film = new Film(w, h);
 	for (int pixel_x = 0; pixel_x < w; pixel_x++) {
 		for (int pixel_y = 0; pixel_y < h; pixel_y++) {
 			Sample sample = Sample(pixel_x, pixel_y);
 			Ray raySample = cam.generateRay(sample, camPos, w, h);
-			HitInfo hit = trace(raySample, this);
+			HitInfo hit = raytracer.trace(raySample);
 			if (hit.is_valid()) {
 				Color hit_color = determine_color(&hit, raySample);
 				film->commit(sample, hit_color);
@@ -142,7 +144,7 @@ Color Scene::_determine_color(HitInfo * hit_info, Ray & ray_in, vec3 eye, const 
 		float t_max = curr_light->get_tmax(P0);
 		Ray shadowRay(P0, P1, t_max);
 
-		HitInfo collision = trace(shadowRay, this);
+		HitInfo collision = raytracer.trace(shadowRay);
 		if (!collision.is_valid()) {
 			// Compute shading for this light
 			Color shading = curr_light->calculate_shading(hit_info, eye, attenuation);
@@ -155,7 +157,7 @@ Color Scene::_determine_color(HitInfo * hit_info, Ray & ray_in, vec3 eye, const 
 
 	// Finally, do tail recursive reflection calculations
 	Ray ray_refl = Ray(hit_info->get_norm(), hit_info->get_point(), ray_in);
-	HitInfo hit_refl = trace(ray_refl, this);
+	HitInfo hit_refl = raytracer.trace(ray_refl);
 	if (hit_refl.is_valid()) {
 		// Calculate reflection
 		vec3 new_eye = hit_info->get_point();
@@ -164,60 +166,6 @@ Color Scene::_determine_color(HitInfo * hit_info, Ray & ray_in, vec3 eye, const 
 
 	return finalCol;
 }
-
-/*
-/*-------------------------------------------------------------------
-	Func:	[determine_reflection]
-	Args:	ray_in - the incident ray
-	Desc:	Determines reflective colors via recursive raytracing
-	Rtrn:	The color of reflection
--------------------------------------------------------------------/
-Color Scene::determine_reflection(Ray & ray_in, HitInfo * hit_info)
-{
-	return _determine_reflection(ray_in, hit_info, Color(), this->depth);
-}
-
-/-------------------------------------------------------------------
-	Func:	[_determine_reflection]
-	Args:	ray_in - the incident ray
-			accum - the accumulative color
-			depth - the current recursive depth
-	Desc:	Helper method to determine_reflection() function using
-			tail recursive raytracing to calculate the reflective
-			colors in the Scene
-	Rtrn:	The color of reflection
--------------------------------------------------------------------/
-Color Scene::_determine_reflection(Ray & ray_in, HitInfo * hit_info, Color & accum, const int depth)
-{
-	// Base case
-	if(depth == 0)
-		return accum;
-
-	// Recursive case
-	Ray ray_refl = Ray(hit_info->get_norm(), hit_info->get_point(), ray_in);
-	HitInfo hit_refl = trace(ray_refl, this);
-	if (hit_refl.is_valid()) {
-		// Calculate attenuation
-		float atten = 1.0f;
-		if (!(attenuation[0] == 0.0 && attenuation[1] == 0.0 && attenuation[2] == 0.0)) {
-			float dist = length(hit_info->get_point() - hit_refl.get_point());
-			atten = (float)(attenuation[0] + attenuation[1] * dist + attenuation[2] * dist*dist);
-			// Sanity check in case attenuation is still 0
-			if (attenuation == 0) {
-				cerr << "Attenuation is still 0!" << endl;
-				atten = 1.0f;
-			}
-		}
-
-		// Calculate reflection
-		Color reflectivity = hit_info->get_object()->get_material().get_specular();
-		accum = reflectivity * (accum + determine_color(&hit_refl)); //* (1.0f/atten));
-		return _determine_reflection(ray_refl, &hit_refl, accum, depth - 1);
-	}
-
-	return accum;
-}
-*/
 
 /*--------------[ Getter Methods ]----------------*/
 // Camera fields

@@ -17,14 +17,11 @@
 // Project file imports
 #include "Transform.h"
 #include "Color.h"
-#include "DirectionalLight.h"
-#include "PointLight.h"
-#include "Sphere.h"
-#include "Object.h"
+#include "Light.h"
 #include "Camera.h"
 #include "Sample.h"
 #include "Film.h"
-#include "HitInfo.h"
+#include "Raytracer.h"
 
 using namespace glm;
 using namespace std;
@@ -65,6 +62,9 @@ private:
 
 	// Path for output
 	string path;
+
+	// Scene renderer
+	Raytracer raytracer;
 
 	// Allow Parser class to set Scene's private fields
 	friend class Parser;
