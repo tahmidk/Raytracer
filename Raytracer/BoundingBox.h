@@ -7,6 +7,9 @@
 // Project import files
 #include "Object.h"
 
+// A small margin of error to offset small floating point rounding errors
+constexpr float MOE = 0.001f;
+
 using namespace glm;
 using namespace std;
 

@@ -31,8 +31,7 @@ Raytracer::Raytracer(bool acceleration, Object ** objects)
 {
 	this->objects = objects;
 	this->accelerated = acceleration;
-	if (acceleration)
-		this->bvh = BVHTree(objects);
+	this->bvh = (acceleration) ? BVHTree(objects) : BVHTree();
 }
 
 /*-------------------------------------------------------------------
@@ -117,7 +116,6 @@ HitInfo Raytracer::trace_normal(Ray & ray)
 -------------------------------------------------------------------*/
 HitInfo Raytracer::trace_accel(Ray & ray)
 {
-	BVHTree bvh(this->objects);
 	HitInfo hit_info;
 	
 	bool collision = bvh.intersect(ray, &hit_info);

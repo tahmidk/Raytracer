@@ -60,9 +60,6 @@ BVHTree::BVHTree(Object ** objects)
 		curr_obj = objects[obj_num + 1];
 	}
 
-	// Initialize root
-	this->root = nullptr;
-
 	// Build the tree
 	if(this->objects.size() > 0)
 		build();
@@ -76,8 +73,7 @@ BVHTree::BVHTree(Object ** objects)
 -------------------------------------------------------------------*/
 BVHTree::~BVHTree()
 {
-	if (this->root != nullptr)
-		delete (this->root);
+	//delete (this->root);
 }
 
 /*-------------------------------------------------------------------

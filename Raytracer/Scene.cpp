@@ -78,6 +78,8 @@ void Scene::render(Camera & cam, string path)
 	Film * film = new Film(w, h);
 	for (int pixel_x = 0; pixel_x < w; pixel_x++) {
 		for (int pixel_y = 0; pixel_y < h; pixel_y++) {
+			if (pixel_x == 138 && pixel_y == 86)
+				cout << endl;
 			Sample sample = Sample(pixel_x, pixel_y);
 			Ray raySample = cam.generateRay(sample, camPos, w, h);
 			HitInfo hit = raytracer.trace(raySample);

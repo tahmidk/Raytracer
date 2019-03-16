@@ -12,12 +12,25 @@
 #include <algorithm>
 
 /*-------------------------------------------------------------------
+	Func:	Default Constructor: [BVHNode]
+	Args:	box - the bounding box representing this node
+	Desc:	Initializes a standard BVHNode
+	Rtrn:	None
+-------------------------------------------------------------------*/
+BVHNode::BVHNode()
+{
+	this->node_box = BoundingBox();
+	this->node_left = nullptr;
+	this->node_right = nullptr;
+}
+
+/*-------------------------------------------------------------------
 	Func:	Constructor: [BVHNode]
 	Args:	box - the bounding box representing this node
 	Desc:	Initializes a standard BVHNode
 	Rtrn:	None
 -------------------------------------------------------------------*/
-BVHNode::BVHNode(BoundingBox & box)
+BVHNode::BVHNode(BoundingBox box)
 {
 	this->node_box = box;
 	this->node_left = nullptr;
@@ -32,14 +45,8 @@ BVHNode::BVHNode(BoundingBox & box)
 -------------------------------------------------------------------*/
 BVHNode::~BVHNode()
 {
-	if (this->node_left != nullptr) {
-		delete (this->node_left);
-		this->node_left = nullptr;
-	}
-	if (this->node_right != nullptr) {
-		delete (this->node_right);
-		this->node_right = nullptr;
-	}
+	//delete (this->node_left);
+	//delete (this->node_right);
 }
 
 /*----------------------[Utility methods]------------------------*/

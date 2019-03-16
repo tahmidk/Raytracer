@@ -111,8 +111,8 @@ bool BoundingBox::intersect_box(Ray & ray, float * t_hit) {
 	float hit_z = (ray.get_dirn().z > 0) ? z_min : z_max;
 
 	float t_hit_x = (hit_x - ray.get_posn().x) / ray.get_dirn().x;
-	float t_hit_y = (hit_x - ray.get_posn().y) / ray.get_dirn().y;
-	float t_hit_z = (hit_x - ray.get_posn().z) / ray.get_dirn().z;
+	float t_hit_y = (hit_y - ray.get_posn().y) / ray.get_dirn().y;
+	float t_hit_z = (hit_z - ray.get_posn().z) / ray.get_dirn().z;
 
 	// The plane with the highest t of collision is the plane hit first
 	float t_max = std::max(std::max(t_hit_x, t_hit_y), t_hit_z);
@@ -139,11 +139,11 @@ bool BoundingBox::intersect_box(Ray & ray, float * t_hit) {
 -------------------------------------------------------------------*/
 bool BoundingBox::containsPoint(vec3 & point)
 {
-	if (point.x < this->x_min || point.x > this->x_max)
+	if (point.x < (this->x_min - MOE) || point.x > (this->x_max + MOE))
 		return false;
-	if (point.y < this->y_min || point.y > this->y_max)
+	if (point.y < (this->y_min - MOE) || point.y > (this->y_max + MOE))
 		return false;
-	if (point.z < this->z_min || point.z > this->z_max)
+	if (point.z < (this->z_min - MOE) || point.z > (this->z_max + MOE))
 		return false;
 
 	return true;

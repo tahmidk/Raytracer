@@ -16,7 +16,8 @@ private:
 
 public:
 	// Constructor + Desctructor
-	BVHNode(BoundingBox & node_box);
+	BVHNode();
+	BVHNode(BoundingBox node_box);
 	~BVHNode();
 
 	// Utility methods
