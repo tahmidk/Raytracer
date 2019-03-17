@@ -85,8 +85,14 @@ void Scene::render(Camera & cam, string path)
 			if (pixel_x == w/2 && pixel_y == h/2)
 				cerr << "Reached center" << endl;
 
-			// Cast and trace ray
 			Sample sample = Sample(pixel_x, pixel_y);
+			if (pixel_x == 361 && pixel_y == 480-336) {
+				//film->commit(sample, COLORS::white);
+				cout << endl;
+				//continue;
+			}
+
+			// Cast and trace ray
 			Ray raySample = cam.generateRay(sample, camPos, w, h);
 			HitInfo hit = raytracer.trace(raySample);
 			if (hit.is_valid()) {
