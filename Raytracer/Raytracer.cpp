@@ -29,12 +29,12 @@ Raytracer::Raytracer()
 			object
 	Rtrn:	The HitInfo object representing the closest collision
 -------------------------------------------------------------------*/
-Raytracer::Raytracer(bool acceleration, Object ** objects)
+Raytracer::Raytracer(Object ** objects)
 {
 	this->objects = objects;
-	this->accelerated = acceleration;
+	this->accelerated = ACCELERATE;
 	cerr << "Building BVH tree...    ";
-	this->bvh = (acceleration) ? BVHTree(objects) : BVHTree();
+	this->bvh = (ACCELERATE) ? BVHTree(objects) : BVHTree();
 	cerr << "Complete!" << endl;
 }
 

@@ -25,7 +25,9 @@
 using namespace std;
 using namespace glm;
 
-// Note: scn is declared as a Scene* and it's accessible in external files
+/*-----[ Acceleration switch ]-----*/
+const bool ACCELERATE = true;
+
 Scene * scn;
 
 int main(int argc, char *argv[])

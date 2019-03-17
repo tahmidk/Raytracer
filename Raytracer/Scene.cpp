@@ -70,9 +70,12 @@ Scene::~Scene()
 void Scene::render(Camera & cam, string path)
 {
 	cerr << "Rendering scene..." << endl;
+	cerr << "  File: " << path << endl;
+	cerr << "  Size: " << w << "x" << h << endl;
+	cerr << "  Acceleration: " << (ACCELERATE ? "ON" : "OFF") << endl << endl;
 
 	// Initialize the tracer
-	this->raytracer = Raytracer(ACCELERATE, objects);
+	this->raytracer = Raytracer(objects);
 
 	// Make a new image of size (this->w) by (this->h)
 	Film * film = new Film(w, h);

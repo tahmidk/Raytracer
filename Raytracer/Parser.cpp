@@ -82,8 +82,10 @@ void Parser::parseFile(Scene * scene) {
 		int lightCount = 0;
 		transfstack.push(mat4(1.0));  // identity
 
-		getline(in, str);
-		while (in) {
+		//getline(in, str);
+		while (getline(in, str)) {
+			if (objCount == 4273)
+				cout << endl;
 			if ((str.find_first_not_of(" \t\r\n") != string::npos) && (str[0] != '#')) {
 
 				stringstream s(str);
@@ -282,7 +284,7 @@ void Parser::parseFile(Scene * scene) {
 					cerr << "Unknown Command: " << cmd << " Skipping \n";
 				}
 			}
-			getline(in, str);
+			//getline(in, str);
 		}
 	}
 	else {

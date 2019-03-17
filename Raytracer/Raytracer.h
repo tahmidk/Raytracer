@@ -8,7 +8,7 @@
 #include "BVHTree.h"
 
 // Use acceleration or not
-constexpr bool ACCELERATE = true;
+extern const bool ACCELERATE;
 
 class Raytracer 
 {
@@ -23,7 +23,7 @@ private:
 public:
 	// Constructor
 	Raytracer();
-	Raytracer(bool acceleration, Object ** objects);
+	Raytracer(Object ** objects);
 
 	// Utility method
 	HitInfo trace(Ray & ray);
