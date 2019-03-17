@@ -33,7 +33,7 @@ Color DirectionalLight::calculate_shading(HitInfo * hit_info, vec3 eye_pos, doub
 	vec3 dirn_eye = normalize(eye_pos - hit_info->get_point());
 	vec3 dirn_half = normalize(dirn_L + dirn_eye);
 
-	return compute_lighting(dirn_L, dirn_half, attenuation, hit_info);
+	return compute_lighting(dirn_L, dirn_half, nullptr, hit_info);
 }
 
 /*-------------------------------------------------------------------
