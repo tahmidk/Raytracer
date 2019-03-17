@@ -90,7 +90,6 @@ void Parser::parseFile(Scene * scene) {
 		int lightCount = 0;
 		transfstack.push(mat4(1.0));  // identity
 
-		//getline(in, str);
 		while (getline(in, str)) {
 			if ((str.find_first_not_of(" \t\r\n") != string::npos) && (str[0] != '#')) {
 
@@ -101,7 +100,9 @@ void Parser::parseFile(Scene * scene) {
 
 				// Process the light, add it to database.
 				// Lighting Command
+			
 				if (cmd == "ambient") {
+					
 					validinput = readvals(s, 3, values); // colors
 					if (validinput) {
 						scene->ambient = Color(values[0], values[1], values[2]);
@@ -112,29 +113,30 @@ void Parser::parseFile(Scene * scene) {
 					validinput = readvals(s, 3, values);
 					if (validinput) {
 						scene->diffuse = Color(values[0], values[1], values[2]);
-
 					}
 				}
 				else if (cmd == "specular") {
 					validinput = readvals(s, 3, values);
 					if (validinput) {
 						scene->specular = Color(values[0], values[1], values[2]);
-
 					}
 				}
 				else if (cmd == "emission") {
+					
 					validinput = readvals(s, 3, values);
 					if (validinput) {
 						scene->emission = Color(values[0], values[1], values[2]);
 					}
 				}
 				else if (cmd == "shininess") {
+					
 					validinput = readvals(s, 1, values);
 					if (validinput) {
 						scene->shininess = values[0];
 					}
 				}
 				else if (cmd == "size") {
+					
 					validinput = readvals(s, 2, values);
 					if (validinput) {
 						scene->w = (int)values[0]; 
@@ -142,6 +144,7 @@ void Parser::parseFile(Scene * scene) {
 					}
 				}
 				else if (cmd == "camera") {
+					
 					validinput = readvals(s, 10, values); // 10 values eye cen up fov
 					if (validinput) {
 						scene->camPos = vec3(values[0], values[1], values[2]);
@@ -159,6 +162,9 @@ void Parser::parseFile(Scene * scene) {
 						float tz = values[2];
 						mat4 translation = Transform::translate(tx, ty, tz);
 						rightmultiply(translation, transfstack);
+					}
+					for (int i = 0; i < 3; i++) {
+						s >> values[i];
 					}
 				}
 				else if (cmd == "scale") {
@@ -204,12 +210,13 @@ void Parser::parseFile(Scene * scene) {
 						int maxverts = (int)values[0];
 						scene->vertices = vector<vec3>(maxverts);
 					}
-
 				}
 				else if (cmd == "vertex") {
 					validinput = readvals(s, 3, values);
-					vec3 newVert = vec3(values[0], values[1], values[2]);
-					scene->vertices[vertCount++] = newVert;
+					if (validinput) {
+						vec3 newVert = vec3(values[0], values[1], values[2]);
+						scene->vertices[vertCount++] = newVert;
+					}
 				}
 				else if (cmd == "tri") {
 					//read input
@@ -289,8 +296,10 @@ void Parser::parseFile(Scene * scene) {
 				else {
 					cerr << "Unknown Command: " << cmd << " Skipping \n";
 				}
-			}
-			//getline(in, str);
+				s.clear();
+				cmd.clear();
+				s.str("");
+			} 
 		}
 	}
 	else {
