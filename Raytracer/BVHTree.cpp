@@ -116,24 +116,19 @@ bool BVHTree::intersect(Ray & ray, HitInfo * hit_info) {
 -------------------------------------------------------------------*/
 void BVHTree::build()
 {
-	/*
 	// Make the world bounding box of the root by unioning all objects'
 	// individual bounding boxes
 	BoundingBox world_box(objects.front());
-	int obj_num = 0;
-	for (auto it = objects.begin(); it != objects.end(); it++, obj_num++) {
+	for (auto it = objects.begin(); it != objects.end(); it++) {
 		if (it == objects.begin())
 			continue;
-		Object * obj = *it;
-		vec2 bounds_x = obj->get_bounds(axis_x);
-		BoundingBox obj_box(obj);
+		BoundingBox obj_box(*it);
 		world_box = world_box + obj_box;
 	}
 
 	// Build root and call recursive helper
 	this->root = new BVHNode(world_box);
 	_build(this->root);
-	*/
 }
 
 /*-------------------------------------------------------------------
@@ -253,9 +248,6 @@ void BVHTree::_build(BVHNode * node) {
 	node->set_right(right_new);
 
 	// Finally make the left and right subtrees recursively
-	//_build(node->get_left());
-	//_build(node->get_right());
-
 	#pragma omp parallel sections
 	{
 		#pragma omp section

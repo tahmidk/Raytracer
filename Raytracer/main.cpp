@@ -25,9 +25,9 @@
 using namespace std;
 using namespace glm;
 
-/*-----[ Acceleration Options ]-----*/
-const bool ACCELERATE = false;	// Acceleration on or off?
-const int MAX_NODE_SIZE = 2;	// Change this according to scene's object density (minimum 1)
+/*-----[ Acceleration switch ]-----*/
+const bool ACCELERATE = false;	// Acceleration on or not?
+const int MAX_NODE_SIZE = 2;	// Maximum size of a single BVH node
 
 Scene * scn;
 
@@ -38,18 +38,18 @@ int main(int argc, char *argv[])
 		cerr << "Unexpected number of arguments!" << endl;
 
     // This is a test to make sure FreeImage is working
-	cout << "FreeImage_" << FreeImage_GetVersion() << endl;
-	cout << FreeImage_GetCopyrightMessage() << endl;
+	cerr << "FreeImage_" << FreeImage_GetVersion() << endl;
+	cerr << FreeImage_GetCopyrightMessage() << endl;
 
 
 	// Read in and parse input file
 	const char * input_file = argv[1];
-	cout << "\nParsing \"" << input_file << "\"..." << endl;
+	cerr << "\nParsing \"" << input_file << "\"..." << endl;
 	Parser parser(input_file);
 
 
 	// Initialize environment
-	cout << "Initializing scene..." << endl;
+	cerr << "Initializing scene..." << endl;
 	scn = new Scene();
 	parser.initScene(scn);
 	Camera cam(scn->getCamPos(), scn->getLookAt(), scn->getUpVector(), 

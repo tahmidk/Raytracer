@@ -17,7 +17,7 @@
 	Func:	Constructor: [Scene]
 	Args:	None
 	Desc:	Constructor doesn't do anything other than make the Scene
-			object and initialize all objects and lights to NULL
+			object and initialize all objects and lights to nullptr
 	Rtrn:	None
 -------------------------------------------------------------------*/
 Scene::Scene()
@@ -80,17 +80,9 @@ void Scene::render(Camera & cam, string path)
 
 	// Make a new image of size (this->w) by (this->h)
 	Film * film = new Film(w, h);
-
-	//#pragma omp parallel for
+	#pragma omp parallel for
 	for (int pixel_x = 0; pixel_x < w; pixel_x++) {
 		for (int pixel_y = 0; pixel_y < h; pixel_y++) {
-<<<<<<< HEAD
-=======
-			// Half-way Progress
-			if (pixel_x == w/2 && pixel_y == h/2)
-				cerr << "Reached center" << endl;
-
->>>>>>> parent of 68f80c9... Scene 4-6 passes
 			// Cast and trace ray
 			Sample sample = Sample(pixel_x, pixel_y);
 			Ray raySample = cam.generateRay(sample, camPos, w, h);
