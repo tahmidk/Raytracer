@@ -27,7 +27,7 @@ using namespace glm;
 using namespace std;
 
 // Important constants
-constexpr int NUM_OBJECTS = 2000;
+constexpr int NUM_OBJECTS = 150000;
 constexpr int NUM_LIGHTS = 2000;
 
 class Scene {
@@ -75,7 +75,7 @@ public:
 	~Scene();
 
 	// Utility methods
-	void render(Camera & cam, string path);
+	void render(Camera & cam);
 	Color determine_color(HitInfo * hit_info, Ray & ray_in);
 	Color _determine_color(HitInfo * hit_info, Ray & ray_in, vec3 eye, const int depth);
 

@@ -61,16 +61,15 @@ Scene::~Scene()
 /*-------------------------------------------------------------------
 	Func:	[render]
 	Args:	cam - the camera
-			path - file path and name of the output PNG file
 	Desc:	The main function responsible for rendering the output
 			image. Iteratively calculates the color of each pixel
 			by raytracing and writes the final image file
 	Rtrn:	None
 -------------------------------------------------------------------*/
-void Scene::render(Camera & cam, string path)
+void Scene::render(Camera & cam)
 {
 	cerr << "Rendering scene..." << endl;
-	cerr << "  File:          " << path << endl;
+	cerr << "  File:          " << this->path << endl;
 	cerr << "  Size:          " << w << "x" << h << endl;
 	cerr << "  Acceleration:  " << (ACCELERATE ? "ON" : "OFF") << endl;
 	cerr << "  Max Node Size: " << MAX_NODE_SIZE << endl << endl;
@@ -96,7 +95,7 @@ void Scene::render(Camera & cam, string path)
 
 	// Output the PNG file
 	cerr << "Writing to image file..." << endl;
-	film->writeImage(path);
+	film->writeImage(this->path);
 	delete film;
 }
 

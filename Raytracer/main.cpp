@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
 
 	// Begin Raytracing/render and time the process
 	auto start = chrono::steady_clock::now();
-	scn->render(cam, scn->getPath());
+	scn->render(cam);
 	auto end = chrono::steady_clock::now();
 
 	auto elapsed = chrono::duration_cast<chrono::seconds>(end - start).count();
