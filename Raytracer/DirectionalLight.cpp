@@ -46,7 +46,7 @@ Color DirectionalLight::calculate_shading(HitInfo * hit_info, vec3 eye_pos, doub
 	Rtrn:	A normalized direction vector towards the light
 -------------------------------------------------------------------*/
 vec3 DirectionalLight::get_towards_dirn(vec3 from) {
-	return (-1.0f * this->posn);
+	return (this->posn);
 }
 
 /*-------------------------------------------------------------------
