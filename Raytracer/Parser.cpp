@@ -29,15 +29,7 @@ Parser::Parser(const char* fname) : filename(fname) {}
 	Rtrn:	The new scene described by .test file
 -------------------------------------------------------------------*/
 void Parser::initScene(Scene * scene) {
-	//parseFile(scene);
-	ifstream test_file;
-	test_file.open(this->filename);
-	string line;
-	while (getline(test_file, line))
-		cout << line << endl;
-
-	cout << endl << "END OF FILE" << endl;
-	exit(0);
+	parseFile(scene);
 }
 
 /*------------[ Helper Methods ]------------*/

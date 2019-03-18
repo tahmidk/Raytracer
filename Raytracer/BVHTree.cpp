@@ -51,16 +51,27 @@ BVHTree::BVHTree()
 -------------------------------------------------------------------*/
 BVHTree::BVHTree(Object ** objects)
 {
-	// Initialize list of objects
+	// Make the world bounding box of the root by unioning all objects'
+	// individual bounding boxes
 	Object * curr_obj = objects[0];
-	for (int obj_num = 0; curr_obj != nullptr; obj_num++) {
-		this->objects.push_back(curr_obj);
+	if (curr_obj == nullptr) {
+		cerr << "No objects detected..." << endl;
+		return;
+	}
+	// Initialize world box
+	BoundingBox world_box(curr_obj);
+
+	curr_obj = objects[1];
+	for (int obj_num = 1; curr_obj != nullptr; obj_num++) {
+		BoundingBox obj_box(curr_obj);
+		world_box = world_box + obj_box;
+
 		curr_obj = objects[obj_num + 1];
 	}
 
-	// Build the tree
-	if(this->objects.size() > 0)
-		build();
+	// Build root and call recursive helper
+	this->root = new BVHNode(world_box);
+	_build(this->root);
 }
 
 /*-------------------------------------------------------------------
@@ -105,19 +116,24 @@ bool BVHTree::intersect(Ray & ray, HitInfo * hit_info) {
 -------------------------------------------------------------------*/
 void BVHTree::build()
 {
+	/*
 	// Make the world bounding box of the root by unioning all objects'
 	// individual bounding boxes
 	BoundingBox world_box(objects.front());
-	for (auto it = objects.begin(); it != objects.end(); it++) {
+	int obj_num = 0;
+	for (auto it = objects.begin(); it != objects.end(); it++, obj_num++) {
 		if (it == objects.begin())
 			continue;
-		BoundingBox obj_box(*it);
+		Object * obj = *it;
+		vec2 bounds_x = obj->get_bounds(axis_x);
+		BoundingBox obj_box(obj);
 		world_box = world_box + obj_box;
 	}
 
 	// Build root and call recursive helper
 	this->root = new BVHNode(world_box);
 	_build(this->root);
+	*/
 }
 
 /*-------------------------------------------------------------------

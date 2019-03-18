@@ -6,7 +6,7 @@
 #include "HitInfo.h"
 
 // The maximum number of primitives to allow in a single node of the tree
-constexpr int MAX_NODE_SIZE = 2;
+extern const int MAX_NODE_SIZE;
 
 class BVHTree
 {

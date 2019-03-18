@@ -24,10 +24,10 @@ Scene::Scene()
 {
 	// Nullify all objects
 	for (int i = 0; i < NUM_OBJECTS; i++)
-		this->objects[i] = NULL;
+		this->objects[i] = nullptr;
 	// Nullify all lights
 	for (int i = 0; i < NUM_LIGHTS; i++)
-		this->lights[i] = NULL;
+		this->lights[i] = nullptr;
 
 	// Store defaults
 	this->ambient = Color(0.2f, 0.2f, 0.2f);
@@ -51,10 +51,10 @@ Scene::Scene()
 Scene::~Scene()
 {
 	// Delete all objects
-	for (int i = 0; this->objects[i] != NULL; i++)
+	for (int i = 0; this->objects[i] != nullptr; i++)
 		delete (this->objects[i]);
 	// Delete all lights
-	for (int i = 0; this->lights[i] != NULL; i++)
+	for (int i = 0; this->lights[i] != nullptr; i++)
 		delete (this->lights[i]);
 }
 
@@ -70,9 +70,10 @@ Scene::~Scene()
 void Scene::render(Camera & cam, string path)
 {
 	cerr << "Rendering scene..." << endl;
-	cerr << "  File: " << path << endl;
-	cerr << "  Size: " << w << "x" << h << endl;
-	cerr << "  Acceleration: " << (ACCELERATE ? "ON" : "OFF") << endl << endl;
+	cerr << "  File:          " << path << endl;
+	cerr << "  Size:          " << w << "x" << h << endl;
+	cerr << "  Acceleration:  " << (ACCELERATE ? "ON" : "OFF") << endl;
+	cerr << "  Max Node Size: " << MAX_NODE_SIZE << endl << endl;
 
 	// Initialize the tracer
 	this->raytracer = Raytracer(objects);
@@ -145,7 +146,7 @@ Color Scene::_determine_color(HitInfo * hit_info, Ray & ray_in, vec3 eye, const 
 	Light ** lights = getAllLights();
 	Light * curr_light = lights[0];
 	Color finalCol = ambient + emission;
-	for (int light_num = 0; curr_light != NULL; light_num++) {
+	for (int light_num = 0; curr_light != nullptr; light_num++) {
 		// Light is visible iff its shadow ray does not collide with another object
 		vec3 P0 = hit_info->get_point();
 		vec3 P1 = curr_light->get_towards_dirn(P0);
