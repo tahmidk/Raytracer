@@ -80,12 +80,10 @@ void Scene::render(Camera & cam, string path)
 
 	// Make a new image of size (this->w) by (this->h)
 	Film * film = new Film(w, h);
+
+	//#pragma omp parallel for
 	for (int pixel_x = 0; pixel_x < w; pixel_x++) {
 		for (int pixel_y = 0; pixel_y < h; pixel_y++) {
-			// Half-way Progress
-			if (pixel_x == w/2 && pixel_y == h/2)
-				cerr << "Reached center" << endl;
-
 			// Cast and trace ray
 			Sample sample = Sample(pixel_x, pixel_y);
 			Ray raySample = cam.generateRay(sample, camPos, w, h);

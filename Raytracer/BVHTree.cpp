@@ -253,8 +253,16 @@ void BVHTree::_build(BVHNode * node) {
 	node->set_right(right_new);
 
 	// Finally make the left and right subtrees recursively
-	_build(node->get_left());
-	_build(node->get_right());
+	//_build(node->get_left());
+	//_build(node->get_right());
+
+	#pragma omp parallel sections
+	{
+		#pragma omp section
+		_build(node->get_left());
+		#pragma omp section
+		_build(node->get_right());
+	}
 
 	return;
 }

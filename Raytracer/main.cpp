@@ -26,8 +26,8 @@ using namespace std;
 using namespace glm;
 
 /*-----[ Acceleration Options ]-----*/
-const bool ACCELERATE = true;	// Acceleration on or off?
-const int MAX_NODE_SIZE = 100;	// Change this according to scene's density (100 for scene7, minimum 2)
+const bool ACCELERATE = false;	// Acceleration on or off?
+const int MAX_NODE_SIZE = 2;	// Change this according to scene's object density (minimum 1)
 
 Scene * scn;
 
