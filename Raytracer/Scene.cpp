@@ -84,6 +84,13 @@ void Scene::render(Camera & cam, string path)
 	//#pragma omp parallel for
 	for (int pixel_x = 0; pixel_x < w; pixel_x++) {
 		for (int pixel_y = 0; pixel_y < h; pixel_y++) {
+<<<<<<< HEAD
+=======
+			// Half-way Progress
+			if (pixel_x == w/2 && pixel_y == h/2)
+				cerr << "Reached center" << endl;
+
+>>>>>>> parent of 68f80c9... Scene 4-6 passes
 			// Cast and trace ray
 			Sample sample = Sample(pixel_x, pixel_y);
 			Ray raySample = cam.generateRay(sample, camPos, w, h);

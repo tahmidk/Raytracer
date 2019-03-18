@@ -60,13 +60,13 @@ Color Light::compute_lighting(vec3 dirn, vec3 half, double * atten, HitInfo * hi
 
 	// Calculate attenuation for point lights (dirn lights have attenuation of 1)
 	float attenuation = 1.0f;
-	if(atten != nullptr){
+	if(!(atten[0] == 0.0 && atten[1] == 0.0 && atten[2] == 0.0)){
 		float dist = length(this->posn - hit_pos);
 		attenuation = (float) (atten[0] + atten[1]*dist + atten[2]*dist*dist);
 		// Sanity check in case attenuation is still 0
 		if (attenuation == 0) {
 			cerr << "Attenuation is still 0!" << endl;
-			attenuation = 1.0f;
+			attenuation = 1;
 		}
 	}
 

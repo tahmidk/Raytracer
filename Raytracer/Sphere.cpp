@@ -12,8 +12,6 @@
 
 #include <algorithm>
 
-constexpr float MOE = 0.001f;
-
 /*-------------------------------------------------------------------
 	Func:	Constructor: [Sphere]
 	Args:	All args of Object
@@ -70,7 +68,7 @@ bool Sphere::intersects_ray(Ray & ray, float * t_hit, vec3 * normal) {
 		float soln_1 = (-b + sqrt(discriminant)) / (2 * a);
 		float soln_2 = (-b - sqrt(discriminant)) / (2 * a);
 
-		if (soln_1 + MOE > 0 && soln_2 + MOE > 0)
+		if (soln_1 > 0 && soln_2 > 0)
 			// Both solutions positive. Pick smaller (closer) one
 			*t_hit = (soln_1 < soln_2) ? soln_1 : soln_2;
 		else

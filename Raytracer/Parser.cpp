@@ -83,6 +83,8 @@ void Parser::parseFile(Scene * scene) {
 		transfstack.push(mat4(1.0));  // identity
 
 		while (getline(in, str)) {
+			if (objCount == 4273)
+				cout << endl;
 			if ((str.find_first_not_of(" \t\r\n") != string::npos) && (str[0] != '#')) {
 
 				stringstream s(str);
